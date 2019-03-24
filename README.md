@@ -1,2 +1,2 @@
 # snake
-Old school Snake game recreation
+under development.
