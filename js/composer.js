@@ -12,7 +12,13 @@ class Address{
   }
 
   extend(newProp){
-    this.arr.push(newProp);
+    if (Array.isArray(newProp)){
+      for (let i=0 , len=newProp.length; i<len ; ++i){
+        this.arr.push(newProp[i]);
+      }
+    }else{
+      this.arr.push(newProp);
+    }
   }
 
   clear(){
@@ -79,12 +85,12 @@ class Address{
 }
 export default function(){
   'use strict'
-  const metaDataKey = Symbol.for("metaDataKey")
+  const metaDataKey = Symbol.for("metaDataKey");
   const composite = {};
-  const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor
+  const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
   const paraRegExp = /.*?\(\{([^)]*)\}\)/; 
-  let affectedComposite = composite;
   let addingLink = false;
+  let removingLink = false;
   let nestedPropertiesCourier = {};
   let addFunctionCurrentAdd;
   let setCurrentAdd;
@@ -128,12 +134,21 @@ export default function(){
   const runFunction = async function(funcAddress){
     let needsUpdate = [];
     let localComposite = funcAddress.getObject(composite);
+    let currentAddress = new Address(funcAddress.arr);
+    currentAddress.arr.pop();
+    // call function
     localComposite[funcAddress.name()] = 
-    await(funcAddress.getRefFrom(metaTree)[metaDataKey].function(localComposite , composite , interceptor(localComposite ,funcAddress , needsUpdate)));
+    await(funcAddress.getRefFrom(metaTree)[metaDataKey].function(
+      localComposite , 
+      composite , 
+      interceptor(localComposite ,funcAddress , needsUpdate) , 
+      composite[metaDataKey].compositeProxy,
+      currentAddress.arr));
+
     needsUpdate.push(new Address(funcAddress.arr));
     manageUpdates(needsUpdate);
   }
-
+  //
   composite[metaDataKey]= {updateQueue:[], metaTree: {} };
   let metaTree = composite[metaDataKey].metaTree;
   let updateQueue = composite[metaDataKey].updateQueue;
@@ -154,6 +169,38 @@ export default function(){
     }
     manageUpdates(needsUpdate);
   }
+
+  const removeLink = function(){
+    removingLink = false;
+    let addresses = [];
+    let newExternalLinks =[];
+    // validating input addresses 
+    if (arguments[1]) {
+      for (let item of nestedPropertiesCourier.property){
+        if (!item.existIn(addresses)){
+          addresses.push(new Address(item.arr));
+        }
+        if (!item.in(metaTree)){
+          throw console.error("removeLink address not found");
+        }
+      }
+    }else{
+      throw console.error("at least two address need for linking");
+    }
+    // remove linked addresses by only copying other links
+    for (let i=0 ; i<addresses.length ; ++i){
+      let externalLinks = addresses[i].getRefFrom(metaTree)[metaDataKey].externalLinks;
+        for (let j=0; j<externalLinks.length ; ++j){
+          if (!externalLinks[j].existIn(addresses) && !externalLinks[j].existIn(newExternalLinks)){
+            newExternalLinks.push(new Address(externalLinks[j].arr));
+          }
+        }
+        addresses[i].getRefFrom(metaTree)[metaDataKey].externalLinks = [...newExternalLinks];
+        newExternalLinks = [];
+        
+    }
+  }
+
   const addLink = function(){
     addingLink = false;
     let addresses = [];
@@ -184,11 +231,12 @@ export default function(){
     }
     // write a copy of addresses to each linked prop
     for (let i=0 ; i<finalAddresses.length ; ++i){
-      finalAddresses[i].getRefFrom(metaTree)[metaDataKey].externalLinks = [...finalAddresses];
+      let exceptSelf = finalAddresses.filter(value=> !finalAddresses[i].isEqual(value));
+      finalAddresses[i].getRefFrom(metaTree)[metaDataKey].externalLinks = [...exceptSelf];
     }
-
-    syncLinkedProps(addresses[0]);
+    manageUpdates([...syncLinkedProps(addresses[0])]);
   }
+
   const addFunction = function(){
     let method = arguments[0];
     let finalFunction;
@@ -196,6 +244,8 @@ export default function(){
     let finalPara;
     let importedFunction = splitFunction(method);
     let injectingFunction = function(){
+      const proxiedComposite = arguments[3];
+      const currentAddress = arguments[4];
     }
     let finalBody =  splitFunction(injectingFunction).body + "with (arguments[2]) {"+ importedFunction.body + "}" ;
     if (importedFunction.paraString){
@@ -281,13 +331,17 @@ export default function(){
 
   const syncLinkedProps = function(prop){
     let externalLinks = prop.getRefFrom(metaTree)[metaDataKey].externalLinks;
-    if (externalLinks.length==0) return [];
+    let updatedLinks = [];
+    if (externalLinks.length==0) return externalLinks;
     let propObj = prop.getObject(composite);
     for (let i=0 , len = externalLinks.length ; i<len ; ++i){
       let linkedObj = externalLinks[i].getObject(composite);
-      linkedObj[externalLinks[i].name()] = propObj[prop.name()];
+      if (!(linkedObj[externalLinks[i].name()] === propObj[prop.name()])){
+        linkedObj[externalLinks[i].name()] = propObj[prop.name()];
+        updatedLinks.push(new Address(externalLinks[i].arr));
+      }
     }
-    return externalLinks;
+    return updatedLinks;
   }
   const manageUpdates = function(needsUpdate){
     // find and add affected overhead properties
@@ -395,7 +449,10 @@ export default function(){
     },
 
     get: function ( obj , prop , receiver ){
-      if (addingLink) {
+      if (addingLink || removingLink) {
+        if (prop.includes(",")){
+          prop = prop.split(",");
+        }
         if (obj[metaDataKey] && obj[metaDataKey].name == "courier"){
           nestedPropertiesCourier.property[nestedPropertiesCourier.property.length-1].extend(prop);
         }else{
@@ -409,20 +466,25 @@ export default function(){
       }
       switch (prop){
         case "set":
-        setCurrentAdd = new Address(addressRecorder.arr);
-        return setProperties;
+          setCurrentAdd = new Address(addressRecorder.arr);
+          return setProperties;
         case "addFunction":
-        addFunctionCurrentAdd = new Address(addressRecorder.arr);
-        return addFunction;
+          addFunctionCurrentAdd = new Address(addressRecorder.arr);
+          return addFunction;
         case "addLink":
-        addingLink = true;
-        nestedPropertiesCourier = {property:[]};
-        nestedPropertiesCourier[metaDataKey] = {name:"courier"};
-        return addLink;
+          addingLink = true;
+          nestedPropertiesCourier = {property:[]};
+          nestedPropertiesCourier[metaDataKey] = {name:"courier"};
+          return addLink;
+        case "removeLink":
+            removingLink = true;
+            nestedPropertiesCourier = {property:[]};
+            nestedPropertiesCourier[metaDataKey] = {name:"courier"};
+            return removeLink;
         case "getProxylessComposite":
-        return composite;
+          return composite;
         case "isCompositeProxy":
-        return true;
+          return true;
       }
       addressRecorder.extend(prop);
       let result = Reflect.get(obj , prop , receiver );
@@ -433,5 +495,7 @@ export default function(){
     }
   }
 }
-  return new Proxy(composite , compositeHandler());
+  const compositeProxy = new Proxy(composite , compositeHandler());
+  composite[metaDataKey].compositeProxy = compositeProxy;
+  return compositeProxy;
 }
