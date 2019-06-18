@@ -65,7 +65,7 @@ snake.addLink(snake.worlds.skyBox1.components.ground.scale , snake.sceneObjects.
 snake.addLink(snake.worlds.skyBox1.components.ground.sceneUpdate , snake.sceneObjects.ground.sceneUpdate);
 snake.addLink(snake.worlds.skyBox1.components.ground.geometryName , snake.sceneObjects.ground.geometryName);
 
-
+// this line added in composition branch
 snake.physicBodies.ground = snake.utils.newPhysicBody();
 snake.physicBodies.ground.set({threeBodyName: "ground" , material: "groundMaterial" , mass: 0});
 
