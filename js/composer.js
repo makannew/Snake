@@ -445,6 +445,7 @@ export default function(){
 
       Reflect.set(obj , prop , value , receiver);
       manageUpdates([new Address(addressRecorder.arr)])
+      addressRecorder = new Address()
       return true;
     },
 
@@ -495,7 +496,7 @@ export default function(){
     }
   }
 }
-  const compositeProxy = new Proxy(composite , compositeHandler());
+  const compositeProxy = new Proxy(composite , compositeHandler(new Address()));
   composite[metaDataKey].compositeProxy = compositeProxy;
   return compositeProxy;
 }

@@ -1,20 +1,29 @@
 
 export function addPhysicBody(mainComposite , sceneObject){
-  console.log("arg1:",mainComposite,"arg2",sceneObject)
+  console.log(sceneObject)
+  sceneObject.physicMaterial = "objectMaterial";
+  sceneObject.damping = 0.15;
+  sceneObject.cylinderSegments = 16;
+console.log("stage 1 finished")
+  //sceneObject.addFunction (initialize); // name exist. will overwrite if apply
+  sceneObject.addFunction(shape);
+  sceneObject.addFunction(body);
+  sceneObject.addFunction(getMaterial);
+  sceneObject.addFunction(updatePhysic);
 }
 
 export function physicBodyBuilder(CompositeObject){
   return function(){
-    let result = CompositeObject();
-    result.material = "objectMaterial";
-    result.damping = 0.15;
-    result.cylinderSegments = 16;
+  //   let result = CompositeObject();
+  //   result.material = "objectMaterial";
+  //   result.damping = 0.15;
+  //   result.cylinderSegments = 16;
 
-    result.addFunction (initialize);
-    result.addFunction(shape);
-    result.addFunction(body);
-    result.addFunction(getMaterial);
-    result.addFunction(update);
+  //   result.addFunction (initialize);
+  //   result.addFunction(shape);
+  //   result.addFunction(body);
+  //   result.addFunction(getMaterial);
+  //   result.addFunction(updatePhysic);
 
 
     return result;
@@ -49,7 +58,7 @@ const initialize = function({threeBodyName}){
   return threeBodyName
 }
 
-const update = function({timeStamp , body}){
+const updatePhysic = function({timeStamp , body}){
   if (body && mass!=0){
     // const physicBodyName = currentAddress[currentAddress.length - 1];
     // let newPosition = Object.assign({} , body.position)
@@ -65,9 +74,9 @@ const update = function({timeStamp , body}){
 
   }
 }
-const getMaterial = function({materials , material}){
-  if (material in materials){
-    return materials[material];
+const getMaterial = function({materials , physicMaterial}){
+  if (physicMaterial in materials){
+    return materials[physicMaterial];
   }else{
     return undefined;
   }
