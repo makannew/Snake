@@ -1,4 +1,8 @@
 
+export function addPhysicBody(mainComposite , sceneObject){
+  console.log("arg1:",mainComposite,"arg2",sceneObject)
+}
+
 export function physicBodyBuilder(CompositeObject){
   return function(){
     let result = CompositeObject();

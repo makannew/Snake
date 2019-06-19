@@ -65,22 +65,26 @@ snake.addLink(snake.worlds.skyBox1.components.ground.scale , snake.sceneObjects.
 snake.addLink(snake.worlds.skyBox1.components.ground.sceneUpdate , snake.sceneObjects.ground.sceneUpdate);
 snake.addLink(snake.worlds.skyBox1.components.ground.geometryName , snake.sceneObjects.ground.geometryName);
 
-// this line added in composition branch
-snake.physicBodies.ground = snake.utils.newPhysicBody();
-snake.physicBodies.ground.set({threeBodyName: "ground" , material: "groundMaterial" , mass: 0});
+// composition
+snake.utils.addPhysicBody(snake.sceneObjects.box1)
+//
+// snake.utils.addSkyBox("skyBox1"); 
+// snake.worlds.skyBox1.set ({texturePath:"world/world2/" , textureName:"world"})
 
+// snake.physicBodies.ground = snake.utils.newPhysicBody();
+// snake.physicBodies.ground.set({threeBodyName: "ground" , material: "groundMaterial" , mass: 0});
 
-snake.physicBodies.body1 = snake.utils.newPhysicBody();
-snake.physicBodies.body1.set({threeBodyName: "box1" ,  mass: 5});
+// snake.physicBodies.body1 = snake.utils.newPhysicBody();
+// snake.physicBodies.body1.set({threeBodyName: "box1" ,  mass: 5});
 
-snake.physicBodies.body2 = snake.utils.newPhysicBody();
-snake.physicBodies.body2.set({threeBodyName: "box2" ,  mass: 15});
+// snake.physicBodies.body2 = snake.utils.newPhysicBody();
+// snake.physicBodies.body2.set({threeBodyName: "box2" ,  mass: 15});
 
-snake.physicBodies.body3 = snake.utils.newPhysicBody();
-snake.physicBodies.body3.set({threeBodyName: "sphere1" ,  mass: 1});
+// snake.physicBodies.body3 = snake.utils.newPhysicBody();
+// snake.physicBodies.body3.set({threeBodyName: "sphere1" ,  mass: 1});
 
-snake.physicBodies.body4 = snake.utils.newPhysicBody();
-snake.physicBodies.body4.set({threeBodyName: "cylinder1" ,  mass: 10})
+// snake.physicBodies.body4 = snake.utils.newPhysicBody();
+// snake.physicBodies.body4.set({threeBodyName: "cylinder1" ,  mass: 10})
 
 snake.player = {
   position: new THREE.Vector3(0,0,0),

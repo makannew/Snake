@@ -6,10 +6,10 @@ import { skyBoxBuilder, activeWorld } from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
 import { initializeThreeJs ,settings } from "./mg.initialize.js"
 import { lightBuilder , updateLight } from "./mg.light.js"
-import { cannonSettingsBuilder} from "./mg.physic.settings.js"
+import { cannonSettingsBuilder } from "./mg.physic.settings.js"
 
 
-import { physicBodyBuilder } from "./mg.physic.js"
+import { addPhysicBody } from "./mg.physic.js"
 
 export function MGame(){
   let result = CompositeObject();
@@ -19,7 +19,7 @@ export function MGame(){
   result.utils.newCamera = cameraBuilder(CompositeObject);
   result.utils.newObject = objectBuilder(CompositeObject);
   result.utils.newLight = lightBuilder(CompositeObject);
-  result.utils.newPhysicBody = physicBodyBuilder(CompositeObject);
+  result.utils.addPhysicBody = function(sceneObject) {addPhysicBody(result , sceneObject)};
 
   result.utils.start = startEngine;
 
