@@ -7,8 +7,6 @@ import { startEngine } from "./mg.startEngine.js"
 import { initializeThreeJs ,settings } from "./mg.initialize.js"
 import { lightBuilder , updateLight } from "./mg.light.js"
 import { cannonSettingsBuilder } from "./mg.physic.settings.js"
-
-
 import { addPhysicBody } from "./mg.physic.js"
 
 export function MGame(){

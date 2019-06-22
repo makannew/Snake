@@ -40,7 +40,7 @@ snake.sceneObjects.sphere1 = snake.utils.newObject();
 snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, position:{x:10,y:-400,z:-320} , color: 0x00ff00 , scale:.2 , materialName:"phong" , shininess:100});
 
 snake.sceneObjects.cylinder1 = snake.utils.newObject();
-snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:2,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
+snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
 // lights
 snake.lights.ambient1 = snake.utils.newLight();
 snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});
@@ -59,14 +59,30 @@ snake.lights.pointLight1 = snake.utils.newLight();
 snake.lights.pointLight1.set ({lightType :"point" , intensity:1});
 
 //physic bodies
-snake.addLink(snake.worlds.skyBox1.components.ground , snake.sceneObjects.ground);
+//snake.addLink(snake.worlds.skyBox1.components.ground , snake.sceneObjects.ground);
 snake.addLink(snake.worlds.skyBox1.components.ground.dimension , snake.sceneObjects.ground.dimension);
 snake.addLink(snake.worlds.skyBox1.components.ground.scale , snake.sceneObjects.ground.scale);
 snake.addLink(snake.worlds.skyBox1.components.ground.sceneUpdate , snake.sceneObjects.ground.sceneUpdate);
 snake.addLink(snake.worlds.skyBox1.components.ground.geometryName , snake.sceneObjects.ground.geometryName);
 
 // composition
-snake.utils.addPhysicBody(snake.sceneObjects.box1)
+snake.sceneObjects.box1.mass = 5;
+snake.utils.addPhysicBody(snake.sceneObjects.box1);
+
+snake.sceneObjects.ground.set({mass:0 , physicMaterial:"groundMaterial"});
+snake.utils.addPhysicBody(snake.sceneObjects.ground);
+
+
+snake.sceneObjects.box2.mass =2;
+snake.utils.addPhysicBody(snake.sceneObjects.box2);
+
+snake.sceneObjects.sphere1.mass =.1;
+snake.utils.addPhysicBody(snake.sceneObjects.sphere1);
+
+snake.sceneObjects.cylinder1.mass =3;
+snake.utils.addPhysicBody(snake.sceneObjects.cylinder1);
+
+
 //
 // snake.utils.addSkyBox("skyBox1"); 
 // snake.worlds.skyBox1.set ({texturePath:"world/world2/" , textureName:"world"})
