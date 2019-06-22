@@ -10,37 +10,27 @@ snake.activeCameraName = "camera1";
 console.log(snake)
 
 // load skybox1 world texture
-snake.worlds.skyBox1 = snake.utils.newSkyBox();
-snake.worlds.skyBox1.scale=1
-snake.worlds.skyBox1.components.back.textureFileName = "world/world1/world_back.png";
-snake.worlds.skyBox1.components.front.textureFileName = "world/world1/world_front.png";
-snake.worlds.skyBox1.components.left.textureFileName = "world/world1/world_left.png";
-snake.worlds.skyBox1.components.right.textureFileName = "world/world1/world_right.png";
-snake.worlds.skyBox1.components.top.textureFileName = "world/world1/world_top.png";
-snake.worlds.skyBox1.components.ground.textureFileName = "world/world1/world_ground.png";
-//load skybox2 world texture
-snake.worlds.skyBox2 = snake.utils.newSkyBox();
-snake.worlds.skyBox2.scale=1;
-snake.worlds.skyBox2.components.back.textureFileName = "world/world2/world_back.png";
-snake.worlds.skyBox2.components.front.textureFileName = "world/world2/world_front.png";
-snake.worlds.skyBox2.components.left.textureFileName = "world/world2/world_left.png";
-snake.worlds.skyBox2.components.right.textureFileName = "world/world2/world_right.png";
-snake.worlds.skyBox2.components.top.textureFileName = "world/world2/world_top.png";
-snake.worlds.skyBox2.components.ground.textureFileName = "world/world2/world_ground.png";
-snake.activeWorldName = "skyBox1";
+snake.utils.addSkyBox("skyBox1"); 
+snake.worlds.skyBox1.set ({textureFilePath:"world/world1/"})
+
+snake.utils.addSkyBox("skyBox2"); 
+snake.worlds.skyBox2.set ({textureFilePath:"world/world2/"})
+
+snake.activeWorldName = "skyBox2";
 
 // geometries
-snake.sceneObjects.box1 = snake.utils.newObject();
+snake.utils.addObject("box1");
 snake.sceneObjects.box1.set({geometryName : "box" , dimension : { height:20 , width: 10 , length:5} , position :{x:50,y:-400,z:-320} , color : 0xff0000 , materialName:"phong" });
 
-snake.sceneObjects.box2 = snake.utils.newObject();
+snake.utils.addObject("box2");
 snake.sceneObjects.box2.set({geometryName : "box" , textureFileName:"/characters/0.png" , position :{x:50,y:-350,z:-320}, scale:.2 , materialName:"phong" , shininess:2});
 
-snake.sceneObjects.sphere1 = snake.utils.newObject();
+snake.utils.addObject("sphere1");
 snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, position:{x:10,y:-400,z:-320} , color: 0x00ff00 , scale:.2 , materialName:"phong" , shininess:100});
 
-snake.sceneObjects.cylinder1 = snake.utils.newObject();
+snake.utils.addObject("cylinder1");
 snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
+
 // lights
 snake.lights.ambient1 = snake.utils.newLight();
 snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});
@@ -59,48 +49,20 @@ snake.lights.pointLight1 = snake.utils.newLight();
 snake.lights.pointLight1.set ({lightType :"point" , intensity:1});
 
 //physic bodies
-//snake.addLink(snake.worlds.skyBox1.components.ground , snake.sceneObjects.ground);
-snake.addLink(snake.worlds.skyBox1.components.ground.dimension , snake.sceneObjects.ground.dimension);
-snake.addLink(snake.worlds.skyBox1.components.ground.scale , snake.sceneObjects.ground.scale);
-snake.addLink(snake.worlds.skyBox1.components.ground.sceneUpdate , snake.sceneObjects.ground.sceneUpdate);
-snake.addLink(snake.worlds.skyBox1.components.ground.geometryName , snake.sceneObjects.ground.geometryName);
-
-// composition
-snake.sceneObjects.box1.mass = 5;
 snake.utils.addPhysicBody(snake.sceneObjects.box1);
+snake.sceneObjects.box1.mass = 5;
 
-snake.sceneObjects.ground.set({mass:0 , physicMaterial:"groundMaterial"});
-snake.utils.addPhysicBody(snake.sceneObjects.ground);
+snake.utils.addPhysicBody(snake.sceneObjects.skyBox2_ground);
+snake.sceneObjects.skyBox2_ground.set({mass:0 , physicMaterial:"groundMaterial"});
 
-
-snake.sceneObjects.box2.mass =2;
 snake.utils.addPhysicBody(snake.sceneObjects.box2);
+snake.sceneObjects.box2.mass =2;
 
-snake.sceneObjects.sphere1.mass =.1;
 snake.utils.addPhysicBody(snake.sceneObjects.sphere1);
+snake.sceneObjects.sphere1.mass =.1;
 
-snake.sceneObjects.cylinder1.mass =3;
 snake.utils.addPhysicBody(snake.sceneObjects.cylinder1);
-
-
-//
-// snake.utils.addSkyBox("skyBox1"); 
-// snake.worlds.skyBox1.set ({texturePath:"world/world2/" , textureName:"world"})
-
-// snake.physicBodies.ground = snake.utils.newPhysicBody();
-// snake.physicBodies.ground.set({threeBodyName: "ground" , material: "groundMaterial" , mass: 0});
-
-// snake.physicBodies.body1 = snake.utils.newPhysicBody();
-// snake.physicBodies.body1.set({threeBodyName: "box1" ,  mass: 5});
-
-// snake.physicBodies.body2 = snake.utils.newPhysicBody();
-// snake.physicBodies.body2.set({threeBodyName: "box2" ,  mass: 15});
-
-// snake.physicBodies.body3 = snake.utils.newPhysicBody();
-// snake.physicBodies.body3.set({threeBodyName: "sphere1" ,  mass: 1});
-
-// snake.physicBodies.body4 = snake.utils.newPhysicBody();
-// snake.physicBodies.body4.set({threeBodyName: "cylinder1" ,  mass: 10})
+snake.sceneObjects.cylinder1.mass =3;
 
 snake.player = {
   position: new THREE.Vector3(0,0,0),
@@ -118,9 +80,10 @@ snake.player = {
 
 //
 const cameraSetup = function({activeCamera , activeWorld , worlds}){
-    if (worlds[activeWorld] && worlds[activeWorld]["skyBox"]){
+    if (worlds[activeWorld] && worlds[activeWorld]["allLoaded"]){
       if (cameraSetup==activeWorld) return activeWorld;
-      activeCamera.position.set( 0 , -1 * (worlds[activeWorld].components.ground.dimension.height * worlds[activeWorld].components.ground.scale / 2 ) * (1 - player.viewPointHeight) , 0 );
+      let ground = sceneObjects[worlds[activeWorld].components[5]];
+      activeCamera.position.set( 0 , -1 * (ground.dimension.height * ground.scale / 2 ) * (1 - player.viewPointHeight) , 0 );
       activeCamera.rotateOnAxis(new THREE.Vector3(1,0,0) , player.lookUpAngle);
       player.position= activeCamera.position;
       return activeWorld
@@ -128,8 +91,6 @@ const cameraSetup = function({activeCamera , activeWorld , worlds}){
 
 }
 snake.addFunction(cameraSetup);
-
-
 
 // game controls
 document.addEventListener( "keydown" , keyDownHandler , false );

@@ -1,8 +1,8 @@
 
 export function addPhysicBody(mainComposite , sceneObject){
-  sceneObject.physicMaterial = "objectMaterial";
-  sceneObject.damping = 0.15;
-  sceneObject.cylinderSegments = 16;
+  if (!sceneObject.physicMaterial) sceneObject.physicMaterial= "objectMaterial";
+  if (!sceneObject.damping) sceneObject.damping = 0.15;
+  if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
 
   sceneObject.addFunction(shape);
   sceneObject.addFunction(body);

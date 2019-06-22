@@ -4,8 +4,6 @@ export function startEngine(gameInstance){
   gameInstance.running = true;
 
   const mainloop = function (animationTimeStamp){
-    //let demandInterval = 1/gameInstance.settings.frameRate;
-
     if(animationTimeStamp>lastTime) {
       animationFrameInterval += (animationTimeStamp - lastTime) / 1000;
     }

@@ -6,7 +6,6 @@ export function cannonSettingsBuilder(result){
 
   result.addLink(result.cannon , result.physicSettings.cannon);
 
-
   result.physicSettings.addFunction(setGravity);
   result.physicSettings.gravity = {x:0 , y:-70 , z:0};
 
@@ -15,9 +14,6 @@ export function cannonSettingsBuilder(result){
   result.physicSettings.materials.objectMaterial= new CANNON.Material();
   result.physicSettings.addFunction(createContactMaterial);
   result.physicSettings.newContactMaterial= {material1: "groundMaterial" , material2: "objectMaterial" , friction: 0.3, restitution: 0.4 }
-
-
-
 }
 
 const initializeCannonJs = function(){

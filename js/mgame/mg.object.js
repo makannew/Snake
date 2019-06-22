@@ -1,52 +1,38 @@
 
-export function objectBuilder(CompositeObject){
-  return function(){
-    let result = CompositeObject();
-    // functions
-    result.addFunction(texture);
-    result.addFunction(needsUpdate);
-    result.addFunction(geometry);
-    result.addFunction(material);
-    result.addFunction(mesh);
-    result.addFunction(setScale);
-    result.addFunction(setColor);
-    result.addFunction(mapTexture);
-    result.addFunction(setPosition);
-    result.addFunction(setGeneralProperties);
-    result.addFunction(setShadow);
-    result.addFunction(initialize);
-    result.addFunction(sceneUpdate);
-    // default values
-    result.geometryName = "plane";
-    result.materialName = "lambert"
-    result.color = 0xffffff;
-    result.scale = 1;
-    result.position = new THREE.Vector3(0,0,0);
-    result.visible = true;
-    result.widthSegments =32;
-    result.heightSegments = 32;
-    result.radialSegments = 32;
-    result.cylinderHeightSegments = 1;
-    result.shininess = 30.0;
-    result.castShadow =true;
-    result.receiveShadow =true;
-    result.forceUpdate = false;
-    return result;
-  }
-
+export function addObject(mainComposite , objectName){
+  mainComposite.sceneObjects[objectName] = {};
+  let obj = mainComposite.sceneObjects[objectName];
+  mainComposite.addLink(mainComposite.three , obj.three);
+  // functions
+  obj.addFunction(texture);
+  obj.addFunction(needsUpdate);
+  obj.addFunction(geometry);
+  obj.addFunction(material);
+  obj.addFunction(mesh);
+  obj.addFunction(setScale);
+  obj.addFunction(setColor);
+  obj.addFunction(mapTexture);
+  obj.addFunction(setPosition);
+  obj.addFunction(setGeneralProperties);
+  obj.addFunction(setShadow);
+  obj.addFunction(sceneUpdate);
+  // default values
+  obj.geometryName = "plane";
+  obj.materialName = "lambert"
+  obj.color = 0xffffff;
+  obj.scale = 1;
+  obj.position = new THREE.Vector3(0,0,0);
+  obj.visible = true;
+  obj.widthSegments =32;
+  obj.heightSegments = 32;
+  obj.radialSegments = 32;
+  obj.cylinderHeightSegments = 1;
+  obj.shininess = 30.0;
+  obj.castShadow =true;
+  obj.receiveShadow =true;
 }
 
-const initialize = function({mesh}){
-  if (initialize) return mesh;
-  if (proxiedComposite.three){
-    proxiedComposite.addLink(proxiedComposite.three , proxiedComposite[currentAddress].three)
-    return mesh;
-  }else{
-    return undefined;
-  }
-
-}
-const sceneUpdate = function({mesh , visible , three , forceUpdate}){
+const sceneUpdate = function({mesh , visible , three}){
   if (visible && sceneUpdate!=mesh){
     three.scene.add(mesh);
     return mesh;
