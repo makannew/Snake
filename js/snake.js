@@ -16,7 +16,7 @@ snake.worlds.skyBox1.set ({textureFilePath:"world/world1/"})
 snake.utils.addSkyBox("skyBox2"); 
 snake.worlds.skyBox2.set ({textureFilePath:"world/world2/"})
 
-snake.activeWorldName = "skyBox2";
+snake.activeWorldName = "skyBox1";
 
 // geometries
 snake.utils.addObject("box1");
@@ -32,7 +32,7 @@ snake.utils.addObject("cylinder1");
 snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
 
 // lights
-snake.lights.ambient1 = snake.utils.newLight();
+snake.utils.addLight("ambient1");
 snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});
 
 // snake.lights.spotLight1 = snake.utils.newLight();
@@ -45,15 +45,15 @@ snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});
 // snake.lights.hemisphereLight1 = snake.utils.newLight();
 // snake.lights.hemisphereLight1.set ({lightType:"hemisphere" , intensity:2});
 
-snake.lights.pointLight1 = snake.utils.newLight();
+snake.utils.addLight("pointLight1");
 snake.lights.pointLight1.set ({lightType :"point" , intensity:1});
 
 //physic bodies
 snake.utils.addPhysicBody(snake.sceneObjects.box1);
 snake.sceneObjects.box1.mass = 5;
 
-snake.utils.addPhysicBody(snake.sceneObjects.skyBox2_ground);
-snake.sceneObjects.skyBox2_ground.set({mass:0 , physicMaterial:"groundMaterial"});
+snake.utils.addPhysicBody(snake.sceneObjects.skyBox1_ground);
+snake.sceneObjects.skyBox1_ground.set({mass:0 , physicMaterial:"groundMaterial"});
 
 snake.utils.addPhysicBody(snake.sceneObjects.box2);
 snake.sceneObjects.box2.mass =2;

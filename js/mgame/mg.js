@@ -5,7 +5,7 @@ import { addObject } from "./mg.object.js"
 import { activeWorld , addSkyBox} from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
 import { initializeThreeJs ,settings } from "./mg.initialize.js"
-import { lightBuilder , updateLight } from "./mg.light.js"
+import { addLight } from "./mg.light.js"
 import { cannonSettingsBuilder } from "./mg.physic.settings.js"
 import { addPhysicBody } from "./mg.physic.js"
 
@@ -15,7 +15,7 @@ export function MGame(){
 
   result.utils = {};
   result.utils.newCamera = cameraBuilder(CompositeObject);
-  result.utils.newLight = lightBuilder(CompositeObject);
+  result.utils.addLight = function(lightName){addLight(result , lightName)};
   result.utils.addObject = function(objectName){addObject(result , objectName)};
   result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName)};
   result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject)};
@@ -45,7 +45,7 @@ export function MGame(){
   result.addFunction(activeCamera);
   result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
-  result.addFunction(updateLight);
+  //result.addFunction(updateLight);
 
   return result;
 
