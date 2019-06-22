@@ -1,6 +1,6 @@
 
 import CompositeObject from "../composer.js"
-import { cameraBuilder, activeCamera } from "./mg.camera.js"
+import { addCamera, activeCamera } from "./mg.camera.js"
 import { addObject } from "./mg.object.js"
 import { activeWorld , addSkyBox} from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
@@ -14,11 +14,11 @@ export function MGame(){
   result.three = initializeThreeJs();
 
   result.utils = {};
-  result.utils.newCamera = cameraBuilder(CompositeObject);
-  result.utils.addLight = function(lightName){addLight(result , lightName)};
-  result.utils.addObject = function(objectName){addObject(result , objectName)};
-  result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName)};
-  result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject)};
+  result.utils.addCamera = function(cameraName){addCamera(result , cameraName);}
+  result.utils.addLight = function(lightName){addLight(result , lightName);}
+  result.utils.addObject = function(objectName){addObject(result , objectName);}
+  result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName);}
+  result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject);}
 
   result.utils.start = startEngine;
 

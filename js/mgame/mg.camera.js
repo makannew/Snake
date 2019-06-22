@@ -1,10 +1,7 @@
 
-export function cameraBuilder(CompositeObject){
-  return function(){
-    let result = CompositeObject();
-    result.addFunction(camera);
-    return result;
-  }
+export function addCamera(mainComposite , cameraName){
+    mainComposite.cameras[cameraName] = {};
+    mainComposite.cameras[cameraName].addFunction(camera);
 }
 
 const camera = function({cameraFocalLenght , cameraNearView , cameraFarView}){
