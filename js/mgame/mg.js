@@ -1,25 +1,24 @@
 
 import CompositeObject from "../composer.js"
-import { cameraBuilder, activeCamera } from "./mg.camera.js"
-import { objectBuilder } from "./mg.object.js"
-import { skyBoxBuilder, activeWorld } from "./mg.skyBox.js"
+import { addCamera, activeCamera } from "./mg.camera.js"
+import { addObject } from "./mg.object.js"
+import { activeWorld , addSkyBox} from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
 import { initializeThreeJs ,settings } from "./mg.initialize.js"
-import { lightBuilder , updateLight } from "./mg.light.js"
-import { cannonSettingsBuilder} from "./mg.physic.settings.js"
-
-
-import { physicBodyBuilder } from "./mg.physic.js"
+import { addLight } from "./mg.light.js"
+import { cannonSettingsBuilder } from "./mg.physic.settings.js"
+import { addPhysicBody } from "./mg.physic.js"
 
 export function MGame(){
   let result = CompositeObject();
+  result.three = initializeThreeJs();
 
   result.utils = {};
-  result.utils.newSkyBox = skyBoxBuilder(CompositeObject);
-  result.utils.newCamera = cameraBuilder(CompositeObject);
-  result.utils.newObject = objectBuilder(CompositeObject);
-  result.utils.newLight = lightBuilder(CompositeObject);
-  result.utils.newPhysicBody = physicBodyBuilder(CompositeObject);
+  result.utils.addCamera = function(cameraName){addCamera(result , cameraName);}
+  result.utils.addLight = function(lightName){addLight(result , lightName);}
+  result.utils.addObject = function(objectName){addObject(result , objectName);}
+  result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName);}
+  result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject);}
 
   result.utils.start = startEngine;
 
@@ -37,7 +36,6 @@ export function MGame(){
   result.running = false;
   result.needsUpdate = undefined;
 
-  result.three = initializeThreeJs();
 
 
   result.addFunction(demandInterval);
@@ -47,8 +45,7 @@ export function MGame(){
   result.addFunction(activeCamera);
   result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
-  //result.addFunction(updateSceneObject);
-  result.addFunction(updateLight);
+  //result.addFunction(updateLight);
 
   return result;
 

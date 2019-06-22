@@ -1,49 +1,35 @@
 
-export function lightBuilder(CompositeObject){
-  return function(){
-    let result = CompositeObject();
+export function addLight(mainComposite , lightName){
     // defaults
-    result.color = 0xffffff;
-    result.intensity = .5;
-    result.visible = true;
-    result.position = new THREE.Vector3(0,0,0);
-    result.targetPosition = new THREE.Vector3(0,0,0);
-    result.castShadow = true ;
-    result.shadowMapDarkness = 1;
-    result.shadowMapSizeWidth = 2048;  
-    result.shadowMapSizeHeight = 2048; 
-    result.shadowCameraNear = 0.5;      
-    result.shadowCameraFar = 2048;   
-    result.skyColor = 0xffffbb;  
-    result.groundColor = 0x080820;
-    result.distance = 0;
-    result.width = 350;
-    result.height = 200;
+    mainComposite.lights[lightName]={};
+    let thisLight = mainComposite.lights[lightName];
+    thisLight.color = 0xffffff;
+    thisLight.intensity = .5;
+    thisLight.visible = true;
+    thisLight.position = new THREE.Vector3(0,0,0);
+    thisLight.targetPosition = new THREE.Vector3(0,0,0);
+    thisLight.castShadow = true ;
+    thisLight.shadowMapDarkness = 1;
+    thisLight.shadowMapSizeWidth = 2048;  
+    thisLight.shadowMapSizeHeight = 2048; 
+    thisLight.shadowCameraNear = 0.5;      
+    thisLight.shadowCameraFar = 2048;   
+    thisLight.skyColor = 0xffffbb;  
+    thisLight.groundColor = 0x080820;
+    thisLight.distance = 0;
+    thisLight.width = 350;
+    thisLight.height = 200;
 
-    result.addFunction(light);
-    result.addFunction(needsUpdate);
-    result.addFunction(setIntensity);
-    result.addFunction(setColor);
-    result.addFunction(setGeneralProperties);
-    result.addFunction(setPosition);
+    thisLight.addFunction(light);
+    thisLight.addFunction(needsUpdate);
+    thisLight.addFunction(setIntensity);
+    thisLight.addFunction(setColor);
+    thisLight.addFunction(setGeneralProperties);
+    thisLight.addFunction(setPosition);
+
+    mainComposite.addLink(mainComposite.three , thisLight.three);
 
 
-    return result;
-  }
-}
-
-export function updateLight({lights , three}){
-  for (let item in lights){
-    let current = lights[item];
-    if (current.needsUpdate){
-      current.needsUpdate = false;
-      if (current.visible){
-        three.scene.add(current.light);
-      }else{
-        three.scene.remove(current.light);
-      }
-    }
-  }
 }
 
 const setIntensity = function({light , intensity}){
@@ -132,5 +118,10 @@ const light = function({lightType}){
 }
 
 const needsUpdate = function({light , visible }){
-  return true;
+    if (visible && needsUpdate!=light){
+      three.scene.add(light);
+    }
+    if (!visible && needsUpdate==light){
+      three.scene.remove(light);
+    }
 }

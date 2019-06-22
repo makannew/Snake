@@ -1,55 +1,21 @@
 
-export function physicBodyBuilder(CompositeObject){
-  return function(){
-    let result = CompositeObject();
-    result.material = "objectMaterial";
-    result.damping = 0.15;
-    result.cylinderSegments = 16;
+export function addPhysicBody(mainComposite , sceneObject){
+  if (!sceneObject.physicMaterial) sceneObject.physicMaterial= "objectMaterial";
+  if (!sceneObject.damping) sceneObject.damping = 0.15;
+  if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
 
-    result.addFunction (initialize);
-    result.addFunction(shape);
-    result.addFunction(body);
-    result.addFunction(getMaterial);
-    result.addFunction(update);
-
-
-    return result;
-  }
-
+  sceneObject.addFunction(shape);
+  sceneObject.addFunction(body);
+  sceneObject.addFunction(getMaterial);
+  sceneObject.addFunction(updatePhysic);
+  //
+  mainComposite.addLink(mainComposite.cannon , sceneObject.cannon);
+  mainComposite.addLink(mainComposite.physicSettings.materials , sceneObject.materials);
+  mainComposite.addLink(mainComposite.timeStamp , sceneObject.timeStamp);
 }
 
-
-const initialize = function({threeBodyName}){
-  const physicBodyName = currentAddress[currentAddress.length - 1];
-  if (initialize && initialize !=threeBodyName && initialize!=""){
-    //proxiedComposite.removeLink(proxiedComposite.sceneObjects[initialize].position , proxiedComposite.physicBodies[physicBodyName].position);
-    proxiedComposite.removeLink(proxiedComposite.sceneObjects[initialize].dimension , proxiedComposite.physicBodies[physicBodyName].dimension);
-    proxiedComposite.removeLink(proxiedComposite.sceneObjects[initialize].geometryName , proxiedComposite.physicBodies[physicBodyName].geometryName);
-    proxiedComposite.removeLink(proxiedComposite.sceneObjects[initialize].scale , proxiedComposite.physicBodies[physicBodyName].scale);
-    proxiedComposite.removeLink(proxiedComposite.sceneObjects[initialize].sceneUpdate , proxiedComposite.physicBodies[physicBodyName].sceneUpdate);
-  }
-  if (!initialize){
-    proxiedComposite.addLink(proxiedComposite.three , proxiedComposite.physicBodies[physicBodyName].three);
-    proxiedComposite.addLink(proxiedComposite.physicSettings.cannon , proxiedComposite.physicBodies[physicBodyName].cannon);
-    proxiedComposite.addLink(proxiedComposite.physicSettings.materials , proxiedComposite.physicBodies[physicBodyName].materials);
-    proxiedComposite.addLink(proxiedComposite.timeStamp , proxiedComposite.physicBodies[physicBodyName].timeStamp);
-
-  }
-  if (threeBodyName!=""){
-    //proxiedComposite.addLink(proxiedComposite.sceneObjects[threeBodyName].position , proxiedComposite.physicBodies[physicBodyName].position);
-    proxiedComposite.addLink(proxiedComposite.sceneObjects[threeBodyName].dimension , proxiedComposite.physicBodies[physicBodyName].dimension);
-    proxiedComposite.addLink(proxiedComposite.sceneObjects[threeBodyName].geometryName , proxiedComposite.physicBodies[physicBodyName].geometryName);
-    proxiedComposite.addLink(proxiedComposite.sceneObjects[threeBodyName].scale , proxiedComposite.physicBodies[physicBodyName].scale);
-    proxiedComposite.addLink(proxiedComposite.sceneObjects[threeBodyName].sceneUpdate , proxiedComposite.physicBodies[physicBodyName].sceneUpdate);
-  }
-  return threeBodyName
-}
-
-const update = function({timeStamp , body}){
+const updatePhysic = function({timeStamp , body}){
   if (body && mass!=0){
-    // const physicBodyName = currentAddress[currentAddress.length - 1];
-    // let newPosition = Object.assign({} , body.position)
-    // proxiedComposite.physicBodies[physicBodyName].position = newPosition;
     sceneUpdate.position.x = body.position.x;
     sceneUpdate.position.y = body.position.y;
     sceneUpdate.position.z = body.position.z;
@@ -58,16 +24,17 @@ const update = function({timeStamp , body}){
     sceneUpdate.quaternion.y = body.quaternion.y;
     sceneUpdate.quaternion.z = body.quaternion.z;
     sceneUpdate.quaternion.w = body.quaternion.w;
-
   }
 }
-const getMaterial = function({materials , material}){
-  if (material in materials){
-    return materials[material];
+
+const getMaterial = function({materials , physicMaterial}){
+  if (physicMaterial in materials){
+    return materials[physicMaterial];
   }else{
     return undefined;
   }
 }
+
 const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   if (body){
     cannon.remove(body);
@@ -79,7 +46,6 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   cannonBody.position.x = sceneUpdate.position.x;
   cannonBody.position.y = sceneUpdate.position.y;
   cannonBody.position.z = sceneUpdate.position.z;
-
   //
   cannonBody.quaternion.x = sceneUpdate.quaternion.x;
   cannonBody.quaternion.y = sceneUpdate.quaternion.y;
