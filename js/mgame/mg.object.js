@@ -136,7 +136,7 @@ const texture = function({textureFileName}){
       if (!dimension){
         dimension = {};
         dimension.length = texture.image.width;
-        dimension.width = texture.image.width;
+        dimension.width = texture.image.height;
         dimension.height = texture.image.height;
         dimension.radius = texture.image.height;
       }

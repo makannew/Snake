@@ -9,12 +9,15 @@ snake.activeCameraName = "camera1";
 
 console.log(snake)
 
-// load skybox1 world texture
+// load world texture
 snake.utils.addSkyBox("skyBox1"); 
-snake.worlds.skyBox1.set ({textureFilePath:"world/world1/"})
+snake.worlds.skyBox1.set ({textureFilePath:"world/world1/"});
 
 snake.utils.addSkyBox("skyBox2"); 
-snake.worlds.skyBox2.set ({textureFilePath:"world/world2/"})
+snake.worlds.skyBox2.set ({textureFilePath:"world/world2/"});
+
+snake.utils.addSkyBox("skyBox3"); 
+snake.worlds.skyBox3.set ({textureFilePath:"world/world3/"});
 
 snake.activeWorldName = "skyBox1";
 
@@ -35,25 +38,15 @@ snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop
 snake.utils.addLight("ambient1");
 snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});
 
-// snake.lights.spotLight1 = snake.utils.newLight();
-// snake.lights.spotLight1.set({lightType:"spot" , intensity:1 , position:{x:0,y:400,z:-320}})
-
-// snake.lights.directionalLight1 = snake.utils.newLight();
-// snake.lights.directionalLight1.set ({lightType:"directional" , position:{x:0,y:400,z:320}});
-
-
-// snake.lights.hemisphereLight1 = snake.utils.newLight();
-// snake.lights.hemisphereLight1.set ({lightType:"hemisphere" , intensity:2});
-
 snake.utils.addLight("pointLight1");
-snake.lights.pointLight1.set ({lightType :"point" , intensity:1});
+snake.lights.pointLight1.set ({lightType :"point" , intensity:1 , position:{x:0,y:0,z:0}});
 
-//physic bodies
-snake.utils.addPhysicBody(snake.sceneObjects.box1);
-snake.sceneObjects.box1.mass = 5;
-
+// physic bodies
 snake.utils.addPhysicBody(snake.sceneObjects.skyBox1_ground);
 snake.sceneObjects.skyBox1_ground.set({mass:0 , physicMaterial:"groundMaterial"});
+
+snake.utils.addPhysicBody(snake.sceneObjects.box1);
+snake.sceneObjects.box1.mass = 5;
 
 snake.utils.addPhysicBody(snake.sceneObjects.box2);
 snake.sceneObjects.box2.mass =2;
@@ -64,6 +57,7 @@ snake.sceneObjects.sphere1.mass =.1;
 snake.utils.addPhysicBody(snake.sceneObjects.cylinder1);
 snake.sceneObjects.cylinder1.mass =3;
 
+//
 snake.player = {
   position: new THREE.Vector3(0,0,0),
   speed: 20 ,
@@ -78,12 +72,12 @@ snake.player = {
   viewPointHeight: 0.05
 };
 
-//
+// 
 const cameraSetup = function({activeCamera , activeWorld , worlds}){
-    if (worlds[activeWorld] && worlds[activeWorld]["allLoaded"]){
+    if (worlds[activeWorld] && worlds[activeWorld]["worldDimension"]){
       if (cameraSetup==activeWorld) return activeWorld;
-      let ground = sceneObjects[worlds[activeWorld].components[5]];
-      activeCamera.position.set( 0 , -1 * (ground.dimension.height * ground.scale / 2 ) * (1 - player.viewPointHeight) , 0 );
+      let world = worlds[activeWorld];
+      activeCamera.position.set( 0 , -1 * (world.worldDimension.height * world.scale / 2 ) * (1 - player.viewPointHeight) , 0 );
       activeCamera.rotateOnAxis(new THREE.Vector3(1,0,0) , player.lookUpAngle);
       player.position= activeCamera.position;
       return activeWorld
