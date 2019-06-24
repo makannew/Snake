@@ -27,7 +27,7 @@ const updatePhysic = function({timeStamp , body}){
   }
 }
 
-const getMaterial = function({materials , physicMaterial}){
+export function getMaterial({materials , physicMaterial}){
   if (physicMaterial in materials){
     return materials[physicMaterial];
   }else{
@@ -57,7 +57,7 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   return cannonBody;
 }
 
-const shape = function({geometryName , dimension , scale}){
+export function shape ({geometryName , dimension , scale}){
   let result;
   switch (geometryName){
     case "plane":

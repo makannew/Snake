@@ -1,4 +1,4 @@
-import { addObject } from "./mg.object.js"
+import { newObject } from "./mg.object.js"
 
 export function addSkyBox(mainComposite , skyBoxName){
   mainComposite.worlds[skyBoxName] = {scale:1 , visible:false , name:skyBoxName , WorldPosition:{x:0,y:0,z:0} , worldDimension:undefined};
@@ -13,7 +13,7 @@ export function addSkyBox(mainComposite , skyBoxName){
                         skyBoxName+"_ground"
                       ];
   for (let name of components){
-    addObject(mainComposite , name);
+    newObject(mainComposite , name);
     mainComposite.sceneObjects[name].addFunction(changePositions);
 
   }

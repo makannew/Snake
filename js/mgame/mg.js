@@ -1,13 +1,15 @@
 
 import CompositeObject from "../composer.js"
 import { addCamera, activeCamera } from "./mg.camera.js"
-import { addObject } from "./mg.object.js"
+import { newObject } from "./mg.object.js"
 import { activeWorld , addSkyBox} from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
 import { initializeThreeJs ,settings } from "./mg.initialize.js"
-import { addLight } from "./mg.light.js"
+import { newLight } from "./mg.light.js"
 import { cannonSettingsBuilder } from "./mg.physic.settings.js"
 import { addPhysicBody } from "./mg.physic.js"
+import { makePhysicCompound } from "./mg.physic.compound.js"
+
 
 export function MGame(){
   let result = CompositeObject();
@@ -15,10 +17,12 @@ export function MGame(){
 
   result.utils = {};
   result.utils.addCamera = function(cameraName){addCamera(result , cameraName);}
-  result.utils.addLight = function(lightName){addLight(result , lightName);}
-  result.utils.addObject = function(objectName){addObject(result , objectName);}
+  result.utils.newLight = function(lightName){newLight(result , lightName);}
+  result.utils.newObject = function(objectName){newObject(result , objectName);}
   result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName);}
   result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject);}
+  result.utils.makePhysicCompound = function(sceneObjects){makePhysicCompound(result , sceneObjects);}
+
 
   result.utils.start = startEngine;
 
@@ -26,7 +30,6 @@ export function MGame(){
   result.cameras = {};
   result.worlds = {};
   result.lights ={};
-  result.physicBodies = {};
 
 
   cannonSettingsBuilder(result);
@@ -45,7 +48,6 @@ export function MGame(){
   result.addFunction(activeCamera);
   result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
-  //result.addFunction(updateLight);
 
   return result;
 

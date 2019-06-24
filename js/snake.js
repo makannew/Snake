@@ -22,23 +22,29 @@ snake.worlds.skyBox3.set ({textureFilePath:"world/world3/"});
 snake.activeWorldName = "skyBox1";
 
 // geometries
-snake.utils.addObject("box1");
+snake.utils.newObject("box1");
 snake.sceneObjects.box1.set({geometryName : "box" , dimension : { height:20 , width: 10 , length:5} , position :{x:50,y:-400,z:-320} , color : 0xff0000 , materialName:"phong" });
 
-snake.utils.addObject("box2");
+snake.utils.newObject("box2");
 snake.sceneObjects.box2.set({geometryName : "box" , textureFileName:"/characters/0.png" , position :{x:50,y:-350,z:-320}, scale:.2 , materialName:"phong" , shininess:2});
 
-snake.utils.addObject("sphere1");
+snake.utils.newObject("sphere1");
 snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, position:{x:10,y:-400,z:-320} , color: 0x00ff00 , scale:.2 , materialName:"phong" , shininess:100});
 
-snake.utils.addObject("cylinder1");
+snake.utils.newObject("cylinder1");
 snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
 
+snake.utils.newObject("box3");
+snake.sceneObjects.box3.set({geometryName : "box" , dimension : { height:30 , width: 20 , length:20} , position :{x:140,y:-400,z:-320} , color : 0xa31177 , materialName:"phong" });
+
+snake.utils.newObject("cylinder2");
+snake.sceneObjects.cylinder2.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:5,height:50}, position:{x:130,y:-410,z:-325} , color:0xaf11af , materialName:"phong" , shinines:0});
+
 // lights
-snake.utils.addLight("ambient1");
+snake.utils.newLight("ambient1");
 snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});
 
-snake.utils.addLight("pointLight1");
+snake.utils.newLight("pointLight1");
 snake.lights.pointLight1.set ({lightType :"point" , intensity:1 , position:{x:0,y:0,z:0}});
 
 // physic bodies
@@ -56,6 +62,10 @@ snake.sceneObjects.sphere1.mass =.1;
 
 snake.utils.addPhysicBody(snake.sceneObjects.cylinder1);
 snake.sceneObjects.cylinder1.mass =3;
+
+snake.utils.makePhysicCompound([snake.sceneObjects.box3 , snake.sceneObjects.cylinder2]);
+snake.sceneObjects.box3.set({compoundMass:10 , compoundPosition:{x:130,y:-410,z:-325}});
+
 
 //
 snake.player = {
