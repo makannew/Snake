@@ -42,7 +42,7 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   if (!sceneUpdate){
     return false;
   }
-  let cannonBody = new CANNON.Body({mass: mass , shape: shape , material: getMaterial });
+  let cannonBody = new CANNON.Body({mass:mass , shape: shape , material: getMaterial });
   cannonBody.position.x = sceneUpdate.position.x;
   cannonBody.position.y = sceneUpdate.position.y;
   cannonBody.position.z = sceneUpdate.position.z;

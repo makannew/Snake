@@ -2,66 +2,85 @@
 import { shape , getMaterial } from "./mg.physic.js"
 
 export function makePhysicCompound(mainComposite , sceneObjects){
-  if (!sceneObjects[0].compoundMass) sceneObjects[0].compoundMass= undefined;
-  if (!sceneObjects[0].compoundPosition) sceneObjects[0].compoundPosition= undefined;
   if (!sceneObjects[0].physicMaterial) sceneObjects[0].physicMaterial= "objectMaterial";
-  sceneObjects[0].compoundBody= undefined;
-  //sceneObjects[0].loadedComponents = 0;
+  sceneObjects[0].compoundPosition = undefined;// choose correctly inside the shape
 
 
   for (let sceneObject of sceneObjects){
     if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
-    
+    if (!sceneObject.quaternion) sceneObject.quaternion = new CANNON.Quaternion();
+    if (sceneObject===sceneObjects[0]){
+      sceneObject.centerOfGravity = true;
+    }else{
+      sceneObject.centerOfGravity = undefined;
+    }
     sceneObject.addFunction(shape);
     sceneObject.addFunction(getMaterial);
+
     sceneObject.addFunction(relativePosition);
-    sceneObject.addFunction(compoundBody);
+    sceneObject.addFunction(relativeQuaternion);
+    sceneObject.addFunction(body);
     sceneObject.addFunction(addToCompoundBody);
     sceneObject.addFunction(updateCompoundBody);
+    sceneObject.addFunction(readCompoundBodyShapeNumber);
 
 
     mainComposite.addLink(mainComposite.physicSettings.materials , sceneObject.materials);
     mainComposite.addLink(mainComposite.cannon , sceneObject.cannon);
 
-    mainComposite.addLink(sceneObjects[0].compoundMass , sceneObject.compoundMass);
+    mainComposite.addLink(sceneObjects[0].mass , sceneObject.mass);
     mainComposite.addLink(sceneObjects[0].physicMaterial , sceneObject.physicMaterial);
     mainComposite.addLink(sceneObjects[0].compoundPosition , sceneObject.compoundPosition);
-    mainComposite.addLink(sceneObjects[0].compoundBody , sceneObject.compoundBody);
-    //mainComposite.addLink(sceneObjects[0].loadedComponents , sceneObject.loadedComponents);
+    mainComposite.addLink(sceneObjects[0].body , sceneObject.body);
     mainComposite.addLink(mainComposite.timeStamp , sceneObject.timeStamp);
 
-
   }
-
-
 }
 
-function relativePosition({compoundPosition , position}){
-  let compoundVec = new CANNON.Vec3(compoundPosition.x,compoundPosition.y,compoundPosition.z);
-  let positionVec = new CANNON.Vec3(position.x,position.y,position.z);
-  return positionVec.vsub(compoundVec);
+function readCompoundBodyShapeNumber({compoundBodyShapeNumber}){
+  return true;
+}
+//
+function relativePosition({compoundPosition  }){
+  if (relativePosition) return relativePosition;
+  return new CANNON.Vec3(position.x - compoundPosition.x  , position.y - compoundPosition.y , position.z - compoundPosition.z );
 }
 
-function compoundBody({compoundMass , physicMaterial , compoundPosition , cannon}){
-  if (compoundBody) return true;
-  let newBody = new CANNON.Body({mass:compoundMass , material:physicMaterial , position:new CANNON.Vec3(compoundPosition.x,compoundPosition.y,compoundPosition.z)});
+function relativeQuaternion({quaternion}){
+  return new CANNON.Quaternion(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
+  return mesh.quaternion.clone().inverse();
+}
+
+function body({mass , physicMaterial , cannon , centerOfGravity , compoundPosition , shape , relativePosition , relativeQuaternion}){
+  if (body) cannon.remove(body);
+  let newBody = new CANNON.Body({mass:mass , material:physicMaterial});
+  newBody.position.set(compoundPosition.x , compoundPosition.y , compoundPosition.z);
+  newBody.quaternion = new CANNON.Quaternion();
   cannon.add(newBody);
   return newBody;
 }
 
-function addToCompoundBody({compoundBody , relativePosition , shape , mesh}){
-  compoundBody.addShape(shape , relativePosition , mesh.quaternion);
-  //loadedComponents = loadedComponents + 1;
-  return true;
+
+
+function addToCompoundBody({body , relativePosition , shape , relativeQuaternion}){
+    compoundBodyShapeNumber = body.shapes.length ;
+    body.addShape(shape , relativePosition, relativeQuaternion);
+  return shape;
 }
 
 const updateCompoundBody = function({timeStamp , addToCompoundBody}){
-    sceneUpdate.position.x = compoundBody.position.x + relativePosition.x;
-    sceneUpdate.position.y = compoundBody.position.y + relativePosition.y;
-    sceneUpdate.position.z = compoundBody.position.z + relativePosition.z;
-    //
-    sceneUpdate.quaternion.x = compoundBody.quaternion.x;
-    sceneUpdate.quaternion.y = compoundBody.quaternion.y;
-    sceneUpdate.quaternion.z = compoundBody.quaternion.z;
-    sceneUpdate.quaternion.w = compoundBody.quaternion.w;
+  let threeQuaternion = new THREE.Quaternion();
+  threeQuaternion.set(body.quaternion.x , body.quaternion.y  ,body.quaternion.z  ,body.quaternion.w )
+  let orientation = new THREE.Quaternion(relativeQuaternion.x , relativeQuaternion.y ,relativeQuaternion.z , relativeQuaternion.w);
+  let newPos = new THREE.Vector3(relativePosition.x , relativePosition.y ,relativePosition.z );
+  newPos.applyQuaternion(threeQuaternion);
+  orientation.multiply(threeQuaternion)
+  sceneUpdate.position.x = body.position.x + newPos.x;
+  sceneUpdate.position.y = body.position.y + newPos.y;
+  sceneUpdate.position.z = body.position.z + newPos.z;
+
+  sceneUpdate.quaternion.x = orientation.x;
+  sceneUpdate.quaternion.y = orientation.y;
+  sceneUpdate.quaternion.z =  orientation.z;
+  sceneUpdate.quaternion.w = orientation.w;
 }

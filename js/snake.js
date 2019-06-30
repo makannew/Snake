@@ -23,10 +23,23 @@ snake.activeWorldName = "skyBox1";
 
 // geometries
 snake.utils.newObject("box1");
-snake.sceneObjects.box1.set({geometryName : "box" , dimension : { height:20 , width: 10 , length:5} , position :{x:50,y:-400,z:-320} , color : 0xff0000 , materialName:"phong" });
+snake.sceneObjects.box1.set({geometryName : "box" , dimension : { height:2 , width: 2 , length:30} , position :{x:-70,y:-400,z:-320} , color : 0xff0000 , materialName:"phong" });
+//snake.sceneObjects.box1.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , Math.PI/4);
+
+snake.utils.newObject("sphere2");
+snake.sceneObjects.sphere2.set({geometryName : "sphere" , dimension : { radius:10} , position :{x:-55,y:-405,z:-320} , color : 0xf1aff0 , materialName:"phong" });
+
+snake.utils.newObject("box5");
+snake.sceneObjects.box5.set({geometryName : "box" , dimension : { height:10 , width: 10 , length:10} , position :{x:-50,y:-405,z:-320} , color : 0x11abfb , materialName:"phong" });
+snake.sceneObjects.box5.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , Math.PI/4);
+
+snake.utils.makePhysicCompound([snake.sceneObjects.box1 , snake.sceneObjects.sphere2 , snake.sceneObjects.box5]);
+snake.sceneObjects.box1.set({mass:10 , compoundPosition:{x:-45,y:-405 ,z:-320}});
+
 
 snake.utils.newObject("box2");
-snake.sceneObjects.box2.set({geometryName : "box" , textureFileName:"/characters/0.png" , position :{x:50,y:-350,z:-320}, scale:.2 , materialName:"phong" , shininess:2});
+snake.sceneObjects.box2.set({geometryName : "box" , textureFileName:"/characters/0.png" , position :{x:45,y:-400,z:-400}, scale:.2 , materialName:"phong" , shininess:2});
+snake.sceneObjects.box2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , -Math.PI/8);
 
 snake.utils.newObject("sphere1");
 snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, position:{x:10,y:-400,z:-320} , color: 0x00ff00 , scale:.2 , materialName:"phong" , shininess:100});
@@ -34,11 +47,7 @@ snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, p
 snake.utils.newObject("cylinder1");
 snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
 
-snake.utils.newObject("box3");
-snake.sceneObjects.box3.set({geometryName : "box" , dimension : { height:30 , width: 20 , length:20} , position :{x:140,y:-400,z:-320} , color : 0xa31177 , materialName:"phong" });
 
-snake.utils.newObject("cylinder2");
-snake.sceneObjects.cylinder2.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:5,height:50}, position:{x:130,y:-410,z:-325} , color:0xaf11af , materialName:"phong" , shinines:0});
 
 // lights
 snake.utils.newLight("ambient1");
@@ -51,8 +60,8 @@ snake.lights.pointLight1.set ({lightType :"point" , intensity:1 , position:{x:0,
 snake.utils.addPhysicBody(snake.sceneObjects.skyBox1_ground);
 snake.sceneObjects.skyBox1_ground.set({mass:0 , physicMaterial:"groundMaterial"});
 
-snake.utils.addPhysicBody(snake.sceneObjects.box1);
-snake.sceneObjects.box1.mass = 5;
+// snake.utils.addPhysicBody(snake.sceneObjects.box1);
+// snake.sceneObjects.box1.mass = 5;
 
 snake.utils.addPhysicBody(snake.sceneObjects.box2);
 snake.sceneObjects.box2.mass =2;
@@ -63,14 +72,24 @@ snake.sceneObjects.sphere1.mass =.1;
 snake.utils.addPhysicBody(snake.sceneObjects.cylinder1);
 snake.sceneObjects.cylinder1.mass =3;
 
+snake.utils.newObject("box3");
+snake.sceneObjects.box3.set({geometryName : "box" , dimension : { height:30 , width: 20 , length:20} , position :{x:140,y:-400,z:-320} , color : 0xa31177 , materialName:"phong" });
+
+snake.utils.newObject("cylinder2");
+snake.sceneObjects.cylinder2.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:5,height:50}, position:{x:140,y:-400,z:-325} , color:0xaf11af , materialName:"phong" , shinines:0});
+snake.sceneObjects.cylinder2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1), Math.PI/8);
+
 snake.utils.makePhysicCompound([snake.sceneObjects.box3 , snake.sceneObjects.cylinder2]);
-snake.sceneObjects.box3.set({compoundMass:10 , compoundPosition:{x:130,y:-410,z:-325}});
+snake.sceneObjects.box3.set({mass:10 , compoundPosition:{x:140,y:-400,z:-325}});
+
+
+
 
 
 //
 snake.player = {
   position: new THREE.Vector3(0,0,0),
-  speed: 20 ,
+  speed: 5 ,
   turningSpeed: .13 ,
   direction: new THREE.Vector3(0,0,0),
   turningRight:false,
