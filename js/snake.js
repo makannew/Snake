@@ -23,18 +23,18 @@ snake.activeWorldName = "skyBox1";
 
 // geometries
 snake.utils.newObject("box1");
-snake.sceneObjects.box1.set({geometryName : "box" , dimension : { height:2 , width: 2 , length:30} , position :{x:-70,y:-400,z:-320} , color : 0xff0000 , materialName:"phong" });
+snake.sceneObjects.box1.set({geometryName : "box" , dimension : { height:2 , width: 2 , length:30} , position :{x:230,y:-400,z:-320} , color : 0xff0000 , materialName:"phong" });
 //snake.sceneObjects.box1.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , Math.PI/4);
 
 snake.utils.newObject("sphere2");
-snake.sceneObjects.sphere2.set({geometryName : "sphere" , dimension : { radius:10} , position :{x:-55,y:-405,z:-320} , color : 0xf1aff0 , materialName:"phong" });
+snake.sceneObjects.sphere2.set({geometryName : "sphere" , dimension : { radius:10} , position :{x:245,y:-405,z:-320} , color : 0xf1aff0 , materialName:"phong" });
 
 snake.utils.newObject("box5");
-snake.sceneObjects.box5.set({geometryName : "box" , dimension : { height:10 , width: 10 , length:10} , position :{x:-50,y:-405,z:-320} , color : 0x11abfb , materialName:"phong" });
+snake.sceneObjects.box5.set({geometryName : "box" , dimension : { height:10 , width: 10 , length:10} , position :{x:250,y:-405,z:-320} , color : 0x11abfb , materialName:"phong" });
 snake.sceneObjects.box5.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , Math.PI/4);
 
 snake.utils.makePhysicCompound([snake.sceneObjects.box1 , snake.sceneObjects.sphere2 , snake.sceneObjects.box5]);
-snake.sceneObjects.box1.set({mass:10 , compoundPosition:{x:-45,y:-405 ,z:-320}});
+snake.sceneObjects.box1.set({mass:10 , compoundPosition:{x:255,y:-405 ,z:-320}});
 
 
 snake.utils.newObject("box2");
@@ -46,6 +46,25 @@ snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, p
 
 snake.utils.newObject("cylinder1");
 snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
+
+// constraints
+snake.utils.newObject("box6");
+snake.sceneObjects.box6.set({geometryName : "box" , dimension : { height:2 , width: 2 , length:30} , position :{x:-70,y:-400,z:-320} , color : 0xaffbb0 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.box6);
+snake.sceneObjects.box6.mass =2;
+
+snake.utils.newObject("box7");
+snake.sceneObjects.box7.set({geometryName : "box" , dimension : { height:2 , width: 40 , length:2} , position :{x:-53,y:-419,z:-320} , color : 0xaffbb0 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.box7);
+snake.sceneObjects.box7.mass =2;
+
+snake.utils.newLockConstraint("lock1");
+//snake.constraints.const1.set({type:"lock" , bodies:[snake.sceneObjects.box6 , snake.sceneObjects.box7]});
+//snake.constraints.const1.active = false;
+
+//snake.constraints.const1.set({type:"lock" , active:"true"});
+snake.constraints.lock1.bodies = [snake.sceneObjects.box6 , snake.sceneObjects.box7];
+//snake.constraints.const1.removeBodies = [snake.sceneObjects.box6];
 
 
 
@@ -59,9 +78,6 @@ snake.lights.pointLight1.set ({lightType :"point" , intensity:1 , position:{x:0,
 // physic bodies
 snake.utils.addPhysicBody(snake.sceneObjects.skyBox1_ground);
 snake.sceneObjects.skyBox1_ground.set({mass:0 , physicMaterial:"groundMaterial"});
-
-// snake.utils.addPhysicBody(snake.sceneObjects.box1);
-// snake.sceneObjects.box1.mass = 5;
 
 snake.utils.addPhysicBody(snake.sceneObjects.box2);
 snake.sceneObjects.box2.mass =2;

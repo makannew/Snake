@@ -3,6 +3,10 @@ import { shape , getMaterial } from "./mg.physic.js"
 
 export function makePhysicCompound(mainComposite , sceneObjects){
   if (!sceneObjects[0].physicMaterial) sceneObjects[0].physicMaterial= "objectMaterial";
+  if (!sceneObjects[0].linearDamping) sceneObjects[0].linearDamping = 0.15;
+  if (!sceneObjects[0].angularDamping) sceneObjects[0].angularDamping = 0.15;
+
+
   sceneObjects[0].compoundPosition = undefined;// choose correctly inside the shape
 
 
@@ -48,7 +52,6 @@ function relativePosition({compoundPosition  }){
 
 function relativeQuaternion({quaternion}){
   return new CANNON.Quaternion(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
-  return mesh.quaternion.clone().inverse();
 }
 
 function body({mass , physicMaterial , cannon , centerOfGravity , compoundPosition , shape , relativePosition , relativeQuaternion}){
@@ -56,6 +59,9 @@ function body({mass , physicMaterial , cannon , centerOfGravity , compoundPositi
   let newBody = new CANNON.Body({mass:mass , material:physicMaterial});
   newBody.position.set(compoundPosition.x , compoundPosition.y , compoundPosition.z);
   newBody.quaternion = new CANNON.Quaternion();
+  newBody.linearDamping = linearDamping;
+  newBody.angularDamping = angularDamping;
+
   cannon.add(newBody);
   return newBody;
 }

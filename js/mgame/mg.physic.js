@@ -1,7 +1,9 @@
 
 export function addPhysicBody(mainComposite , sceneObject){
   if (!sceneObject.physicMaterial) sceneObject.physicMaterial= "objectMaterial";
-  if (!sceneObject.damping) sceneObject.damping = 0.15;
+  if (!sceneObject.linearDamping) sceneObject.linearDamping = 0.15;
+  if (!sceneObject.angularDamping) sceneObject.angularDamping = 0.15;
+
   if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
 
   sceneObject.addFunction(shape);
@@ -52,7 +54,9 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   cannonBody.quaternion.z = sceneUpdate.quaternion.z;
   cannonBody.quaternion.w = sceneUpdate.quaternion.w;
   //
-  cannonBody.linearDamping = damping;
+  cannonBody.linearDamping = linearDamping;
+  cannonBody.angularDamping = angularDamping;
+
   cannon.add(cannonBody);
   return cannonBody;
 }

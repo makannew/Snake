@@ -9,6 +9,8 @@ import { newLight } from "./mg.light.js"
 import { cannonSettingsBuilder } from "./mg.physic.settings.js"
 import { addPhysicBody } from "./mg.physic.js"
 import { makePhysicCompound } from "./mg.physic.compound.js"
+import { newLockConstraint } from "./mg.constraints.lock.js"
+
 
 
 export function MGame(){
@@ -22,6 +24,8 @@ export function MGame(){
   result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName);}
   result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject);}
   result.utils.makePhysicCompound = function(sceneObjects){makePhysicCompound(result , sceneObjects);}
+  result.utils.newLockConstraint = function(constraintName){newLockConstraint(result , constraintName);}
+
 
 
   result.utils.start = startEngine;
@@ -30,6 +34,7 @@ export function MGame(){
   result.cameras = {};
   result.worlds = {};
   result.lights ={};
+  result.constraints = {};
 
 
   cannonSettingsBuilder(result);
