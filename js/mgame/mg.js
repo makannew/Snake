@@ -10,6 +10,8 @@ import { cannonSettingsBuilder } from "./mg.physic.settings.js"
 import { addPhysicBody } from "./mg.physic.js"
 import { makePhysicCompound } from "./mg.physic.compound.js"
 import { newLockConstraint } from "./mg.constraints.lock.js"
+import { newPointsConstraint } from "./mg.constraints.points.js"
+
 
 
 
@@ -25,6 +27,8 @@ export function MGame(){
   result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject);}
   result.utils.makePhysicCompound = function(sceneObjects){makePhysicCompound(result , sceneObjects);}
   result.utils.newLockConstraint = function(constraintName){newLockConstraint(result , constraintName);}
+  result.utils.newPointsConstraint = function(constraintName){newPointsConstraint(result , constraintName);}
+
 
 
 

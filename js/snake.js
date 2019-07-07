@@ -1,5 +1,6 @@
 
 import {MGame} from './mgame/mg.js';
+import { cannonSettingsBuilder } from './mgame/mg.physic.settings.js';
 
 const snake = MGame();
 
@@ -42,12 +43,12 @@ snake.sceneObjects.box2.set({geometryName : "box" , textureFileName:"/characters
 snake.sceneObjects.box2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , -Math.PI/8);
 
 snake.utils.newObject("sphere1");
-snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:100}, position:{x:10,y:-400,z:-320} , color: 0x00ff00 , scale:.2 , materialName:"phong" , shininess:100});
+snake.sceneObjects.sphere1.set({geometryName:"sphere" ,dimension:{radius:50}, position:{x:-60, y:-400,z:-310} , color: 0x00ff00 , scale:.2 , materialName:"phong" , shininess:100});
 
 snake.utils.newObject("cylinder1");
 snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:15,radiusBottom:.5,height:50}, position:{x:90,y:-480,z:-320} , color:0x1f11ff , materialName:"phong" , shinines:0});
 
-// constraints
+// Lock constraint
 snake.utils.newObject("box6");
 snake.sceneObjects.box6.set({geometryName : "box" , dimension : { height:2 , width: 2 , length:30} , position :{x:-70,y:-400,z:-320} , color : 0xaffbb0 , materialName:"phong" });
 snake.utils.addPhysicBody(snake.sceneObjects.box6);
@@ -64,8 +65,26 @@ snake.utils.addPhysicBody(snake.sceneObjects.box8);
 snake.sceneObjects.box8.mass =2;
 
 snake.utils.newLockConstraint("lock1");
-//snake.constraints.lock1.maxForce = 1;
+snake.constraints.lock1.maxForce = 1;
 snake.constraints.lock1.bodies = [snake.sceneObjects.box6 , snake.sceneObjects.box7 ,snake.sceneObjects.box8];
+
+// point to point constraint
+snake.utils.newObject("stand1");
+snake.sceneObjects.stand1.set({geometryName : "box" , dimension : {length:2 , width: 150 , height:2  } , position :{x:-100,y:-437,z:-340} , color : 0xdf1bb1 , materialName:"phong" });
+
+snake.utils.newObject("stand2");
+snake.sceneObjects.stand2.set({geometryName : "box" , dimension : {length:2 , width: 2 , height:60 } , position :{x:-100,y:-362,z:-340} , color : 0xdf1bb1 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.stand2);
+snake.sceneObjects.stand2.mass = 0;
+
+
+snake.utils.newObject("box9");
+snake.sceneObjects.box9.set({geometryName : "box" , dimension : { height:2 , width: 60 , length:2} , position :{x:-120,y:-400,z:-310} , color : 0xaffbb0 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.box9);
+snake.sceneObjects.box9.mass =2;
+
+snake.utils.newPointsConstraint("hangedBox");
+snake.constraints.hangedBox.set({bodyA: snake.sceneObjects.box9 , bodyB: snake.sceneObjects.stand2 , offsetA:{x:0,y:0,z:0}, offsetA:{x:0,y:31,z:0} , offsetB:{x:0 , b:0 , z:31}})
 
 
 // lights
