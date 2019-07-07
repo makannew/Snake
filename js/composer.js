@@ -491,6 +491,7 @@ export default function(){
           return addLink;
         case "removeLink":
             removingLink = true;
+            // selfAddress = new Address();
             nestedPropertiesCourier = {property:[]};
             nestedPropertiesCourier[metaDataKey] = {name:"courier"};
             return removeLink;

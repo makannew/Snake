@@ -54,18 +54,18 @@ snake.utils.addPhysicBody(snake.sceneObjects.box6);
 snake.sceneObjects.box6.mass =2;
 
 snake.utils.newObject("box7");
-snake.sceneObjects.box7.set({geometryName : "box" , dimension : { height:2 , width: 40 , length:2} , position :{x:-53,y:-419,z:-320} , color : 0xaffbb0 , materialName:"phong" });
+snake.sceneObjects.box7.set({geometryName : "box" , dimension : { height:2 , width: 40 , length:2} , position :{x:-54,y:-419,z:-320} , color : 0xaffbb0 , materialName:"phong" });
 snake.utils.addPhysicBody(snake.sceneObjects.box7);
 snake.sceneObjects.box7.mass =2;
 
+snake.utils.newObject("box8");
+snake.sceneObjects.box8.set({geometryName : "box" , dimension : { height:2 , width: 40 , length:2} , position :{x:-86,y:-419,z:-320} , color : 0xaffbb0 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.box8);
+snake.sceneObjects.box8.mass =2;
+
 snake.utils.newLockConstraint("lock1");
-//snake.constraints.const1.set({type:"lock" , bodies:[snake.sceneObjects.box6 , snake.sceneObjects.box7]});
-//snake.constraints.const1.active = false;
-
-//snake.constraints.const1.set({type:"lock" , active:"true"});
-snake.constraints.lock1.bodies = [snake.sceneObjects.box6 , snake.sceneObjects.box7];
-//snake.constraints.const1.removeBodies = [snake.sceneObjects.box6];
-
+//snake.constraints.lock1.maxForce = 1;
+snake.constraints.lock1.bodies = [snake.sceneObjects.box6 , snake.sceneObjects.box7 ,snake.sceneObjects.box8];
 
 
 // lights
