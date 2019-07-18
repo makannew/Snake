@@ -1,5 +1,5 @@
 
-export function addObject(mainComposite , objectName){
+export function newObject(mainComposite , objectName){
   mainComposite.sceneObjects[objectName] = {};
   let obj = mainComposite.sceneObjects[objectName];
   mainComposite.addLink(mainComposite.three , obj.three);
@@ -16,6 +16,7 @@ export function addObject(mainComposite , objectName){
   obj.addFunction(setGeneralProperties);
   obj.addFunction(setShadow);
   obj.addFunction(sceneUpdate);
+  obj.addFunction(setQuaternion);
   // default values
   obj.geometryName = "plane";
   obj.materialName = "lambert"
@@ -30,6 +31,7 @@ export function addObject(mainComposite , objectName){
   obj.shininess = 30.0;
   obj.castShadow =true;
   obj.receiveShadow =true;
+  //obj.quaternion = new THREE.Quaternion();//.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), 0 );
 }
 
 const sceneUpdate = function({mesh , visible , three}){
@@ -51,6 +53,7 @@ const setGeneralProperties = function({mesh , shininess}){
   if (materialName == "phong"){
     material.shininess = shininess;
   }
+  
 }
 
 const setShadow = function({mesh , castShadow , receiveShadow}){
@@ -62,6 +65,11 @@ const setPosition = function({mesh , position}){
   mesh.position.x = position.x;
   mesh.position.y = position.y;
   mesh.position.z = position.z;
+}
+
+const setQuaternion = function({mesh , quaternion}){
+  mesh.applyQuaternion( quaternion );
+  return true;
 }
 
 const mesh = function({geometry , material}){
@@ -86,7 +94,7 @@ const material = function({materialName , dimension}){
   return result;
 }
 
-const mapTexture = function({texture , material}){
+const mapTexture = function({texture , material }){
   material.map = texture.threeTexture;
 }
 
@@ -136,7 +144,7 @@ const texture = function({textureFileName}){
       if (!dimension){
         dimension = {};
         dimension.length = texture.image.width;
-        dimension.width = texture.image.width;
+        dimension.width = texture.image.height;
         dimension.height = texture.image.height;
         dimension.radius = texture.image.height;
       }

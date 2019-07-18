@@ -1,7 +1,9 @@
 
 export function addPhysicBody(mainComposite , sceneObject){
   if (!sceneObject.physicMaterial) sceneObject.physicMaterial= "objectMaterial";
-  if (!sceneObject.damping) sceneObject.damping = 0.15;
+  if (!sceneObject.linearDamping) sceneObject.linearDamping = 0.15;
+  if (!sceneObject.angularDamping) sceneObject.angularDamping = 0.15;
+
   if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
 
   sceneObject.addFunction(shape);
@@ -27,7 +29,7 @@ const updatePhysic = function({timeStamp , body}){
   }
 }
 
-const getMaterial = function({materials , physicMaterial}){
+export function getMaterial({materials , physicMaterial}){
   if (physicMaterial in materials){
     return materials[physicMaterial];
   }else{
@@ -42,7 +44,7 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   if (!sceneUpdate){
     return false;
   }
-  let cannonBody = new CANNON.Body({mass: mass , shape: shape , material: getMaterial });
+  let cannonBody = new CANNON.Body({mass:mass , shape: shape , material: getMaterial });
   cannonBody.position.x = sceneUpdate.position.x;
   cannonBody.position.y = sceneUpdate.position.y;
   cannonBody.position.z = sceneUpdate.position.z;
@@ -52,12 +54,14 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   cannonBody.quaternion.z = sceneUpdate.quaternion.z;
   cannonBody.quaternion.w = sceneUpdate.quaternion.w;
   //
-  cannonBody.linearDamping = damping;
+  cannonBody.linearDamping = linearDamping;
+  cannonBody.angularDamping = angularDamping;
+
   cannon.add(cannonBody);
   return cannonBody;
 }
 
-const shape = function({geometryName , dimension , scale}){
+export function shape ({geometryName , dimension , scale}){
   let result;
   switch (geometryName){
     case "plane":

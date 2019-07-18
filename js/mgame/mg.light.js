@@ -1,5 +1,5 @@
 
-export function addLight(mainComposite , lightName){
+export function newLight(mainComposite , lightName){
     // defaults
     mainComposite.lights[lightName]={};
     let thisLight = mainComposite.lights[lightName];
