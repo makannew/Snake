@@ -92,6 +92,24 @@ snake.constraints.hangedBox.set({bodyA: snake.sceneObjects.box9 , bodyB: snake.s
 snake.utils.newDistanceConstraint("distance1");
 snake.constraints.distance1.set({bodyA: snake.sceneObjects.stand2 , bodyB: snake.sceneObjects.sphere1});
 
+// hinge constraint
+snake.utils.newObject("stand3");
+snake.sceneObjects.stand3.set({geometryName : "box" , dimension : {length:2 , width: 150 , height:2  } , position :{x:-20,y:-437,z:-300} , color : 0xdf1bb1 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.stand3);
+snake.sceneObjects.stand3.mass = 0;
+
+snake.utils.newObject("rod1");
+snake.sceneObjects.rod1.set({geometryName : "box" , dimension : {length:150 , width: 2 , height:2  } , position :{x:57,y:-362,z:-300} , color : 0xdf1bb1 , materialName:"phong" });
+snake.utils.addPhysicBody(snake.sceneObjects.rod1);
+snake.sceneObjects.rod1.mass = 5;
+
+snake.utils.newHingeConstraint("hinge1");
+snake.constraints.hinge1.axisA = new CANNON.Vec3(0,0,1);
+snake.constraints.hinge1.axisB = new CANNON.Vec3(0,0,1);
+
+snake.constraints.hinge1.set({bodyA:snake.sceneObjects.stand3 , bodyB:snake.sceneObjects.rod1 , offsetA:{x:0,y:75,z:0} , offsetB:{x:-75,y:0,z:0} , motor:true , speed:-20})
+
+
 // lights
 snake.utils.newLight("ambient1");
 snake.lights.ambient1.set({lightType:"ambient" , intensity:.5});

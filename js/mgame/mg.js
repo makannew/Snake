@@ -12,6 +12,8 @@ import { makePhysicCompound } from "./mg.physic.compound.js"
 import { newLockConstraint } from "./mg.constraints.lock.js"
 import { newPointsConstraint } from "./mg.constraints.points.js"
 import { newDistanceConstraint } from "./mg.constraints.distance.js"
+import { newHingeConstraint } from "./mg.constraints.hinge.js"
+
 
 export function MGame(){
   let result = CompositeObject();
@@ -27,6 +29,8 @@ export function MGame(){
   result.utils.newLockConstraint = function(constraintName){newLockConstraint(result , constraintName);}
   result.utils.newPointsConstraint = function(constraintName){newPointsConstraint(result , constraintName);}
   result.utils.newDistanceConstraint = function(constraintName){newDistanceConstraint(result , constraintName);}
+  result.utils.newHingeConstraint = function(constraintName){newHingeConstraint(result , constraintName);}
+
 
   result.utils.start = startEngine;
 
