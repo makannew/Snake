@@ -1,6 +1,5 @@
 
-import {MGame} from './mgame/mg.js';
-import { cannonSettingsBuilder } from './mgame/mg.physic.settings.js';
+import {MGame} from '../js/mgame/mg.js';
 
 const snake = MGame();
 

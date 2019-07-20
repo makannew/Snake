@@ -1,5 +1,5 @@
 
-import CompositeObject from "../composer.js"
+import CompositeObject from "./dependencies/composer.js"
 import { addCamera, activeCamera } from "./mg.camera.js"
 import { newObject } from "./mg.object.js"
 import { activeWorld , addSkyBox} from "./mg.skyBox.js"
