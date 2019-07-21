@@ -89,8 +89,7 @@ export function exampleGeometries(snake){
   snake.constraints.hinge1.set({bodyA:snake.sceneObjects.stand3 , bodyB:snake.sceneObjects.rod1 , offsetA:{x:0,y:75,z:0} , offsetB:{x:-75,y:0,z:0} , motor:true , speed:-20})
 
   // physic bodies
-  snake.utils.addPhysicBody(snake.sceneObjects.skyBox1_ground);
-  snake.sceneObjects.skyBox1_ground.set({mass:0 , physicMaterial:"groundMaterial"});
+
 
   snake.utils.addPhysicBody(snake.sceneObjects.box2);
   snake.sceneObjects.box2.mass =2;

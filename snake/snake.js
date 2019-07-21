@@ -7,6 +7,8 @@ import { loadCameras } from './snake.cameras.js';
 import { setupControls } from './snake.controls.js';
 import { loadPlayerSettings } from './snake.player.js';
 import { updateGame } from './snake.logics.js';
+import { loadRigidVehicle } from './snake.rigidVehicle.js';
+import { initialize } from './snake.initialize.js';
 
 
 const snake = MGame();
@@ -23,7 +25,11 @@ loadLights(snake);
 loadWorlds(snake);
 
 // load example geometries
-exampleGeometries(snake);
+//exampleGeometries(snake);
+
+
+// load vehicle
+loadRigidVehicle(snake);
 
 // player settings
 loadPlayerSettings(snake);
@@ -33,6 +39,9 @@ updateGame(snake);
 
 // setup game user controls
 setupControls(snake);
+
+// initialize the game
+initialize(snake);
 
 // start game
 snake.utils.start(snake);

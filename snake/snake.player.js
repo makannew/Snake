@@ -2,8 +2,8 @@
 export function loadPlayerSettings(snake){
   snake.player = {
     position: new THREE.Vector3(0,0,0),
-    speed: 5 ,
-    turningSpeed: .13 ,
+    speed: 15 ,
+    turningSpeed: .33 ,
     direction: new THREE.Vector3(0,0,0),
     turningRight:false,
     turningLeft:false,

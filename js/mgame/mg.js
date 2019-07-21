@@ -13,6 +13,7 @@ import { newLockConstraint } from "./mg.constraints.lock.js"
 import { newPointsConstraint } from "./mg.constraints.points.js"
 import { newDistanceConstraint } from "./mg.constraints.distance.js"
 import { newHingeConstraint } from "./mg.constraints.hinge.js"
+import { newVehicle } from "./mg.physic.vehicle.js";
 
 
 export function MGame(){
@@ -30,6 +31,7 @@ export function MGame(){
   result.utils.newPointsConstraint = function(constraintName){newPointsConstraint(result , constraintName);}
   result.utils.newDistanceConstraint = function(constraintName){newDistanceConstraint(result , constraintName);}
   result.utils.newHingeConstraint = function(constraintName){newHingeConstraint(result , constraintName);}
+  result.utils.newVehicle = function(vehicleName){newVehicle(result , vehicleName);}
 
 
   result.utils.start = startEngine;
@@ -39,6 +41,7 @@ export function MGame(){
   result.worlds = {};
   result.lights ={};
   result.constraints = {};
+  result.vehicles = {};
 
   cannonSettingsBuilder(result);
 

@@ -10,6 +10,5 @@ export function loadWorlds(snake){
   snake.utils.addSkyBox("skyBox3"); 
   snake.worlds.skyBox3.set ({textureFilePath:"world/world3/"});
 
-  snake.activeWorldName = "skyBox1";
 
 }

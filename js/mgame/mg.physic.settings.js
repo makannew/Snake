@@ -14,14 +14,23 @@ export function cannonSettingsBuilder(result){
   result.physicSettings.materials.objectMaterial= new CANNON.Material();
   result.physicSettings.addFunction(createContactMaterial);
   result.physicSettings.newContactMaterial= {material1: "groundMaterial" , material2: "objectMaterial" , friction: 0.3, restitution: 0.4 }
+
+  result.physicSettings.materials.wheelMaterial= new CANNON.Material();
+  result.physicSettings.newContactMaterial= {material1: "groundMaterial" , material2: "wheelMaterial" , friction: 0.3, restitution: 0 , contactEquationStiffness: 1000}
+
+  result.physicSettings.newContactMaterial= {material1: "objectMaterial" , material2: "wheelMaterial" , friction: 0.3, restitution: 0 ,contactEquationStiffness: 1000}
+
+
 }
 
 const initializeCannonJs = function(){
   let result = new CANNON.World();
   result.broadphase = new CANNON.NaiveBroadphase();
-  result.solver.iterations = 5;
+  //result.broadphase = new CANNON.SAPBroadphase(result);
+  result.solver.iterations = 7;
   result.defaultContactMaterial.contactEquationStiffness = 1e6;
   result.defaultContactMaterial.contactEquationRelaxation = 10;
+  //result.defaultContactMaterial.friction = 0.2;
   return result;
 }
 
