@@ -66,7 +66,7 @@ export function loadRigidVehicle(snake){
   snake.utils.addPhysicBody(snake.sceneObjects.frontRWheel);
   snake.sceneObjects.frontRWheel.set({mass: wheelMass , physicMaterial:"wheelMaterial" });
 
-  snake.utils.newVehicle("vehicle1");
+  snake.utils.newRigidVehicle("vehicle1");
   snake.vehicles.vehicle1.chassis = [snake.sceneObjects.chassis];
   snake.vehicles.vehicle1.wheels = [
     {body:snake.sceneObjects.rearLWheel, axis: new CANNON.Vec3(0, 1, 0) , direction:new CANNON.Vec3(0, 0, -1) , engine:true , steering:false, leftHand:true} , 

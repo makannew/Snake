@@ -10,8 +10,6 @@ export function setupControls(snake){
           snake.player.turningLeft = false;
           snake.player.turningRight = true;
 
-          
-
         }
     }
     else if (e.key == "Left" || e.key == "ArrowLeft"){
@@ -19,10 +17,34 @@ export function setupControls(snake){
           snake.player.turningRight = false;
           snake.player.turningLeft = true;
 
-
-
-
         }
+    }
+    let x=200;
+    if (e.key=="6"){
+      if (snake.vehicles.vehicle1.wheels[2].steering!=-.4){
+        snake.vehicles.vehicle1.wheels[2].set({steering:-.4,brake:0});
+        snake.vehicles.vehicle1.wheels[3].set({steering:-.4,brake:0});
+      }
+    }
+    if (e.key=="4"){
+      if (snake.vehicles.vehicle1.wheels[2].steering!=.4){
+        snake.vehicles.vehicle1.wheels[2].set({steering:.4,brake:0});
+        snake.vehicles.vehicle1.wheels[3].set({steering:.4,brake:0});
+      }
+    }
+    if (e.key=="8"){
+      if (snake.vehicles.vehicle1.wheels[2].engine!=-x){
+        snake.vehicles.vehicle1.wheels[2].set({engine:-x, brake:0});
+        snake.vehicles.vehicle1.wheels[3].set({engine:-x , brake:0});
+    
+      }
+    }
+    if (e.key=="2"){
+      if (snake.vehicles.vehicle1.wheels[2].engine!=x){
+        snake.vehicles.vehicle1.wheels[2].set({engine:x, brake:0});
+        snake.vehicles.vehicle1.wheels[3].set({engine:x , brake:0});
+    
+      }
     }
   }
   function keyUpHandler ( e ){
@@ -32,5 +54,9 @@ export function setupControls(snake){
     else if (e.key == "Left" || e.key == "ArrowLeft"){
       snake.player.turningLeft = false;
     }
+
+
   }
+
+
 }

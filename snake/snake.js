@@ -9,6 +9,7 @@ import { loadPlayerSettings } from './snake.player.js';
 import { updateGame } from './snake.logics.js';
 import { loadRigidVehicle } from './snake.rigidVehicle.js';
 import { initialize } from './snake.initialize.js';
+import { loadRayCastVehicle } from './snake.rayCastVehicle.js';
 
 
 const snake = MGame();
@@ -25,11 +26,14 @@ loadLights(snake);
 loadWorlds(snake);
 
 // load example geometries
-//exampleGeometries(snake);
+exampleGeometries(snake);
 
 
-// load vehicle
-loadRigidVehicle(snake);
+// load rigid vehicle
+//loadRigidVehicle(snake);
+
+//load ray cast vehicle
+loadRayCastVehicle(snake);
 
 // player settings
 loadPlayerSettings(snake);

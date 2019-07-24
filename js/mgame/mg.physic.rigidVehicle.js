@@ -1,5 +1,5 @@
 
-export function newVehicle(mainComposite , vehicleName){
+export function newRigidVehicle(mainComposite , vehicleName){
   mainComposite.vehicles[vehicleName] = {};
   let obj = mainComposite.vehicles[vehicleName];
   mainComposite.addLink(mainComposite.cannon , obj.cannon);
