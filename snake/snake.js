@@ -49,3 +49,4 @@ initialize(snake);
 
 // start game
 snake.utils.start(snake);
+

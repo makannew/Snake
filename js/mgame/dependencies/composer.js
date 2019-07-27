@@ -397,38 +397,6 @@ export default function(){
     return true;
   }
 
-  const addPrefixToAddresses = function(addressArray , prefix){
-    for (let i=0, len=addressArray.length ; i<len ; ++i){
-      addressArray[i] = new Address([...prefix,...addressArray[i].arr]);
-    }
-  }
-
-
-  const adoptComposite = function(adoptedComposite , currentAdd){
-
-    let adoptedMeta = adoptedComposite[metaDataKey].metaTree;
-    let currentMetaAdd = currentAdd.getObject(metaTree)[currentAdd.name()];
-
-    const iterate = function(obj , objClone){
-      Object.keys(obj).forEach(prop=>{
-        objClone[prop] = {};
-        objClone[prop][metaDataKey] ={}
-        Object.assign(objClone[prop][metaDataKey] , obj[prop][metaDataKey]);
-        objClone[prop][metaDataKey].affectedFunctions = [...obj[prop][metaDataKey].affectedFunctions];
-        objClone[prop][metaDataKey].inputProps = [...obj[prop][metaDataKey].inputProps];
-        objClone[prop][metaDataKey].externalLinks = [...obj[prop][metaDataKey].externalLinks];
-
-        addPrefixToAddresses(objClone[prop][metaDataKey].affectedFunctions , currentAdd.arr);
-        addPrefixToAddresses(objClone[prop][metaDataKey].inputProps, currentAdd.arr);
-        addPrefixToAddresses(objClone[prop][metaDataKey].externalLinks, currentAdd.arr);
-        if (typeof(obj[prop]) === "object" && obj[prop] != null){
-          iterate(obj[prop] , objClone[prop]);
-        }
-      })
-    }
-    iterate(adoptedMeta , currentMetaAdd);
-  }
-
   const compositeHandler = function(addressRecorder  , selfAddress){
     return {
     set: function ( obj , prop , value , receiver ){
@@ -442,13 +410,6 @@ export default function(){
       addressRecorder.extend(prop);
       if (!addressRecorder.in(metaTree)){
         buildMetaPath(addressRecorder);
-      }
-      if (typeof(value) === "object" && value != null){
-        if (value["isCompositeProxy"]){
-          value = value["getProxylessComposite"]
-          adoptComposite(value , new Address(addressRecorder.arr));
-          //delete value[metaDataKey];
-        }
       }
 
       Reflect.set(obj , prop , value , receiver);
@@ -491,14 +452,17 @@ export default function(){
           return addLink;
         case "removeLink":
             removingLink = true;
-            // selfAddress = new Address();
             nestedPropertiesCourier = {property:[]};
             nestedPropertiesCourier[metaDataKey] = {name:"courier"};
             return removeLink;
-        case "getProxylessComposite":
+        case "getParentComposite":
           return composite;
         case "isCompositeProxy":
           return true;
+        case "getCurrentAddress":
+          return new Address(addressRecorder.arr);
+        case "getProxyLessObject":
+          return addressRecorder.getRefFrom(composite);
       }
       addressRecorder.extend(prop);
       let result = Reflect.get(obj , prop , receiver );

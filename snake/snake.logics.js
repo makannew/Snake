@@ -1,6 +1,6 @@
 
 export function updateGame(snake){
-  snake.addFunction(cameraSetup);
+
   snake.addFunction(animationFrameUpdate);
 }
 
@@ -21,16 +21,4 @@ const animationFrameUpdate = function({newAnimationFrame}){
   cameras.camera1.camera.position.z=player.position.z;
   
   return true;
-}
-
-const cameraSetup = function({activeCamera , activeWorld , worlds}){
-  if (worlds[activeWorld] && worlds[activeWorld]["worldDimension"]){
-    if (cameraSetup==activeWorld) return activeWorld;
-    let world = worlds[activeWorld];
-    activeCamera.position.set( 0 , -1 * (world.worldDimension.height * world.scale / 2 ) * (1 - player.viewPointHeight) , 0 );
-    activeCamera.rotateOnAxis(new THREE.Vector3(1,0,0) , player.lookUpAngle);
-    player.position= activeCamera.position;
-    return activeWorld
-  }
-
 }

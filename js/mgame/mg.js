@@ -1,6 +1,6 @@
 
 import CompositeObject from "./dependencies/composer.js"
-import { addCamera, activeCamera } from "./mg.camera.js"
+import { addCamera } from "./mg.camera.js"
 import { newObject } from "./mg.object.js"
 import { activeWorld , addSkyBox} from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
@@ -57,7 +57,7 @@ export function MGame(){
   // default values
   result.settings = settings;
 
-  result.addFunction(activeCamera);
+  //result.addFunction(activeCamera);
   result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
 
