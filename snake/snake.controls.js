@@ -19,6 +19,16 @@ export function setupControls(snake){
 
         }
     }
+
+    if (e.key == "f"){
+      snake.cameras.camera2.active = false;
+      snake.cameras.camera1.active = true;
+    }
+    if (e.key == "t"){
+      snake.cameras.camera1.active = false;
+      snake.cameras.camera2.active = true;
+    }
+
     let x=200;
     if (e.key=="6"){
       if (snake.vehicles.vehicle1.wheels[2].steering!=-.4){

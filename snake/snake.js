@@ -16,7 +16,7 @@ const snake = MGame();
 
 console.log(snake)
 
-//load Cameras
+// load Cameras
 loadCameras(snake);
 
 // lights
