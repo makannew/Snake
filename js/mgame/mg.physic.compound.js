@@ -79,14 +79,17 @@ const updateCompoundBody = function({timeStamp , addToCompoundBody}){
   threeQuaternion.set(body.quaternion.x , body.quaternion.y  ,body.quaternion.z  ,body.quaternion.w )
   let orientation = new THREE.Quaternion(relativeQuaternion.x , relativeQuaternion.y ,relativeQuaternion.z , relativeQuaternion.w);
   let newPos = new THREE.Vector3(relativePosition.x , relativePosition.y ,relativePosition.z );
-  newPos.applyQuaternion(threeQuaternion);
-  orientation.multiply(threeQuaternion)
-  sceneUpdate.position.x = body.position.x + newPos.x;
-  sceneUpdate.position.y = body.position.y + newPos.y;
-  sceneUpdate.position.z = body.position.z + newPos.z;
+  let pos = new THREE.Vector3(body.position.x,body.position.y,body.position.z);
+  threeQuaternion.multiply(orientation)
 
-  sceneUpdate.quaternion.x = orientation.x;
-  sceneUpdate.quaternion.y = orientation.y;
-  sceneUpdate.quaternion.z =  orientation.z;
-  sceneUpdate.quaternion.w = orientation.w;
+  newPos.applyQuaternion(threeQuaternion);
+  newPos.add(pos);
+  sceneUpdate.position.x = newPos.x;
+  sceneUpdate.position.y = newPos.y;
+  sceneUpdate.position.z = newPos.z;
+
+  sceneUpdate.quaternion.x = threeQuaternion.x;
+  sceneUpdate.quaternion.y = threeQuaternion.y;
+  sceneUpdate.quaternion.z =  threeQuaternion.z;
+  sceneUpdate.quaternion.w = threeQuaternion.w;
 }

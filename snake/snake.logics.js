@@ -11,7 +11,7 @@ function animationFrameUpdate ({newAnimationFrame}){
   let vehicleQuat = vehicles.vehicle1.raycastVehicle.chassisBody.quaternion
 
   let threeQuat = new THREE.Quaternion(vehicleQuat.x ,vehicleQuat.y ,vehicleQuat.z ,vehicleQuat.w);
-  let threeRelativePos = new THREE.Vector3(0,30,0);
+  let threeRelativePos = new THREE.Vector3(0,30,0); 
   let threePos = new THREE.Vector3(vehiclePos.x,vehiclePos.y,vehiclePos.z);
   let quat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0) , Math.PI);
   
