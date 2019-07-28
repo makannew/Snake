@@ -6,9 +6,7 @@ export function makePhysicCompound(mainComposite , sceneObjects){
   if (!sceneObjects[0].linearDamping) sceneObjects[0].linearDamping = 0.15;
   if (!sceneObjects[0].angularDamping) sceneObjects[0].angularDamping = 0.15;
 
-
   sceneObjects[0].compoundPosition = undefined;// choose correctly inside the shape
-
 
   for (let sceneObject of sceneObjects){
     if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;

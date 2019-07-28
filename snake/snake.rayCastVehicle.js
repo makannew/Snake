@@ -1,11 +1,5 @@
 
 export function loadRayCastVehicle(snake){
-  // snake.utils.newObject("correctionBridge");
-  // snake.sceneObjects.correctionBridge.set({geometryName : "box" , 
-  // dimension : { height:700 , width: .5 , length: 70} , position :{x:0,y:-480,z:350} , color : 0xffffff , materialName:"phong" });
-  // snake.utils.addPhysicBody(snake.sceneObjects.correctionBridge);
-  // snake.sceneObjects.correctionBridge.set({mass: 20 , physicMaterial:"groundMaterial" });
-
   let x=0 , y=-480 , z=-320;
   let ch = {lx:25 , wy:4 , hz:80};
   let wh = {r:9,wy:4 , clearance:.5};

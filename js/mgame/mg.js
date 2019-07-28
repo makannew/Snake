@@ -57,7 +57,6 @@ export function MGame(){
   // default values
   result.settings = settings;
 
-  //result.addFunction(activeCamera);
   result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
 
