@@ -26,7 +26,7 @@ loadLights(snake);
 loadWorlds(snake);
 
 // load example geometries
-exampleGeometries(snake);
+ exampleGeometries(snake);
 
 
 // load rigid vehicle

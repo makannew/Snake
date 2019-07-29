@@ -1,11 +1,11 @@
 
 import CompositeObject from "./dependencies/composer.js"
 import { addCamera } from "./mg.camera.js"
-import { newObject } from "./mg.object.js"
-import { activeWorld , addSkyBox} from "./mg.skyBox.js"
+import { addObject } from "./mg.object.js"
+import { addSkyBox} from "./mg.skyBox.js"
 import { startEngine } from "./mg.startEngine.js"
 import { initializeThreeJs ,settings } from "./mg.initialize.js"
-import { newLight } from "./mg.light.js"
+import { addLight } from "./mg.light.js"
 import { cannonSettingsBuilder } from "./mg.physic.settings.js"
 import { addPhysicBody } from "./mg.physic.js"
 import { makePhysicCompound } from "./mg.physic.compound.js"
@@ -23,10 +23,10 @@ export function MGame(){
   result.three = initializeThreeJs();
 
   result.utils = {};
-  result.utils.addCamera = function(cameraName){addCamera(result , cameraName);}
-  result.utils.newLight = function(lightName){newLight(result , lightName);}
-  result.utils.newObject = function(objectName){newObject(result , objectName);}
-  result.utils.addSkyBox = function(skyBoxName){addSkyBox(result , skyBoxName);}
+  result.utils.addCamera = function(newCamera){addCamera(result , newCamera);}
+  result.utils.addLight = function(newLight){addLight(result , newLight);}
+  result.utils.addObject = function(newObject){addObject(result , newObject);}
+  result.utils.addSkyBox = function(newSkyBox){addSkyBox(result , newSkyBox);}
   result.utils.addPhysicBody = function(sceneObject){addPhysicBody(result , sceneObject);}
   result.utils.makePhysicCompound = function(sceneObjects){makePhysicCompound(result , sceneObjects);}
   result.utils.newLockConstraint = function(constraintName){newLockConstraint(result , constraintName);}
@@ -57,7 +57,7 @@ export function MGame(){
   // default values
   result.settings = settings;
 
-  result.addFunction(activeWorld);
+  //result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
 
   return result;

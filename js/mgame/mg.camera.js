@@ -1,18 +1,18 @@
 
-export function addCamera(mainComposite , cameraName){
-    cameraName.cameraUpdateFunction = function () {
+export function addCamera(mainComposite , newCamera){
+    newCamera.cameraUpdateFunction = function () {
       three.renderer.setSize ( innerWidth , innerHeight);
       camera.aspect = innerWidth / innerHeight;
       camera.updateProjectionMatrix ();
     };
-    mainComposite.addLink(mainComposite.activeCamera , cameraName.activeCamera);
-    cameraName.position = {x:0,y:0,z:0};
-    cameraName.quaternion = {x:0,y:0,z:0,w:0};
-    cameraName.addFunction(camera);
-    cameraName.addFunction(activate);
-    cameraName.addFunction(setPosition);
-    cameraName.addFunction(setQuaternion);
-    cameraName.addFunction(setActiveCamera);
+    mainComposite.addLink(mainComposite.activeCamera , newCamera.activeCamera);
+    newCamera.position = {x:0,y:0,z:0};
+    newCamera.quaternion = {x:0,y:0,z:0,w:0};
+    newCamera.addFunction(camera);
+    newCamera.addFunction(activate);
+    newCamera.addFunction(setPosition);
+    newCamera.addFunction(setQuaternion);
+    newCamera.addFunction(setActiveCamera);
 }
 
 function camera({cameraFocalLenght , cameraNearView , cameraFarView}){
