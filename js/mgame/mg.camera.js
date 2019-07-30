@@ -1,11 +1,9 @@
 
 export function addCamera(mainComposite , newCamera){
-    newCamera.cameraUpdateFunction = function () {
-      three.renderer.setSize ( innerWidth , innerHeight);
-      camera.aspect = innerWidth / innerHeight;
-      camera.updateProjectionMatrix ();
-    };
+
     mainComposite.addLink(mainComposite.activeCamera , newCamera.activeCamera);
+    mainComposite.addLink(mainComposite.three , newCamera.three);
+
     newCamera.position = {x:0,y:0,z:0};
     newCamera.quaternion = {x:0,y:0,z:0,w:0};
     newCamera.addFunction(camera);
@@ -13,6 +11,7 @@ export function addCamera(mainComposite , newCamera){
     newCamera.addFunction(setPosition);
     newCamera.addFunction(setQuaternion);
     newCamera.addFunction(setActiveCamera);
+    newCamera.addFunction(cameraUpdateFunction);
 }
 
 function camera({cameraFocalLenght , cameraNearView , cameraFarView}){
@@ -38,7 +37,15 @@ function setQuaternion({camera , quaternion}){
   return true;
 }
 
-function activate({camera , cameraUpdateFunction ,active }){
+function cameraUpdateFunction({camera,three}){
+  return function () {
+    three.renderer.setSize ( innerWidth , innerHeight);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix ();
+  };
+}
+function activate({active , cameraUpdateFunction}){
+
   if (active){
     if (!activate){
       addEventListener('resize', cameraUpdateFunction);
