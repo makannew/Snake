@@ -13,7 +13,8 @@ export function addSkyBox(mainComposite , skyBoxName){
                         skyBoxName+"_ground"
                       ];
   for (let name of components){
-    addObject(mainComposite , name);
+    mainComposite.sceneObjects[name]={}
+    addObject(mainComposite , mainComposite.sceneObjects[name]);
     mainComposite.sceneObjects[name].addFunction(changePositions);
 
   }

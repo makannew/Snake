@@ -1,7 +1,7 @@
 
-export function addObject(mainComposite , objectName){
-  mainComposite.sceneObjects[objectName] = {};
-  let obj = mainComposite.sceneObjects[objectName];
+export function addObject(mainComposite , obj){
+  //mainComposite.sceneObjects[objectName] = {};
+  //let obj = mainComposite.sceneObjects[objectName];
   mainComposite.addLink(mainComposite.three , obj.three);
   // functions
   obj.addFunction(texture);
