@@ -2,6 +2,7 @@
 export function addObject(mainComposite , obj){
   //mainComposite.sceneObjects[objectName] = {};
   //let obj = mainComposite.sceneObjects[objectName];
+  //obj.three={};
   mainComposite.addLink(mainComposite.three , obj.three);
   // functions
   obj.addFunction(texture);
@@ -141,13 +142,13 @@ const texture = function({textureFileName}){
       texture.context.drawImage(texture.image, 0, 0);
       texture.threeTexture = new THREE.Texture(texture.canvas);
       texture.threeTexture.needsUpdate = true;
-      if (!dimension){
-        dimension = {};
-        dimension.length = texture.image.width;
-        dimension.width = texture.image.height;
-        dimension.height = texture.image.height;
-        dimension.radius = texture.image.height;
-      }
+      // if (!dimension){
+      //   dimension = {};
+      //   dimension.length = texture.image.width;
+      //   dimension.width = texture.image.height;
+      //   dimension.height = texture.image.height;
+      //   dimension.radius = texture.image.height;
+      // }
       resolve(texture)
     };
     texture.image.onerror = ()=> resolve(undefined);

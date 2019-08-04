@@ -19,7 +19,9 @@ import { newRayCastVehicle } from "./mg.physic.rayCastVehicle.js";
 
 
 export function MGame(){
+
   let result = CompositeObject();
+
   result.three = initializeThreeJs();
 
   result.utils = {};
@@ -51,7 +53,7 @@ export function MGame(){
 
   result.actualInterval = 0;
   result.running = false;
-  result.needsUpdate = undefined;
+  //result.needsUpdate = undefined;
 
   result.addFunction(demandInterval);
   // default values

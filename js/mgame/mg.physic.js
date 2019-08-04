@@ -1,19 +1,19 @@
 
-export function addPhysicBody(mainComposite , sceneObject){
-  if (!sceneObject.physicMaterial) sceneObject.physicMaterial= "objectMaterial";
-  if (!sceneObject.linearDamping) sceneObject.linearDamping = 0.15;
-  if (!sceneObject.angularDamping) sceneObject.angularDamping = 0.15;
+export function addPhysicBody(mainComposite , obj){
+  if (!obj.physicMaterial) obj.physicMaterial= "objectMaterial";
+  if (!obj.linearDamping) obj.linearDamping = 0.15;
+  if (!obj.angularDamping) obj.angularDamping = 0.15;
 
-  if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
+  if (!obj.cylinderSegments) obj.cylinderSegments = 16;
 
-  sceneObject.addFunction(shape);
-  sceneObject.addFunction(body);
-  sceneObject.addFunction(getMaterial);
-  sceneObject.addFunction(updatePhysic);
+  obj.addFunction(shape);
+  obj.addFunction(body);
+  obj.addFunction(getMaterial);
+  obj.addFunction(updatePhysic);
   //
-  mainComposite.addLink(mainComposite.cannon , sceneObject.cannon);
-  mainComposite.addLink(mainComposite.physicSettings.materials , sceneObject.materials);
-  mainComposite.addLink(mainComposite.timeStamp , sceneObject.timeStamp);
+  mainComposite.addLink(mainComposite.cannon , obj.cannon);
+  mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
+  mainComposite.addLink(mainComposite.timeStamp , obj.timeStamp);
 }
 
 const updatePhysic = function({timeStamp , body}){
