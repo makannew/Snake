@@ -12,7 +12,7 @@ export function newRayCastVehicle(mainComposite , vehicleName){
   // obj.wheelForce = undefined;
   // obj.steering = undefined;
   obj.wheelOptions = {
-		radius: 0.1,
+		radius: 9,
 		directionLocal: new CANNON.Vec3(0, -1, 0), 
 		suspensionStiffness: 43,
 		suspensionRestLength: 0.18,

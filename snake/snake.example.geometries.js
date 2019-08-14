@@ -122,5 +122,11 @@ export function exampleGeometries(snake){
   snake.utils.makePhysicCompound([snake.sceneObjects.box3 , snake.sceneObjects.cylinder2]);
   snake.sceneObjects.box3.set({mass:10 , compoundPosition:{x:140,y:-400,z:-325}});
 
-
+  // snake.sceneObjects.tp={};
+  // snake.utils.addObject(snake.sceneObjects.tp);
+  // snake.sceneObjects.tp.set({geometryName : "plane" , dimension : { height:1024 , width: 1024 , length:1024} , position :{x:0,y:-512,z:0} , color : 0xaffbb0 , materialName:"phong" });
+  // snake.sceneObjects.tp.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , -Math.PI/2);
+  
+  // snake.utils.addPhysicBody(snake.sceneObjects.tp);
+  // snake.sceneObjects.tp.set({mass:0 , physicMaterial:"groundMaterial"});
 }
