@@ -75,11 +75,13 @@ export function exampleGeometries(snake){
   snake.utils.addPhysicBody(snake.sceneObjects.box9);
   snake.sceneObjects.box9.mass =2;
 
-  snake.utils.newPointsConstraint("hangedBox");
+  snake.constraints.hangedBox = {};
+  snake.utils.newPointsConstraint(snake.constraints.hangedBox);
   snake.constraints.hangedBox.set({bodyA: snake.sceneObjects.box9 , bodyB: snake.sceneObjects.stand2 , offsetA:{x:0,y:0,z:0}, offsetA:{x:0,y:31,z:0} , offsetB:{x:0 , b:0 , z:31}})
 
   // distance constraint
-  snake.utils.newDistanceConstraint("distance1");
+  snake.constraints.distance1 = {};
+  snake.utils.newDistanceConstraint(snake.constraints.distance1);
   snake.constraints.distance1.set({bodyA: snake.sceneObjects.stand2 , bodyB: snake.sceneObjects.sphere1});
 
   // hinge constraint
@@ -95,7 +97,8 @@ export function exampleGeometries(snake){
   snake.utils.addPhysicBody(snake.sceneObjects.rod1);
   snake.sceneObjects.rod1.mass = 5;
 
-  snake.utils.newHingeConstraint("hinge1");
+  snake.constraints.hinge1 = {};
+  snake.utils.newHingeConstraint(snake.constraints.hinge1);
   snake.constraints.hinge1.axisA = new CANNON.Vec3(0,0,1);
   snake.constraints.hinge1.axisB = new CANNON.Vec3(0,0,1);
 

@@ -1,35 +1,28 @@
 
 export function newHingeConstraint (mainComposite ,constraintName){
-  mainComposite.constraints[constraintName] = {};
-  let obj = mainComposite.constraints[constraintName];
-  mainComposite.addLink(mainComposite.cannon , obj.cannon);
-  obj.active = true;
-  obj.maxForce = 1e6;
-  obj.bodyABody = undefined;
-  obj.bodyBBody = undefined;
-  obj.offsetA = {x:0,y:0,z:0};
-  obj.offsetB = {x:0,y:0,z:0};
-  obj.axisA = undefined;
-  obj.axisB = undefined;
-  obj.addFunction(addBodyA);
-  obj.addFunction(addBodyB);
-  obj.addFunction(hingeConstraint);
-  obj.addFunction(setStatus);
-  obj.addFunction(pivotA);
-  obj.addFunction(pivotB);
-  obj.addFunction(setMotor);
-  obj.addFunction(setMotorSpeed);
-
-
+  mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
+  constraintName.selfProxy = constraintName;
+  constraintName.active = true;
+  constraintName.maxForce = 1e6;
+  constraintName.offsetA = {x:0,y:0,z:0};
+  constraintName.offsetB = {x:0,y:0,z:0};
+  constraintName.addFunction(addBodyA);
+  constraintName.addFunction(addBodyB);
+  constraintName.addFunction(hingeConstraint);
+  constraintName.addFunction(setStatus);
+  constraintName.addFunction(pivotA);
+  constraintName.addFunction(pivotB);
+  constraintName.addFunction(setMotor);
+  constraintName.addFunction(setMotorSpeed);
 }
 
 function addBodyA({bodyA}){
-    proxiedComposite.addLink(bodyA.body , proxiedComposite.constraints[currentAddress[currentAddress.length - 1]].bodyABody);;
+    proxiedComposite.addLink(bodyA.body , selfProxy.bodyABody);;
   return true;
 }
 
 function addBodyB({bodyB}){
-  proxiedComposite.addLink(bodyB.body , proxiedComposite.constraints[currentAddress[currentAddress.length - 1]].bodyBBody);;
+  proxiedComposite.addLink(bodyB.body , selfProxy.bodyBBody);;
 return true;
 }
 

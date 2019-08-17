@@ -1,26 +1,23 @@
 
 export function newDistanceConstraint (mainComposite ,constraintName){
-  mainComposite.constraints[constraintName] = {};
-  let obj = mainComposite.constraints[constraintName];
-  mainComposite.addLink(mainComposite.cannon , obj.cannon);
-  obj.active = true;
-  obj.maxForce = 1e6;
-  obj.bodyABody = undefined;
-  obj.bodyBBody = undefined;
-  obj.distance = undefined;
-  obj.addFunction(addBodyA);
-  obj.addFunction(addBodyB);
-  obj.addFunction(distanceConstraint);
-  obj.addFunction(setStatus);
+  mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
+  constraintName.selfProxy = constraintName;
+  constraintName.active = true;
+  constraintName.maxForce = 1e6;
+  constraintName.distance = undefined;
+  constraintName.addFunction(addBodyA);
+  constraintName.addFunction(addBodyB);
+  constraintName.addFunction(distanceConstraint);
+  constraintName.addFunction(setStatus);
 }
 
 function addBodyA({bodyA}){
-    proxiedComposite.addLink(bodyA.body , proxiedComposite.constraints[currentAddress[currentAddress.length - 1]].bodyABody);;
+    proxiedComposite.addLink(bodyA.body , selfProxy.bodyABody);
   return true;
 }
 
 function addBodyB({bodyB}){
-  proxiedComposite.addLink(bodyB.body , proxiedComposite.constraints[currentAddress[currentAddress.length - 1]].bodyBBody);;
+  proxiedComposite.addLink(bodyB.body , selfProxy.bodyBBody);
 return true;
 }
 

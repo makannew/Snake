@@ -33,7 +33,7 @@ exampleGeometries(snake);
 //loadRigidVehicle(snake);
 
 //load ray cast vehicle
-loadRayCastVehicle(snake);
+//loadRayCastVehicle(snake);
 
 // player settings
 loadPlayerSettings(snake);
