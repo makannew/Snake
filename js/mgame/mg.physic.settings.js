@@ -17,8 +17,8 @@ export function cannonSettingsBuilder(result){
   result.physicSettings.materials.objectMaterial= new CANNON.Material({name:"objectMaterial"});
   result.physicSettings.materials.wheelMaterial= new CANNON.Material({name:"wheelMaterial"});
 
-  result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: 0.3, restitution: .4 };
-  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: 0.3, restitution: .4 };
+  result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .3, restitution: .4 };
+  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: .2, restitution: .3 };
   result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: 0.3, restitution: .4};
 }
 

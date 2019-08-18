@@ -15,6 +15,7 @@ import { newDistanceConstraint } from "./mg.constraints.distance.js"
 import { newHingeConstraint } from "./mg.constraints.hinge.js"
 import { newRigidVehicle } from "./mg.physic.rigidVehicle.js";
 import { newRayCastVehicle } from "./mg.physic.rayCastVehicle.js";
+import { newRoadTrain } from "./mg.roadTrain.js";
 
 
 
@@ -36,6 +37,7 @@ export function MGame(){
   result.utils.newHingeConstraint = function(constraintName){newHingeConstraint(result , constraintName);}
   result.utils.newRigidVehicle = function(vehicleName){newRigidVehicle(result , vehicleName);}
   result.utils.newRayCastVehicle = function(vehicleName){newRayCastVehicle(result , vehicleName);}
+  result.utils.newRoadTrain = function(roadTrain){newRoadTrain(result , roadTrain)};
 
 
 
