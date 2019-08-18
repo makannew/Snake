@@ -4,7 +4,7 @@ import { buildHeadWheels } from "./snake.roadTrain.wheels.js";
 export function loadRoadTrain(snake){
   snake.roadTrains = {};
   snake.roadTrains.roadTrain1 = {};
-  snake.roadTrains.roadTrain1.position = {x:30 , y:-480 , z:-320};
+  snake.roadTrains.roadTrain1.position = {x:3.0 , y:-48.0 , z:-32.0};
 
   snake.utils.newRoadTrain(snake.roadTrains.roadTrain1);
 

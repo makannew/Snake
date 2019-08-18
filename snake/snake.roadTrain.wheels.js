@@ -1,18 +1,18 @@
 
 export function buildHeadWheels(snake , roadTrain){
-  let x=roadTrain.position.x , y=roadTrain.position.y - 4, z=roadTrain.position.z;
-  let wh = {r:9,wy:4 , ax:45};
+  let x=roadTrain.position.x , y=roadTrain.position.y - .4, z=roadTrain.position.z;
+  let wh = {r:.9,wy:.4 , ax:4.5};
 
 
-  buildWeel(snake,roadTrain.wheels,wh , x+wh.ax/2,y,z-50 , Math.PI/2 , true,false);
-  buildWeel(snake,roadTrain.wheels,wh , x+wh.ax/2,y,z-30 , Math.PI/2 ,true,false);
+  buildWeel(snake,roadTrain.wheels,wh , x+wh.ax/2,y,z-5.0 , Math.PI/2 , true,false);
+  buildWeel(snake,roadTrain.wheels,wh , x+wh.ax/2,y,z-3.0 , Math.PI/2 ,true,false);
 
-  buildWeel(snake,roadTrain.wheels,wh , x-wh.ax/2,y,z-50 , -Math.PI/2,false,false);
-  buildWeel(snake,roadTrain.wheels,wh , x-wh.ax/2,y,z-30 , -Math.PI/2,false,false);
+  buildWeel(snake,roadTrain.wheels,wh , x-wh.ax/2,y,z-5.0 , -Math.PI/2,false,false);
+  buildWeel(snake,roadTrain.wheels,wh , x-wh.ax/2,y,z-3.0 , -Math.PI/2,false,false);
 
-  buildWeel(snake,roadTrain.wheels,wh , x+wh.ax/2,y,z+30 , Math.PI/2,true,true);
+  buildWeel(snake,roadTrain.wheels,wh , x+wh.ax/2,y,z+3.0 , Math.PI/2,true,true);
 
-  buildWeel(snake,roadTrain.wheels,wh , x-wh.ax/2,y,z+30 , -Math.PI/2,false,true);
+  buildWeel(snake,roadTrain.wheels,wh , x-wh.ax/2,y,z+3.0 , -Math.PI/2,false,true);
 
 
 

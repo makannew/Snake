@@ -3,15 +3,15 @@
 export function buildHeadChassis(snake , roadTrain){
     //
     let x=roadTrain.position.x , y=roadTrain.position.y , z=roadTrain.position.z;
-    let ch = {lx:25 , wy:4 , hz:80};
-    let wh = {r:9,wy:4 , clearance:.5};
-    let cp = {lx:25,wy:40,hz:45}
-    let ns = {lx:25,wy:20,hz:35}
-    let wheelGap = 4;
+    let ch = {lx:2.5 , wy:.4 , hz:8.0};
+    let wh = {r:.9,wy:.4 , clearance:.05};
+    let cp = {lx:2.5,wy:4.0,hz:4.5}
+    let ns = {lx:2.5,wy:2.0,hz:3.5}
+    let wheelGap = .4;
     
   
-    let ax = {r:1,wy:ch.lx+wheelGap*2}
-    let wheelMass =.1
+    let ax = {r:.1,wy:ch.lx+wheelGap*2}
+    let wheelMass =.01
   
     roadTrain.chassis={};
     snake.utils.addObject(roadTrain.chassis);

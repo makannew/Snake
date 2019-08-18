@@ -3,7 +3,7 @@ export function initializeThreeJs(){
   let result={};
   // three.js setup
   result.scene = new THREE.Scene ();
-  result.renderer = new THREE.WebGLRenderer ();
+  result.renderer = new THREE.WebGLRenderer (); //{devicePixelRatio: 100 }
   result.renderer.shadowMap.enabled = true;
   result.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   result.renderer.setSize ( innerWidth , innerHeight);

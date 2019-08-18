@@ -7,7 +7,7 @@ export function cannonSettingsBuilder(result){
   result.addLink(result.cannon , result.physicSettings.cannon);
 
   result.physicSettings.addFunction(setGravity);
-  result.physicSettings.gravity = {x:0, y:-70 , z:0};
+  result.physicSettings.gravity = {x:0, y:-10 , z:0};
 
   result.physicSettings.materials = {};
   result.physicSettings.contactMaterials = [];

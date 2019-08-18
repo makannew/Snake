@@ -6,7 +6,7 @@ export function loadCameras(snake){
   snake.cameras.camera2 = {};
   snake.utils.addCamera(snake.cameras.camera2);
   snake.cameras.camera2.set ({cameraFocalLenght: 55 , cameraNearView: 1 , cameraFarView: 3000 , active:false , 
-    position:{x:510,y:250,z:510}, quaternion:{x:topViewQuat.x , y:topViewQuat.y, z:topViewQuat.z , w:topViewQuat.w }});
+    position:{x:51.0,y:25.0,z:51.0}, quaternion:{x:topViewQuat.x , y:topViewQuat.y, z:topViewQuat.z , w:topViewQuat.w }});
   
   // vehicle front camera
   snake.cameras.camera1 = {};
