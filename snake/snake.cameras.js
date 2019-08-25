@@ -12,4 +12,9 @@ export function loadCameras(snake){
   snake.cameras.camera1 = {};
   snake.utils.addCamera(snake.cameras.camera1);
   snake.cameras.camera1.set ({cameraFocalLenght: 55 , cameraNearView: 1 , cameraFarView: 3000 , active:true });
+
+    // ground camera
+    snake.cameras.camera3 = {};
+    snake.utils.addCamera(snake.cameras.camera3);
+    snake.cameras.camera3.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:true });
 }

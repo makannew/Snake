@@ -1,24 +1,25 @@
 
 export function roadTrainControls(roadTrain){
-  roadTrain.turningSpeed = (Math.PI/4)/1.5; // rad/sec
-  roadTrain.absMaxSteering = Math.PI/4;
+  roadTrain.turningSpeed = (Math.PI/6)/1; // rad per sec
+  roadTrain.absMaxSteering = Math.PI/6;
   roadTrain.turningLeft = false;
   roadTrain.turningRight = false;
   roadTrain.drivingForward = true;
-  roadTrain.addFunction(steering);
+  roadTrain.steering = 0;
+  roadTrain.addFunction(setSteering);
 
 }
 
-function steering({turningLeft , turningRight , actualInterval}){
-  if(steering===undefined) return 0;
-  if (!turningRight && !turningLeft) return steering;
+function setSteering({turningLeft , turningRight ,actualInterval}){
+  // if(steering===undefined) return 0;
+  if (!turningRight && !turningLeft) return false;
 
   if (turningRight){
     let newSteering = steering + actualInterval * turningSpeed;
     if (newSteering>absMaxSteering){
       newSteering = absMaxSteering;
     }
-    return newSteering;
+    steering = newSteering;
   }
 
   if (turningLeft){
@@ -26,6 +27,6 @@ function steering({turningLeft , turningRight , actualInterval}){
     if (newSteering<-absMaxSteering){
       newSteering = -absMaxSteering;
     }
-    return newSteering;
+    steering = newSteering;
   }
 }
