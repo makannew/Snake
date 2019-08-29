@@ -11,10 +11,12 @@ import { loadRigidVehicle } from './snake.rigidVehicle.js';
 import { initialize } from './snake.initialize.js';
 import { loadRayCastVehicle } from './snake.rayCastVehicle.js';
 import { loadRoadTrain } from './snake.roadTrain.js';
+import { startSnake } from './snake.start.js';
 
 
 const snake = MGame();
-
+snake.loadIndex = 0;
+snake.self = snake;
 console.log(snake)
 
 // load Cameras
@@ -52,6 +54,6 @@ setupControls(snake);
 initialize(snake);
 
 // start game
-setTimeout(snake.utils.start(snake),2000)
-;
+startSnake(snake);
+
 

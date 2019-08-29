@@ -3,7 +3,7 @@ export function startEngine(gameInstance){
   let animationFrameInterval=0;
   gameInstance.running = true;
 
-  const mainloop = function (animationTimeStamp){
+  function mainloop(animationTimeStamp){
     if(animationTimeStamp>lastTime) {
       animationFrameInterval += (animationTimeStamp - lastTime) / 1000;
     }
