@@ -35,74 +35,82 @@ export function exampleGeometries(snake){
   snake.sceneObjects.cylinder1.set({geometryName:"cylinder" , dimension:{radiusTop:1.5,radiusBottom:.05,height:5.0}, position:{x:9.0,y:-48.0,z:-32.0} , color:0x1f11ff , materialName:"phong" , shinines:0});
 
   // Lock constraint
-  snake.sceneObjects.box6={};
-  snake.utils.addObject(snake.sceneObjects.box6);
-  snake.sceneObjects.box6.set({geometryName : "box" , dimension : { height:.2 , width: .2 , length:3.0} , position :{x:-7.0,y:-40.0,z:-32.0} , color : 0xaffbb0 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.box6);
-  snake.sceneObjects.box6.mass =2;
-
-  snake.sceneObjects.box7={};
-  snake.utils.addObject(snake.sceneObjects.box7);
-  snake.sceneObjects.box7.set({geometryName : "box" , dimension : { height:.2 , width: 4.0 , length:.2} , position :{x:-5.4,y:-41.9,z:-32.0} , color : 0xaffbb0 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.box7);
-  snake.sceneObjects.box7.mass =2;
-
-  snake.sceneObjects.box8={};
-  snake.utils.addObject(snake.sceneObjects.box8);
-  snake.sceneObjects.box8.set({geometryName : "box" , dimension : { height:.2 , width: 4.0 , length:.2} , position :{x:-8.6,y:-41.9,z:-32.0} , color : 0xaffbb0 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.box8);
-  snake.sceneObjects.box8.mass =2;
-
-  snake.constraints.lock1={};
-  snake.utils.newLockConstraint(snake.constraints.lock1);
-  snake.constraints.lock1.maxForce = 1e6;
-  snake.constraints.lock1.bodies = [snake.sceneObjects.box6 , snake.sceneObjects.box7 ,snake.sceneObjects.box8];
+  snake.sceneObjects.box6 =[];
+  snake.sceneObjects.box7 =[];
+  snake.sceneObjects.box8 =[];
+  snake.constraints.lock1 = [];
+  for(let i=-0;i<6;++i){
+    let x=0,y=-40,z=-40+i*15;
+    snake.sceneObjects.box6[i]={};
+    snake.utils.addObject(snake.sceneObjects.box6[i]);
+    snake.sceneObjects.box6[i].set({geometryName : "box" , dimension : { height:.2 , width: .2 , length:3.0} , position :{x:x-7.0,y:y,z:z} , color : 0xaffbb0 , materialName:"phong" });
+    snake.utils.addPhysicBody(snake.sceneObjects.box6[i]);
+    snake.sceneObjects.box6[i].mass =2;
+  
+    snake.sceneObjects.box7[i]={};
+    snake.utils.addObject(snake.sceneObjects.box7[i]);
+    snake.sceneObjects.box7[i].set({geometryName : "box" , dimension : { height:.2 , width: 4.0 , length:.2} , position :{x:x-5.4,y:y-1.9,z:z} , color : 0xaffbb0 , materialName:"phong" });
+    snake.utils.addPhysicBody(snake.sceneObjects.box7[i]);
+    snake.sceneObjects.box7[i].mass =2;
+  
+    snake.sceneObjects.box8[i]={};
+    snake.utils.addObject(snake.sceneObjects.box8[i]);
+    snake.sceneObjects.box8[i].set({geometryName : "box" , dimension : { height:.2 , width: 4.0 , length:.2} , position :{x:x-8.6,y:y-1.9,z:z} , color : 0xaffbb0 , materialName:"phong" });
+    snake.utils.addPhysicBody(snake.sceneObjects.box8[i]);
+    snake.sceneObjects.box8[i].mass =2;
+  
+    snake.constraints.lock1[i]={};
+    snake.utils.newLockConstraint(snake.constraints.lock1[i]);
+    snake.constraints.lock1[i].maxForce = 1e6;
+    snake.constraints.lock1[i].bodies = [snake.sceneObjects.box6[i] , snake.sceneObjects.box7[i] ,snake.sceneObjects.box8[i]];
+  
+  }
 
   // point to point constraint
-  snake.sceneObjects.stand1={};
-  snake.utils.addObject(snake.sceneObjects.stand1);
-  snake.sceneObjects.stand1.set({geometryName : "box" , dimension : {length:.2 , width: 15.0 , height:.2  } , position :{x:-10.0,y:-43.7,z:-34.0} , color : 0xdf1bb1 , materialName:"phong" });
+  // snake.sceneObjects.stand1={};
+  // snake.utils.addObject(snake.sceneObjects.stand1);
+  // snake.sceneObjects.stand1.set({geometryName : "box" , dimension : {length:.2 , width: 15.0 , height:.2  } , position :{x:-10.0,y:-43.7,z:-34.0} , color : 0xdf1bb1 , materialName:"phong" });
 
-  snake.sceneObjects.stand2={};
-  snake.utils.addObject(snake.sceneObjects.stand2);
-  snake.sceneObjects.stand2.set({geometryName : "box" , dimension : {length:.2 , width: .2 , height:6.0 } , position :{x:-10.0,y:-36.2,z:-34.0} , color : 0xdf1bb1 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.stand2);
-  snake.sceneObjects.stand2.mass = 0;
+  // snake.sceneObjects.stand2={};
+  // snake.utils.addObject(snake.sceneObjects.stand2);
+  // snake.sceneObjects.stand2.set({geometryName : "box" , dimension : {length:.2 , width: .2 , height:6.0 } , position :{x:-10.0,y:-36.2,z:-34.0} , color : 0xdf1bb1 , materialName:"phong" });
+  // snake.utils.addPhysicBody(snake.sceneObjects.stand2);
+  // snake.sceneObjects.stand2.mass = 0;
 
-  snake.sceneObjects.box9={};
-  snake.utils.addObject(snake.sceneObjects.box9);
-  snake.sceneObjects.box9.set({geometryName : "box" , dimension : { height:.2 , width: 6.0 , length:.2} , position :{x:-12.0,y:-40.0,z:-31.0} , color : 0xaffbb0 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.box9);
-  snake.sceneObjects.box9.mass =2;
+  // snake.sceneObjects.box9={};
+  // snake.utils.addObject(snake.sceneObjects.box9);
+  // snake.sceneObjects.box9.set({geometryName : "box" , dimension : { height:.2 , width: 6.0 , length:.2} , position :{x:-12.0,y:-40.0,z:-31.0} , color : 0xaffbb0 , materialName:"phong" });
+  // snake.utils.addPhysicBody(snake.sceneObjects.box9);
+  // snake.sceneObjects.box9.mass =2;
 
-  snake.constraints.hangedBox = {};
-  snake.utils.newPointsConstraint(snake.constraints.hangedBox);
-  snake.constraints.hangedBox.set({bodyA: snake.sceneObjects.box9 , bodyB: snake.sceneObjects.stand2 , offsetA:{x:0,y:0,z:0}, offsetA:{x:0,y:3.1,z:0} , offsetB:{x:0 , b:0 , z:3.1}})
+  // snake.constraints.hangedBox = {};
+  // snake.utils.newPointsConstraint(snake.constraints.hangedBox);
+  // snake.constraints.hangedBox.set({bodyA: snake.sceneObjects.box9 , bodyB: snake.sceneObjects.stand2 , offsetA:{x:0,y:0,z:0}, offsetA:{x:0,y:3.1,z:0} , offsetB:{x:0 , b:0 , z:3.1}})
 
   // distance constraint
-  snake.constraints.distance1 = {};
-  snake.utils.newDistanceConstraint(snake.constraints.distance1);
-  snake.constraints.distance1.set({bodyA: snake.sceneObjects.stand2 , bodyB: snake.sceneObjects.sphere1});
+  // snake.constraints.distance1 = {};
+  // snake.utils.newDistanceConstraint(snake.constraints.distance1);
+  // snake.constraints.distance1.set({bodyA: snake.sceneObjects.stand2 , bodyB: snake.sceneObjects.sphere1});
 
   // hinge constraint
-  snake.sceneObjects.stand3={};
-  snake.utils.addObject(snake.sceneObjects.stand3);
-  snake.sceneObjects.stand3.set({geometryName : "box" , dimension : {length:.2 , width: 15.0 , height:.2  } , position :{x:-2.0,y:-43.7,z:-30.0} , color : 0xdf1bb1 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.stand3);
-  snake.sceneObjects.stand3.mass = 0;
+  // snake.sceneObjects.stand3={};
+  // snake.utils.addObject(snake.sceneObjects.stand3);
+  // snake.sceneObjects.stand3.set({geometryName : "box" , dimension : {length:.2 , width: 15.0 , height:.2  } , position :{x:-2.0,y:-43.7,z:-30.0} , color : 0xdf1bb1 , materialName:"phong" });
+  // snake.utils.addPhysicBody(snake.sceneObjects.stand3);
+  // snake.sceneObjects.stand3.mass = 0;
 
-  snake.sceneObjects.rod1={};
-  snake.utils.addObject(snake.sceneObjects.rod1);
-  snake.sceneObjects.rod1.set({geometryName : "box" , dimension : {length:15.0 , width: .2 , height:.2  } , position :{x:5.7,y:-36.2,z:-30.0} , color : 0xdf1bb1 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.rod1);
-  snake.sceneObjects.rod1.mass = 5;
+  // snake.sceneObjects.rod1={};
+  // snake.utils.addObject(snake.sceneObjects.rod1);
+  // snake.sceneObjects.rod1.set({geometryName : "box" , dimension : {length:15.0 , width: .2 , height:.2  } , position :{x:5.7,y:-36.2,z:-30.0} , color : 0xdf1bb1 , materialName:"phong" });
+  // snake.utils.addPhysicBody(snake.sceneObjects.rod1);
+  // snake.sceneObjects.rod1.mass = 5;
 
-  snake.constraints.hinge1 = {};
-  snake.utils.newHingeConstraint(snake.constraints.hinge1);
-  snake.constraints.hinge1.axisA = new CANNON.Vec3(0,0,1);
-  snake.constraints.hinge1.axisB = new CANNON.Vec3(0,0,1);
+  // snake.constraints.hinge1 = {};
+  // snake.utils.newHingeConstraint(snake.constraints.hinge1);
+  // snake.constraints.hinge1.axisA = new CANNON.Vec3(0,0,1);
+  // snake.constraints.hinge1.axisB = new CANNON.Vec3(0,0,1);
 
-  snake.constraints.hinge1.set({bodyA:snake.sceneObjects.stand3 , bodyB:snake.sceneObjects.rod1 , offsetA:{x:0,y:7.5,z:0} , offsetB:{x:-7.5,y:0,z:0} , motor:true , speed:-2.0})
+  // snake.constraints.hinge1.set({bodyA:snake.sceneObjects.stand3 , bodyB:snake.sceneObjects.rod1 , offsetA:{x:0,y:8.6,z:1} , offsetB:{x:-7.5,y:0,z:0} , motor:true , speed:-2.0})
 
   // physic bodies
 

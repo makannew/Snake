@@ -1,29 +1,23 @@
 import { roadTrainControls } from "./mg.roadTrain.controls.js";
-import { loadRoadTrainHead } from "./mg.roadTrain.head.js";
+import { loadBuilder } from "./mg.roadTrain.builder.js";
+import { roadTrainTowing } from "./mg.roadTrain.towing.js";
 
 export function newRoadTrain(mainComposite , roadTrain){
   mainComposite.addLink(mainComposite.cannon , roadTrain.cannon);
   mainComposite.addLink(mainComposite.actualInterval , roadTrain.actualInterval);
 
   roadTrainControls(roadTrain);
-  loadRoadTrainHead(roadTrain);
+  roadTrainTowing(roadTrain);
+  loadBuilder(mainComposite,roadTrain);
 
   roadTrain.allWheels = [];
-  //roadTrain.springs = [];
-  //roadTrain.steeringConstraints = [];
-  //roadTrain.steeringIsLeftSide = [];
-  roadTrain.suspensionStiffness = 250;
-  roadTrain.suspensionDamping = 10;
   roadTrain.suspensionRestLenght = 0;
-  roadTrain.suspensionLenght = .8;
   roadTrain.speed = 0;
-  roadTrain.engineForce =1;
+  roadTrain.engineForce =10;
   roadTrain.addFunction(setHingeConstraints);
   roadTrain.addFunction(updateSpring);
-  //roadTrain.addFunction(applySteering);
   roadTrain.addFunction(applySteering);
   roadTrain.addFunction(updateEngine);
-
 
 }
 
@@ -65,12 +59,7 @@ function applySteering({steering , setHingeConstraints}){
     }
   }
 }
-// function updateSpring({setHingeConstraints,actualInterval,springs}){
-//   for (let spring of springs){
 
-//     spring.applyForce();
-//   }
-// }
 function setHingeConstraints({headBodiesLoaded , cannon}){
   if (setHingeConstraints) return true;
   let zero = new CANNON.Vec3(0,0,0);
@@ -94,14 +83,6 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
       axisA = new CANNON.Vec3(-1,0,0);
       axisB = new CANNON.Vec3(0,1,0);
     }
-    // wheel constraint
-    // let wheelConstraint = new CANNON.HingeConstraint(suspensionsBodies[i],wheelsBodies[i],{
-    //   pivotA: wheelRelativePos,
-    //   axisA:axisA,
-    //   pivotB: zero,
-    //   axisB: axisB,
-    //   maxForce:1e6
-    // });
 
     thisWheel.wheelConstraint = new CANNON.HingeConstraint(suspensionsBodies[i],wheelsBodies[i],{
       pivotA: wheelRelativePos,
@@ -127,31 +108,6 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
       thisWheel.driving = false;
     }
 
-    // if (wheels[i].wheelSteering){
-    //   steeringConstraints.push(wheelConstraint);
-    //   steeringIsLeftSide.push(wheels[i].wheelLeft);
-    //   let sLen = steeringConstraints.length-1
-    //   steeringConstraints[steeringConstraints.length-1].setMotorMaxForce(10);
-    //   if (wheels[i].wheelLeft){
-    //     steeringConstraints[sLen].setMotorSpeed(speed);
-
-    //   }else{
-    //     steeringConstraints[sLen].setMotorSpeed(-speed);
-
-    //   }
-    //   steeringConstraints[sLen].enableMotor();
-    // }else{
-    //   constraints.push(wheelConstraint);
-    //   constraints[constraints.length-1].setMotorMaxForce(10);
-    //   if (wheels[i].wheelLeft){
-    //     constraints[constraints.length-1].setMotorSpeed(speed);
-    //   }else{
-    //     constraints[constraints.length-1].setMotorSpeed(-speed);
-
-    //   }
-    //   constraints[constraints.length-1].enableMotor();
-    // }
-
 
     let farPivotChassis = new CANNON.Vec3(-(suspensionsBodies[i].position.x - chassisBody.position.x + wheelRelativePos.x), 
       suspensionsBodies[i].position.y - chassisBody.position.y + wheelRelativePos.y, 
@@ -168,8 +124,6 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
       maxForce:1e6
     });
     cannon.addConstraint(thisWheel.suspensionConstraint);
-    //constraints.push(susConstraint);
-
 
     let suspensionRelativePos = new CANNON.Vec3(wheelsBodies[i].position.x - chassisBody.position.x, 
       wheelsBodies[i].position.y - chassisBody.position.y - wheels[i].springLenght, 
@@ -185,14 +139,6 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
 
     allWheels.push(thisWheel);
   }
-
-  // for(let constraint of constraints){
-  //   cannon.addConstraint(constraint);
-  // }
-  // for(let constraint of steeringConstraints){
-  //   cannon.addConstraint(constraint);
-  // }
-
 
   return true;
 }

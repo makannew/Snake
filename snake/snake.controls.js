@@ -23,7 +23,14 @@ export function setupControls(snake){
 
     }
 
-    let roadTrain1 = snake.roadTrains.roadTrain1;
+    if (e.key == "r"){
+      snake.cameras.camera1.active = false;
+      snake.cameras.camera2.active = false;
+      snake.cameras.camera4.active = true;
+
+    }
+
+    let roadTrain1 = snake.roadTrains[0];
     if (e.key == "Right" || e.key == "ArrowRight"){
       if (!roadTrain1.turningRight){
         roadTrain1.turningLeft = false;
@@ -40,10 +47,10 @@ export function setupControls(snake){
 
     }
     if (e.key == "Up" || e.key == "ArrowUp"){
-      roadTrain1.speed = 10;
+      roadTrain1.speed = 20;
     }
     if (e.key == "Down" || e.key == "ArrowDown"){
-      roadTrain1.speed = -10;
+      roadTrain1.speed = -20;
     }
     if (e.key == "s"){
       roadTrain1.speed = 0;
@@ -52,7 +59,7 @@ export function setupControls(snake){
 
   }
   function keyUpHandler ( e ){
-    let roadTrain1 = snake.roadTrains.roadTrain1;
+    let roadTrain1 = snake.roadTrains[0];
     if (e.key == "Right" || e.key == "ArrowRight" ){
       roadTrain1.turningRight = false;
     }

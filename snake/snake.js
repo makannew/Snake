@@ -52,5 +52,6 @@ setupControls(snake);
 initialize(snake);
 
 // start game
-snake.utils.start(snake);
+setTimeout(snake.utils.start(snake),2000)
+;
 
