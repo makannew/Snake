@@ -62,7 +62,8 @@ const build = function(mainComposite,roadTrain){
       driving:wheelInfo.engine, 
       stiffness:wheelInfo.stiffness, 
       damping:wheelInfo.damping, 
-      springLenght:wheelInfo.springLegth
+      springLenght:wheelInfo.springLegth,
+      allowSleep:false
     });
     // build suspension
     let suspensions = roadTrain.suspensions;
@@ -86,7 +87,8 @@ const build = function(mainComposite,roadTrain){
     mainComposite.utils.addPhysicBody(suspension);
     suspension.set({
       physicMaterial:wheelInfo.axelMaterial, 
-      mass:wheelInfo.axelMass
+      mass:wheelInfo.axelMass,
+      allowSleep:false
     });
     if (wheelInfo.distance+wheelInfo.axelDiameter*2>chassisFront){
       chassisFront = wheelInfo.distance+wheelInfo.axelDiameter*2;

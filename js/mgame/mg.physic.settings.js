@@ -16,10 +16,18 @@ export function cannonSettingsBuilder(result){
   result.physicSettings.materials.groundMaterial= new CANNON.Material({name:"groundMaterial"});
   result.physicSettings.materials.objectMaterial= new CANNON.Material({name:"objectMaterial"});
   result.physicSettings.materials.wheelMaterial= new CANNON.Material({name:"wheelMaterial"});
+  result.physicSettings.materials.fakeWheelMaterial= new CANNON.Material({name:"fakeWheelMaterial"});
+
 
   result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .3, restitution: .4 };
-  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: .9, restitution: 0 };
+
+  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: 1.3, restitution: 0 };
   result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: .3, restitution: 0};
+
+  result.physicSettings.contactMaterials[3]={material1: "objectMaterial" , material2: "fakeWheelMaterial" , friction: 0.1, restitution: 0};
+  result.physicSettings.contactMaterials[4]={material1: "groundMaterial" , material2: "fakeWheelMaterial" , friction: 0.1, restitution: 0};
+
+
 }
 
 function buildContactMaterial({contactMaterials}){
@@ -44,12 +52,15 @@ function buildContactMaterial({contactMaterials}){
 }
 const initializeCannonJs = function(){
   let result = new CANNON.World();
-  result.broadphase = new CANNON.NaiveBroadphase();
-  //result.broadphase = new CANNON.SAPBroadphase(result);
-  //result.quatNormalizeFast = false;
-  //result.quatNormalizeSkip = 0;
+  //result.broadphase = new CANNON.NaiveBroadphase();
+  result.broadphase = new CANNON.SAPBroadphase(result);
+  // result.quatNormalizeFast = false;
+  // result.quatNormalizeSkip = 0;
+  //result.allowSleep = true;
 
   result.solver.iterations = 20;// 7
+  //result.solver.tolerance = 1e-7;
+
   result.defaultContactMaterial.contactEquationStiffness = 1e6;
   result.defaultContactMaterial.contactEquationRelaxation = 10;
   result.defaultContactMaterial.friction = 0.2;

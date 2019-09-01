@@ -42,6 +42,7 @@ export function MGame(){
 
 
   result.utils.start = startEngine;
+  result.self = result;
 
   result.sceneObjects = {};
   result.cameras = {};
@@ -53,6 +54,7 @@ export function MGame(){
   cannonSettingsBuilder(result);
 
   result.actualInterval = 0;
+  result.timeStamp = 0;
   result.running = false;
   //result.needsUpdate = undefined;
 
@@ -66,9 +68,8 @@ export function MGame(){
   return result;
 }
 
-const newAnimationFrame = function({timeStamp , three , activeCamera , cannon}){
-  cannon.step(demandInterval , actualInterval , settings.maxSubStep);
 
+const newAnimationFrame = function({timeStamp , three , activeCamera , cannon}){
   three.renderer.render( three.scene , activeCamera);
   return true;
 }

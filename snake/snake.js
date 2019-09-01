@@ -16,7 +16,7 @@ import { startSnake } from './snake.start.js';
 
 const snake = MGame();
 snake.loadIndex = 0;
-snake.self = snake;
+//snake.self = snake;
 console.log(snake)
 
 // load Cameras
@@ -26,7 +26,7 @@ loadCameras(snake);
 loadLights(snake);
 
 // load world texture
-loadWorlds(snake);
+//loadWorlds(snake);
 
 // load example geometries
 exampleGeometries(snake);

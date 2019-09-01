@@ -2,7 +2,7 @@ import { buildHeadChassis } from "./snake.roadTrain.chassis.js";
 import { loadHeadWheelsInfo, loadTrailerWheelsInfo } from "./snake.roadTrain.wheels.js";
 
 export function loadRoadTrain(snake){
-  let z=30,l=11;
+  let z=30,l=11,t=.5;
 
   snake.roadTrains = [];
   snake.roadTrains.push({});
@@ -15,10 +15,10 @@ export function loadRoadTrain(snake){
     z = z - l;
     snake.roadTrains.push({});
     snake.utils.newRoadTrain(snake.roadTrains[i]);
-    snake.roadTrains[i].set({position:{x:30.0 , y:-48.0 , z:z} , axelsVerticalFreedom:.2 , chassisMass:30,chassisFrontLength:2,chassisRearLength:-2 , chassisColor:0x936974});
+    snake.roadTrains[i].set({position:{x:30.0 , y:-48.0 , z:z} , axelsVerticalFreedom:.2 , chassisMass:20,chassisFrontLength:4,chassisRearLength:-4.5 , chassisColor:0x936974});
     loadTrailerWheelsInfo(snake.roadTrains[i]);
     snake.roadTrains[i].build();
-    snake.roadTrains[i].frontTowing.set({thisTowingPosition:{x:0,y:0,z:7} , otherTowingPosition:{x:0,y:0,z:-4},distance:.7,towedRoadTrain:snake.roadTrains[i-1]});
+    snake.roadTrains[i].frontTowing.set({thisTowingPosition:{x:0,y:0,z:l*(1-t)} , otherTowingPosition:{x:0,y:0,z:-l*t},distance:.7,towedRoadTrain:snake.roadTrains[i-1]});
   }
 
 

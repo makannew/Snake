@@ -10,10 +10,18 @@ export function addPhysicBody(mainComposite , obj){
   obj.addFunction(body);
   obj.addFunction(getMaterial);
   obj.addFunction(updatePhysic);
+  obj.addFunction(setLoadIndex);
+
   //
+  mainComposite.addLink(mainComposite.loadIndex,obj.loadIndex);
   mainComposite.addLink(mainComposite.cannon , obj.cannon);
   mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
   mainComposite.addLink(mainComposite.timeStamp , obj.timeStamp);
+}
+function setLoadIndex({body}){
+  if (setLoadIndex) return true;
+  ++loadIndex;
+  return true;
 }
 
 const updatePhysic = function({timeStamp , body}){

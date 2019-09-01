@@ -13,9 +13,9 @@ export function newRoadTrain(mainComposite , roadTrain){
   roadTrain.allWheels = [];
   roadTrain.suspensionRestLenght = 0;
   roadTrain.speed = 0;
-  roadTrain.engineForce =10;
+  roadTrain.engineForce =30;
   roadTrain.addFunction(setHingeConstraints);
-  roadTrain.addFunction(updateSpring);
+  //roadTrain.addFunction(updateSpring);
   roadTrain.addFunction(applySteering);
   roadTrain.addFunction(updateEngine);
 
@@ -23,23 +23,21 @@ export function newRoadTrain(mainComposite , roadTrain){
 
 function updateEngine({setHingeConstraints , engineForce , speed}){
   for (let wheel of allWheels){
-    let c = wheel.wheelConstraint;
-    if (engineForce==0){
-      c.disableMotor()
-    }else{
-      c.setMotorMaxForce(engineForce);
-      if (wheel.isLeft){
-        c.setMotorSpeed(speed);
+    if (wheel.driving){
+      let c = wheel.wheelConstraint;
+      if (engineForce==0){
+        c.disableMotor()
       }else{
-        c.setMotorSpeed(-speed);
+        c.setMotorMaxForce(engineForce);
+        if (wheel.isLeft){
+          c.setMotorSpeed(speed);
+        }else{
+          c.setMotorSpeed(-speed);
+        }
+        c.enableMotor();
       }
-      c.enableMotor();
     }
-  }
-}
-function updateSpring({setHingeConstraints,actualInterval}){
-  for (let wheel of allWheels){
-    wheel.spring.applyForce();
+
   }
 }
 
@@ -64,6 +62,7 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
   if (setHingeConstraints) return true;
   let zero = new CANNON.Vec3(0,0,0);
   let axisA,axisB;
+  let axelSprings=[];
 
   for (let i=0,len=wheelsBodies.length;i<len;++i){
     let thisWheel={};
@@ -129,16 +128,57 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
       wheelsBodies[i].position.y - chassisBody.position.y - wheels[i].springLenght, 
       wheelsBodies[i].position.z - chassisBody.position.z);
 
-    thisWheel.spring = new CANNON.Spring(chassisBody,suspensionsBodies[i],{
+    // thisWheel.spring = new CANNON.Spring(chassisBody,suspensionsBodies[i],{
+    //   restLength:suspensionRestLenght,
+    //   stiffness: wheels[i].stiffness,
+    //   damping: wheels[i].damping,
+    //   localAnchorA:suspensionRelativePos,
+    //   localAnchorB:wheelRelativePos
+    // });
+    axelSprings.push(new CANNON.Spring(chassisBody,suspensionsBodies[i],{
       restLength:suspensionRestLenght,
       stiffness: wheels[i].stiffness,
       damping: wheels[i].damping,
       localAnchorA:suspensionRelativePos,
       localAnchorB:wheelRelativePos
-    });
+    }));
+
+
 
     allWheels.push(thisWheel);
   }
+  cannon.addEventListener("postStep",function(event){
+    for (let i=0,len=axelSprings.length;i<len;++i){
+      axelSprings[i].applyForce();
+      //let quat = new CANNON.Quaternion(suspensionsBodies[i].quaternion.x,suspensionsBodies[i].quaternion.y,suspensionsBodies[i].quaternion.z)
+
+      // let wheelFixRotation = new CANNON.Quaternion();
+      // wheelFixRotation.setFromAxisAngle(new CANNON.Vec3(0,0,1),Math.PI/2);
+      // quat.mult(wheelFixRotation,quat);
+      // let correctionQuat = new CANNON.Quaternion();
+      // let rot;
+      // if (!wheels[i].wheelLeft){
+      //   rot =-Math.PI/2;
+      // }else{
+      //   rot = Math.PI/2;
+      // }
+      // correctionQuat.setFromAxisAngle(new CANNON.Vec3(0,0,1), rot);
+      // quat.mult(correctionQuat,quat);
+      // wheelsBodies[i].quaternion.copy(quat);
+
+      //let susRotation = quat.toAxisAngle();
+
+
+      //wheelsBodies[i].quaternion.setFromAxisAngle(susRotation[0],susRotation[1]);
+
+      // quat.mult(wheelFixRotation,quat);
+      // wheelsBodies[i].quaternion.copy(quat);
+      // wheelsBodies[i].quaternion.y = quat.y;
+      // wheelsBodies[i].quaternion.z = quat.z;
+
+    }
+  });
+
 
   return true;
 }

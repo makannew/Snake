@@ -13,6 +13,6 @@ export function initializeThreeJs(){
 
 
 export const settings = {
-  frameRate: 60,
-  maxSubStep: 3
+  frameRate:60,
+  maxSubStep:3
 };

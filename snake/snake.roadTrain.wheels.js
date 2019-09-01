@@ -2,12 +2,12 @@
 export function loadHeadWheelsInfo(roadTrain){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
   let frontAxel = 3.1 , midleAxel = -1.9 , rearAxel = -3.5;
-  let frontStiffness = 600,frontDamping = 60,frontSpringLength = .8;
+  let frontStiffness = 700,frontDamping = 80,frontSpringLength = .8;
   let rearStiffness = 300,rearDamping = 40,rearSpringLength = .8;
-  let wheelMass = 5, axelMass = 10;
+  let wheelMass = 10, axelMass = 30;
   let textureFileName = undefined , color=0x777777;
-  let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial";
-
+  let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
+  let steeringWheelMass = 20, steeringAxelMass = 70;
   let wheelsInfo=[];
   //front left
   wheelsInfo.push({
@@ -23,8 +23,8 @@ export function loadHeadWheelsInfo(roadTrain){
     steering:true,
     engine:false,
     left:true,
-    wheelMass,
-    axelMass,
+    wheelMass:steeringWheelMass,
+    axelMass:steeringAxelMass,
     textureFileName,
     color,
     wheelMaterial,
@@ -44,8 +44,8 @@ export function loadHeadWheelsInfo(roadTrain){
     steering:true,
     engine:false,
     left:false,
-    wheelMass,
-    axelMass,
+    wheelMass:steeringWheelMass,
+    axelMass:steeringAxelMass,
     textureFileName,
     color,
     wheelMaterial,
@@ -69,7 +69,7 @@ export function loadHeadWheelsInfo(roadTrain){
     axelMass,
     textureFileName,
     color,
-    wheelMaterial,
+    wheelMaterial:fakeMaterial,
     axelMaterial
   });
   //middle right
@@ -90,7 +90,7 @@ export function loadHeadWheelsInfo(roadTrain){
     axelMass,
     textureFileName,
     color,
-    wheelMaterial,
+    wheelMaterial:fakeMaterial,
     axelMaterial
   });
   //rear left
@@ -142,27 +142,69 @@ export function loadHeadWheelsInfo(roadTrain){
 // trailer
 export function loadTrailerWheelsInfo(roadTrain){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
-  let frontAxel = 1 , midleAxel = -1.9 , rearAxel = -.5;
+  let frontAxel = 1 , midleAxel = -2 , rearAxel = -3.5;
   let frontStiffness = 150,frontDamping = 30,frontSpringLength = .8;
   let rearStiffness = 150,rearDamping = 20,rearSpringLength = .8;
   let wheelMass = .5 , axelMass = 1;
   let textureFileName = undefined , color=0x777777;
-  let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial";
+  let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
 
   let wheelsInfo=[];
   //front left
+  // wheelsInfo.push({
+  //   radius,
+  //   width,
+  //   axelLength,
+  //   axelHeight,
+  //   axelDiameter,
+  //   distance:frontAxel,
+  //   stiffness:frontStiffness,
+  //   damping:frontDamping,
+  //   springLegth:frontSpringLength,
+  //   steering:false,
+  //   engine:false,
+  //   left:true,
+  //   wheelMass,
+  //   axelMass,
+  //   textureFileName,
+  //   color,
+  //   wheelMaterial:fakeMaterial,
+  //   axelMaterial
+  // });
+ // front right
+  // wheelsInfo.push({
+  //   radius,
+  //   width,
+  //   axelLength,
+  //   axelHeight,
+  //   axelDiameter,
+  //   distance:frontAxel,
+  //   stiffness:frontStiffness,
+  //   damping:frontDamping,
+  //   springLegth:frontSpringLength,
+  //   steering:false,
+  //   engine:false,
+  //   left:false,
+  //   wheelMass,
+  //   axelMass,
+  //   textureFileName,
+  //   color,
+  //   wheelMaterial:fakeMaterial,
+  //   axelMaterial
+  // });
+  //middle left
   wheelsInfo.push({
     radius,
     width,
     axelLength,
     axelHeight,
     axelDiameter,
-    distance:frontAxel,
-    stiffness:frontStiffness,
-    damping:frontDamping,
-    springLegth:frontSpringLength,
+    distance:midleAxel,
+    stiffness:rearStiffness,
+    damping:rearDamping,
+    springLegth:rearSpringLength,
     steering:false,
-    engine:true,
+    engine:false,
     left:true,
     wheelMass,
     axelMass,
@@ -171,19 +213,19 @@ export function loadTrailerWheelsInfo(roadTrain){
     wheelMaterial,
     axelMaterial
   });
-  //front right
+  //middle right
   wheelsInfo.push({
     radius,
     width,
     axelLength,
     axelHeight,
     axelDiameter,
-    distance:frontAxel,
-    stiffness:frontStiffness,
-    damping:frontDamping,
-    springLegth:frontSpringLength,
+    distance:midleAxel,
+    stiffness:rearStiffness,
+    damping:rearDamping,
+    springLegth:rearSpringLength,
     steering:false,
-    engine:true,
+    engine:false,
     left:false,
     wheelMass,
     axelMass,
@@ -192,48 +234,6 @@ export function loadTrailerWheelsInfo(roadTrain){
     wheelMaterial,
     axelMaterial
   });
-  //middle left
-  // wheelsInfo.push({
-  //   radius,
-  //   width,
-  //   axelLength,
-  //   axelHeight,
-  //   axelDiameter,
-  //   distance:midleAxel,
-  //   stiffness:rearStiffness,
-  //   damping:rearDamping,
-  //   springLegth:rearSpringLength,
-  //   steering:false,
-  //   engine:true,
-  //   left:true,
-  //   wheelMass,
-  //   axelMass,
-  //   textureFileName,
-  //   color,
-  //   wheelMaterial,
-  //   axelMaterial
-  // });
-  //middle right
-  // wheelsInfo.push({
-  //   radius,
-  //   width,
-  //   axelLength,
-  //   axelHeight,
-  //   axelDiameter,
-  //   distance:midleAxel,
-  //   stiffness:rearStiffness,
-  //   damping:rearDamping,
-  //   springLegth:rearSpringLength,
-  //   steering:false,
-  //   engine:true,
-  //   left:false,
-  //   wheelMass,
-  //   axelMass,
-  //   textureFileName,
-  //   color,
-  //   wheelMaterial,
-  //   axelMaterial
-  // });
   //rear left
   wheelsInfo.push({
     radius,
@@ -246,13 +246,13 @@ export function loadTrailerWheelsInfo(roadTrain){
     damping:rearDamping,
     springLegth:rearSpringLength,
     steering:false,
-    engine:true,
+    engine:false,
     left:true,
     wheelMass,
     axelMass,
     textureFileName,
     color,
-    wheelMaterial,
+    wheelMaterial:fakeMaterial,
     axelMaterial
   });
   //rear right
@@ -267,13 +267,13 @@ export function loadTrailerWheelsInfo(roadTrain){
     damping:rearDamping,
     springLegth:rearSpringLength,
     steering:false,
-    engine:true,
+    engine:false,
     left:false,
     wheelMass,
     axelMass,
     textureFileName,
     color,
-    wheelMaterial,
+    wheelMaterial:fakeMaterial,
     axelMaterial
   });  
   

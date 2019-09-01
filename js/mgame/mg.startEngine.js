@@ -1,21 +1,27 @@
-export function startEngine(gameInstance){
+export async function startEngine(gameInstance){
+  let frameInterval=0;
+  let dI = 1/gameInstance.settings.frameRate;
+  let comp = gameInstance.getProxyLessObject;
   let lastTime = 0;
-  let animationFrameInterval=0;
   gameInstance.running = true;
 
-  function mainloop(animationTimeStamp){
-    if(animationTimeStamp>lastTime) {
-      animationFrameInterval += (animationTimeStamp - lastTime) / 1000;
+  async function mainloop(t){
+    if(lastTime==0 && comp.loadIndex==3) {
+      frameInterval = .02;
+    }else{
+      frameInterval += (t - lastTime) / 1000;
     }
-    if (animationFrameInterval >= gameInstance.demandInterval){
-      gameInstance.timeStamp = animationTimeStamp;
-      gameInstance.actualInterval = animationFrameInterval;
-
-      animationFrameInterval=0;
+    lastTime = t;
+    comp.cannon.step(.016);
+    //
+    if (frameInterval >= dI && gameInstance.compositeRunningFunctions==0){
+      gameInstance.set({timeStamp:t, actualInterval:frameInterval,rendering:true })
+      frameInterval=0;
     }
-    lastTime = animationTimeStamp;
+  //comp.three.renderer.render( comp.three.scene , comp.activeCamera);
+    requestAnimationFrame(mainloop);
 
-    if (gameInstance.running) requestAnimationFrame(mainloop);
   }
+
   requestAnimationFrame(mainloop);
 }
