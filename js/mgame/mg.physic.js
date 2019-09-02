@@ -5,18 +5,38 @@ export function addPhysicBody(mainComposite , obj){
   if (!obj.angularDamping) obj.angularDamping = 0.15;
 
   if (!obj.cylinderSegments) obj.cylinderSegments = 16;
+  if (obj.physicStatus===undefined) obj.physicStatus = true;
+  if (obj.sleep==undefined) obj.sleep = false;
+
+
 
   obj.addFunction(shape);
   obj.addFunction(body);
   obj.addFunction(getMaterial);
   obj.addFunction(updatePhysic);
   obj.addFunction(setLoadIndex);
+  obj.addFunction(setStatus);
+  obj.addFunction(setActivityStatus);
 
   //
   mainComposite.addLink(mainComposite.loadIndex,obj.loadIndex);
-  mainComposite.addLink(mainComposite.cannon , obj.cannon);
-  mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
-  mainComposite.addLink(mainComposite.timeStamp , obj.timeStamp);
+  //mainComposite.addLink(mainComposite.cannon , obj.cannon);
+  //mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
+  obj.cannon = mainComposite.cannon.getProxyLessObject;
+  obj.materials = mainComposite.physicSettings.materials;
+
+  //if (!obj.sleep) mainComposite.addLink(mainComposite.timeStamp , obj.timeStamp);
+}
+
+function setActivityStatus({sleep}){
+  if (sleep){
+    if (timeStamp){
+      mainComposite.removeLink(mainComposite.timeStamp,self.timeStamp);
+    }
+  }else{
+    mainComposite.addLink(mainComposite.timeStamp,self.timeStamp);
+
+  }
 }
 function setLoadIndex({body}){
   if (setLoadIndex) return true;
@@ -45,6 +65,13 @@ export function getMaterial({materials , physicMaterial}){
   }
 }
 
+function setStatus({body,physicStatus}){
+  if(physicStatus){
+    cannon.add(body);
+  }else{
+    cannon.remove(body);
+  }
+}
 const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   if (body){
     cannon.remove(body);
@@ -65,7 +92,6 @@ const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
   cannonBody.linearDamping = linearDamping;
   cannonBody.angularDamping = angularDamping;
 
-  cannon.add(cannonBody);
   return cannonBody;
 }
 
@@ -73,7 +99,11 @@ export function shape ({geometryName , dimension , scale}){
   let result;
   switch (geometryName){
     case "plane":
-      result = new CANNON.Plane();
+      if (heightData){
+        result = new CANNON.Heightfield(heightData, {elementSize:dimension.width/dimension.xSeg});// error: heightData need to converted 
+      }else{
+        result = new CANNON.Plane();
+      }
       break;
     case "box":
       result =  new CANNON.Box(new CANNON.Vec3(dimension.length * scale/2 ,dimension.width * scale/2 ,dimension.height * scale/2));

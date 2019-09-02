@@ -1,10 +1,6 @@
 
 export function exampleGeometries(snake){
-  snake.sceneObjects.ground1={};
-  snake.utils.addObject(snake.sceneObjects.ground1);
-  snake.sceneObjects.ground1.set({geometryName : "box" , dimension : { height:1020.4 , width: .2 , length:1020.4} , position :{x:0.0,y:-51.2,z:0} , color : 0x9f0050 , materialName:"phong" });
-  snake.utils.addPhysicBody(snake.sceneObjects.ground1);
-  snake.sceneObjects.ground1.mass = 0;
+
   // geometries
   snake.sceneObjects.box1={};
   snake.utils.addObject(snake.sceneObjects.box1);

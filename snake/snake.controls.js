@@ -30,6 +30,13 @@ export function setupControls(snake){
 
     }
 
+    if (e.key == "m"){
+      snake.cameras.camera1.active = false;
+      snake.cameras.camera2.active = false;
+      snake.cameras.camera5.active = true;
+
+    }
+
     let roadTrain1 = snake.roadTrains[0];
     if (e.key == "Right" || e.key == "ArrowRight"){
       if (!roadTrain1.turningRight){

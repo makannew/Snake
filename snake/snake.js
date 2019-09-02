@@ -12,6 +12,7 @@ import { initialize } from './snake.initialize.js';
 import { loadRayCastVehicle } from './snake.rayCastVehicle.js';
 import { loadRoadTrain } from './snake.roadTrain.js';
 import { startSnake } from './snake.start.js';
+import { loadGround } from './snake.ground.js';
 
 
 const snake = MGame();
@@ -25,11 +26,13 @@ loadCameras(snake);
 // lights
 loadLights(snake);
 
+//
+loadGround(snake);
 // load world texture
 //loadWorlds(snake);
 
 // load example geometries
-exampleGeometries(snake);
+//exampleGeometries(snake);
 
 
 // load rigid vehicle
@@ -40,7 +43,6 @@ exampleGeometries(snake);
 
 // load mg road train
 loadRoadTrain(snake);
-
 // player settings
 loadPlayerSettings(snake);
 

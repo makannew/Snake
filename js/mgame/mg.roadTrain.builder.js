@@ -48,7 +48,7 @@ const build = function(mainComposite,roadTrain){
       dimension:{radiusTop:wheelInfo.radius,radiusBottom:wheelInfo.radius,height:wheelInfo.width}, 
       position:{x:wheelPosX,y:y+wheelInfo.radius-wheelInfo.axelHeight,z:z+wheelInfo.distance}, 
       color:wheelInfo.color, 
-      materialName:"lambert", 
+      materialName:"phong", 
       shinines:0,
       textureFileName:wheelInfo.textureFileName
     });
@@ -82,7 +82,7 @@ const build = function(mainComposite,roadTrain){
       dimension:{ height:wheelInfo.axelDiameter , width: wheelInfo.axelDiameter , length:susLength }, 
       position:{x:susXPos,y:y,z:z+wheelInfo.distance}, 
       color:wheelInfo.color, 
-      materialName:"lambert", 
+      materialName:"phong", 
       shinines:0});
     mainComposite.utils.addPhysicBody(suspension);
     suspension.set({
@@ -139,7 +139,7 @@ const build = function(mainComposite,roadTrain){
     dimension : { height:roadTrain.chassisLength , width: roadTrain.axelsVerticalFreedom/8 , length: roadTrain.chassisWidth}, 
     position :{x:x,y:y+roadTrain.axelsVerticalFreedom,z:z+(roadTrain.chassisFrontLength+roadTrain.chassisRearLength)/2}, 
     color : roadTrain.chassisColor, 
-    materialName:"lambert" 
+    materialName:"phong" 
   });
 
   roadTrain.chassis={};
@@ -149,7 +149,7 @@ const build = function(mainComposite,roadTrain){
     dimension : { height:massCenterChassisLength , width: roadTrain.axelsVerticalFreedom/8 , length:roadTrain.chassisWidth}, 
     position :{x:x,y:y-roadTrain.axelsVerticalFreedom,z:z}, 
     color : roadTrain.chassisColor, 
-    materialName:"lambert" 
+    materialName:"phong" 
   });
 
   
@@ -161,7 +161,7 @@ if (extensionChassisLength!=0){
     dimension : { height:extensionChassisLength , width: roadTrain.axelsVerticalFreedom/8 , length:roadTrain.chassisWidth}, 
     position :{x:x,y:y-roadTrain.axelsVerticalFreedom,z:z+extensionChassisLocalZ}, 
     color : roadTrain.chassisColor, 
-    materialName:"lambert" 
+    materialName:"phong" 
   });
   mainComposite.utils.makePhysicCompound([roadTrain.chassis,roadTrain.chassisExtension,roadTrain.chassisTop]);
 }else{

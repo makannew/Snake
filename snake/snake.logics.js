@@ -52,5 +52,38 @@ function animationFrameUpdate ({newAnimationFrame}){
   rearCameraQuat.z = threeQuat.z;
   rearCameraQuat.w = threeQuat.w;
 
+  // main camera
+  let lastTrailerPos = roadTrains[6].chassis.body.position;
+  let truckPos = roadTrains[0].chassis.body.position;
+  let truckQuat = roadTrains[0].chassis.body.quaternion;
+
+
+  let camera5Quat = cameras.camera5.camera.quaternion;
+  let lastTrailerQuat = roadTrains[6].chassis.body.quaternion
+  
+  let camera5Pos = cameras.camera5.camera.position;
+
+  camera5Pos.x = lastTrailerPos.x;
+  camera5Pos.y = -40;
+  camera5Pos.z = lastTrailerPos.z;
+  
+  // let cam = new THREE.Vector3(0,50,-50);
+  // let camQuat = new THREE.Quaternion(truckQuat.x,truckQuat.y,truckQuat.z,truckQuat.w);
+  // cam.applyQuaternion(camQuat);
+  // camera5Pos.x = cam.x+truckPos.x;
+  // camera5Pos.y = 10;//cam.y+truckPos.y;
+  // camera5Pos.z = cam.z+threePos.z;
+
+  cameras.camera5.camera.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
+
+  // camera5Quat.x = lastTrailerQuat.x;
+  // camera5Quat.y = lastTrailerQuat.y;
+  // camera5Quat.z = lastTrailerQuat.z;
+  // camera5Quat.w = lastTrailerQuat.w;
+
+
+
+
+
   return true;
 }

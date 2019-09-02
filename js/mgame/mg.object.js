@@ -1,9 +1,8 @@
 
 export function addObject(mainComposite , obj){
-  //mainComposite.sceneObjects[objectName] = {};
-  //let obj = mainComposite.sceneObjects[objectName];
-  //obj.three={};
-  mainComposite.addLink(mainComposite.three , obj.three);
+
+ // mainComposite.addLink(mainComposite.three , obj.three);
+  obj.three = mainComposite.three.getProxyLessObject;
   // functions
   obj.addFunction(texture);
   obj.addFunction(needsUpdate);
@@ -18,6 +17,7 @@ export function addObject(mainComposite , obj){
   obj.addFunction(setShadow);
   obj.addFunction(sceneUpdate);
   obj.addFunction(setQuaternion);
+  obj.addFunction(setPlaneHeightField);
   // default values
   obj.geometryName = "plane";
   obj.materialName = "lambert"
@@ -32,9 +32,19 @@ export function addObject(mainComposite , obj){
   obj.shininess = 30.0;
   obj.castShadow =true;
   obj.receiveShadow =true;
+  obj.self = obj;
+  obj.mainComposite = mainComposite;
+
   //obj.quaternion = new THREE.Quaternion();//.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), 0 );
 }
 
+function setPlaneHeightField({mesh,heightData}){
+  if (geometryName=="plane"){
+    for (let i = 0; i<mesh.geometry.vertices.length; i++ ) {
+      mesh.geometry.vertices[i].z = heightData[i];
+    }
+  }
+}
 const sceneUpdate = function({mesh , visible , three}){
   if (visible && sceneUpdate!=mesh){
     three.scene.add(mesh);
@@ -103,7 +113,7 @@ const geometry = function({geometryName , dimension}){
   let result;
   switch (geometryName){
     case "plane":
-      result = new THREE.PlaneGeometry(dimension.length , dimension.width );
+      result = new THREE.PlaneGeometry(dimension.length , dimension.width , dimension.xSeg, dimension.Yseg);
       break;
     case "box":
       result = new THREE.BoxGeometry(dimension.length , dimension.width , dimension.height );
