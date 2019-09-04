@@ -355,7 +355,9 @@ export default function(){
   }
 
   const syncLinkedProps = function(prop){
+    //if (!prop.getRefFrom(metaTree)) console.log(String(prop.arr))
     let externalLinks = prop.getRefFrom(metaTree)[metaDataKey].externalLinks;
+    
     let updatedLinks = [];
     if (externalLinks.length==0) return externalLinks;
     let propObj = prop.getObject(composite); 

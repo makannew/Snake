@@ -1,8 +1,46 @@
 
-export function setupControls(snake){
+export function loadControls(snake){
   // game controls
+  let oldTouchX=undefined;
   document.addEventListener( "keydown" , keyDownHandler , false );
   document.addEventListener( "keyup" , keyUpHandler , false );
+  document.addEventListener( 'touchstart' ,toushStartHandler , { passive: false })
+  document.addEventListener( 'touchend' ,toushEndHandler , { passive: false })
+  document.addEventListener( 'touchmove' ,toushMoveHandler , { passive: false })
+
+function toushMoveHandler(e){
+  e.preventDefault();
+  let roadTrain1 = snake.roadTrains[0];
+  let x=e.changedTouches[0].clientX;
+
+  if (oldTouchX!=undefined){
+    if(x-oldTouchX>0 && !roadTrain1.turningRight){
+      roadTrain1.set({turningRight:true,turningLeft:false});
+    }
+    if(x-oldTouchX<0 && !roadTrain1.turningLeft){
+      roadTrain1.set({turningRight:false,turningLeft:true});
+    }
+  }
+
+  oldTouchX=x;
+}
+function toushStartHandler(e){
+  e.preventDefault();
+  oldTouchX=undefined;
+  let roadTrain1 = snake.roadTrains[0];
+  if (roadTrain1.speed ==0){
+    roadTrain1.speed = 20;
+  }
+}
+
+function toushEndHandler(e){
+  e.preventDefault();
+  let roadTrain1 = snake.roadTrains[0];
+  roadTrain1.set({turningRight:false,turningLeft:false});
+
+  oldTouchX=undefined;
+
+}
 
   function keyDownHandler ( e ){
 
@@ -40,15 +78,15 @@ export function setupControls(snake){
     let roadTrain1 = snake.roadTrains[0];
     if (e.key == "Right" || e.key == "ArrowRight"){
       if (!roadTrain1.turningRight){
-        roadTrain1.turningLeft = false;
-        roadTrain1.turningRight = true;
+        roadTrain1.set({turningRight:true,turningLeft:false});
+
       }
       //snake.cameras.camera1.position.x=snake.cameras.camera1.position.x+1
     }
     if (e.key == "Left" || e.key == "ArrowLeft"){
       if (!roadTrain1.turningLeft){
-        roadTrain1.turningRight = false;
-        roadTrain1.turningLeft = true;
+        roadTrain1.set({turningRight:false,turningLeft:true});
+
       }
       //snake.cameras.camera1.position.x=snake.cameras.camera1.position.x-1
 

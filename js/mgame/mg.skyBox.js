@@ -11,7 +11,6 @@ export function addSkyBox(mainComposite , skyBoxName){
   skyBoxName.physicBody = true;
   skyBoxName.components = [];
   skyBoxName.selfProxy = skyBoxName;
-  skyBoxName.addLink(mainComposite.loadIndex , skyBoxName.loadIndex);
   for (let i=0,len=skyBoxName.worldFileNames.length;i<len;++i){
     skyBoxName.components[i]={};
     addObject(mainComposite,skyBoxName.components[i]);
@@ -23,17 +22,12 @@ export function addSkyBox(mainComposite , skyBoxName){
   }
   skyBoxName.addFunction(allLoaded);
   skyBoxName.addFunction(setGeometries);
-  skyBoxName.addFunction(setLoadIndex);
   for (let prop of ["scale" , "visible"]){
     mainComposite.addLink(skyBoxName[prop] , skyBoxName.components[0][prop] , skyBoxName.components[1][prop],
       skyBoxName.components[2][prop],skyBoxName.components[3][prop],skyBoxName.components[4][prop],skyBoxName.components[5][prop]);
   }
 }
-function setLoadIndex({setGeometries}){
-  if (setLoadIndex) return true;
-  ++loadIndex;
-  return true;
-}
+
 function setGeometries({WorldPosition,worldDimension,allLoaded, thickness}){
   let l = worldDimension.x;
   let w = worldDimension.y;

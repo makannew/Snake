@@ -54,7 +54,7 @@ export function MGame(){
   cannonSettingsBuilder(result);
 
   result.actualInterval = 0;
-  result.timeStamp = 0;
+  //result.timeStamp = 0;
   result.running = false;
   //result.needsUpdate = undefined;
 

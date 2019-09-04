@@ -14,12 +14,10 @@ export function addPhysicBody(mainComposite , obj){
   obj.addFunction(body);
   obj.addFunction(getMaterial);
   obj.addFunction(updatePhysic);
-  obj.addFunction(setLoadIndex);
   obj.addFunction(setStatus);
   obj.addFunction(setActivityStatus);
 
   //
-  mainComposite.addLink(mainComposite.loadIndex,obj.loadIndex);
   //mainComposite.addLink(mainComposite.cannon , obj.cannon);
   //mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
   obj.cannon = mainComposite.cannon.getProxyLessObject;
@@ -38,11 +36,7 @@ function setActivityStatus({sleep}){
 
   }
 }
-function setLoadIndex({body}){
-  if (setLoadIndex) return true;
-  ++loadIndex;
-  return true;
-}
+
 
 const updatePhysic = function({timeStamp , body}){
   if (body && mass!=0){

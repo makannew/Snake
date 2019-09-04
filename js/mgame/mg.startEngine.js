@@ -6,7 +6,7 @@ export async function startEngine(gameInstance){
   gameInstance.running = true;
 
   async function mainloop(t){
-    if(lastTime==0 && comp.loadIndex==3) {
+    if(lastTime==undefined) {
       frameInterval = .02;
     }else{
       frameInterval += (t - lastTime) / 1000;

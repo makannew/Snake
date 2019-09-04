@@ -12,8 +12,10 @@ export function loadGround(snake){
     fallingBlockColor:0xffffff,
     blockGap:.2,
     garbageBlocks:new Set(),
-    blockLoosingDelay:5000,
-    minFallingDepth:-100
+    garbageDelay:3000,
+    standLeftBlocks:new Set(),
+    standLeftDelay:3000,
+    minFallingDepth:-200
     
   };
   snake.ground.self=snake.ground;
@@ -54,26 +56,46 @@ export function loadGround(snake){
   snake.addLink(snake.timeStamp, snake.ground.timeStamp);
 
   snake.ground.addFunction(roadTrainBlocks);
-  snake.ground.addFunction(looseGarbageBlocks);
+  snake.ground.addFunction(manageStandLeftBlocks);
+  snake.ground.addFunction(manageGarbageBlocks);
+
 
 }
 
-function looseGarbageBlocks({roadTrainBlocks,timeStamp}){
+function manageGarbageBlocks({roadTrainBlocks,timeStamp}){
+  let removeList=[];
   for (let block of garbageBlocks){
-    let t=timeStamp-block.startLoosingTime;
-    if (block.color==roadTrainBlockColor) block.self.color = looseBlockColor;
-    if (t>blockLoosingDelay && block.color==looseBlockColor){
-      block.self.set({color:fallingBlockColor,mass:1,sleep:false});
+    if (timeStamp-block.startLoosingTime>garbageDelay && !block.blockIsFalling){
+      block.self.set({mass:1,sleep:false, blockIsFalling:true});
+
     }
-    if (block.color==fallingBlockColor&& block.body.position.y<minFallingDepth){
+    if(block.blockIsFalling && block.body.position.y<minFallingDepth){
       block.self.set({sleep:true,physicStatus:false,visible:false})
-      garbageBlocks.delete(block);
+      removeList.push(block)
     }
+  }
+  for (let block of removeList){
+    garbageBlocks.delete(block);
+
   }
 
 }
+
+function manageStandLeftBlocks({roadTrainBlocks, timeStamp}){
+  let removeList=[];
+  for (let block of standLeftBlocks){
+    if (timeStamp-block.standTimeStamp>standLeftDelay && block.color==roadTrainBlockColor){
+      block.self.set({color:looseBlockColor,sleep:true,physicStatus:false});
+      removeList.push(block);
+    }
+  }
+  for (let block of removeList){
+    standLeftBlocks.delete(block);
+  }
+}
 function roadTrainBlocks({roadTrains,timeStamp}){
   let result=new Set();
+  // find all blocks which roadTrain stands on it
   for (let i=0,len=roadTrains.length;i<len;++i){
     let wheelsBodies = roadTrains[i].wheelsBodies;
     if (wheelsBodies){
@@ -88,31 +110,20 @@ function roadTrainBlocks({roadTrains,timeStamp}){
   }
   
   for (let block of result){
-    if (!roadTrainBlocks.has(block)){
-      if (block.color == solidBlockColor){
-        block.self.set({color:roadTrainBlockColor,physicStatus:true});
+      if (block.color==roadTrainBlockColor || block.color==solidBlockColor){
+        if (!block.standTimeStamp){
+          standLeftBlocks.add(block);
+          block.self.set({color:roadTrainBlockColor,physicStatus:true});
+        }
+          block.standTimeStamp = timeStamp;
       }
-
-    }
-  }
-  // change blocks to roadTrain road blocks
-  if (roadTrainBlocks){
-    for (let block of roadTrainBlocks){
-      if (!result.has(block)){
+      if (block.color==looseBlockColor && !block.startLoosingTime){
         block.startLoosingTime = timeStamp;
+        block.self.set({physicStatus:true});
+
         garbageBlocks.add(block);
       }
-      //block.self.set({color:roadTrainBlockColor,physicStatus:true});
-    }
   }
 
-
-
-
   return result;
-}
-
-function getBlockByAddress(snake,i,j){
-  let d = snake.ground.groundDimension;
-  return snake.ground.blocks[i*d+j];
 }
