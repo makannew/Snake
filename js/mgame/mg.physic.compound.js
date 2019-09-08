@@ -1,44 +1,52 @@
 
 import { shape , getMaterial } from "./mg.physic.js"
 
-export function makePhysicCompound(mainComposite , sceneObjects){
-  if (!sceneObjects[0].physicMaterial) sceneObjects[0].physicMaterial= "objectMaterial";
-  if (!sceneObjects[0].linearDamping) sceneObjects[0].linearDamping = 0.15;
-  if (!sceneObjects[0].angularDamping) sceneObjects[0].angularDamping = 0.15;
+export function makePhysicCompound(mainComposite , components){
+  if (!components[0].physicMaterial) components[0].physicMaterial= "objectMaterial";
+  if (!components[0].linearDamping) components[0].linearDamping = 0.15;
+  if (!components[0].angularDamping) components[0].angularDamping = 0.15;
 
-  sceneObjects[0].compoundPosition = undefined;// choose correctly inside the shape
+  components[0].compoundPosition = undefined;// choose correctly inside the shape
 
-  for (let sceneObject of sceneObjects){
-    if (!sceneObject.cylinderSegments) sceneObject.cylinderSegments = 16;
-    if (!sceneObject.quaternion) sceneObject.quaternion = new CANNON.Quaternion();
-    if (sceneObject===sceneObjects[0]){
-      sceneObject.centerOfGravity = true;
+  for (let obj of components){
+    if (!obj.cylinderSegments) obj.cylinderSegments = 16;
+    if (!obj.quaternion) obj.quaternion = new CANNON.Quaternion(0,0,0,1);
+    if (obj===components[0]){
+      obj.centerOfGravity = true;
     }else{
-      sceneObject.centerOfGravity = undefined;
+      obj.centerOfGravity = undefined;
     }
-    sceneObject.addFunction(shape);
-    sceneObject.addFunction(getMaterial);
+    obj.addFunction(shape);
+    obj.addFunction(getMaterial);
 
-    sceneObject.addFunction(relativePosition);
-    sceneObject.addFunction(relativeQuaternion);
-    sceneObject.addFunction(body);
-    sceneObject.addFunction(addToCompoundBody);
-    sceneObject.addFunction(updateCompoundBody);
-    sceneObject.addFunction(readCompoundBodyShapeNumber);
+    obj.addFunction(relativePosition);
+    obj.addFunction(relativeQuaternion);
+    obj.addFunction(body);
+    obj.addFunction(addToCompoundBody);
+    obj.addFunction(updateCompoundBody);
+    obj.addFunction(readCompoundBodyShapeNumber);
+    //obj.addFunction(setCompoundQuaternion);
 
 
-    mainComposite.addLink(mainComposite.physicSettings.materials , sceneObject.materials);
-    mainComposite.addLink(mainComposite.cannon , sceneObject.cannon);
+    mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
+    mainComposite.addLink(mainComposite.cannon , obj.cannon);
 
-    mainComposite.addLink(sceneObjects[0].mass , sceneObject.mass);
-    mainComposite.addLink(sceneObjects[0].physicMaterial , sceneObject.physicMaterial);
-    mainComposite.addLink(sceneObjects[0].compoundPosition , sceneObject.compoundPosition);
-    mainComposite.addLink(sceneObjects[0].body , sceneObject.body);
-    mainComposite.addLink(mainComposite.timeStamp , sceneObject.timeStamp);
+    mainComposite.addLink(components[0].mass , obj.mass);
+    mainComposite.addLink(components[0].physicMaterial , obj.physicMaterial);
+    mainComposite.addLink(components[0].compoundPosition , obj.compoundPosition);
+    mainComposite.addLink(components[0].body , obj.body);
+    mainComposite.addLink(mainComposite.timeStamp , obj.timeStamp);
 
   }
 }
+function setCompoundQuaternion({body,compoundQuaternion}){
+  body.quaternion.x = compoundQuaternion.x;
+  body.quaternion.y = compoundQuaternion.y;
+  body.quaternion.z = compoundQuaternion.z;
+  body.quaternion.w = compoundQuaternion.w;
 
+
+}
 function readCompoundBodyShapeNumber({compoundBodyShapeNumber}){
   return true;
 }
@@ -56,7 +64,7 @@ function body({mass , physicMaterial , cannon , centerOfGravity , compoundPositi
   if (body) cannon.remove(body);
   let newBody = new CANNON.Body({mass:mass , material:physicMaterial});
   newBody.position.set(compoundPosition.x , compoundPosition.y , compoundPosition.z);
-  newBody.quaternion = new CANNON.Quaternion();
+  newBody.quaternion = new CANNON.Quaternion(0,0,0,1);
   newBody.linearDamping = linearDamping;
   newBody.angularDamping = angularDamping;
 

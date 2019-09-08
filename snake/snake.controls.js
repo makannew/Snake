@@ -45,8 +45,8 @@ function toushEndHandler(e){
   function keyDownHandler ( e ){
 
     if (e.key == "f"){
-      snake.cameras.camera2.active = false;
-      snake.cameras.camera3.active = false;
+      //snake.cameras.camera2.active = false;
+      //snake.cameras.camera3.active = false;
       snake.cameras.camera1.active = true;
     }
     if (e.key == "t"){
@@ -56,7 +56,7 @@ function toushEndHandler(e){
     }
     if (e.key == "g"){
       snake.cameras.camera1.active = false;
-      snake.cameras.camera2.active = false;
+      //snake.cameras.camera2.active = false;
       snake.cameras.camera3.active = true;
 
     }

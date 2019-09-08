@@ -109,7 +109,7 @@ export function shape ({geometryName , dimension , scale}){
       result = new CANNON.Cylinder( dimension.radiusTop, dimension.radiusBottom , 
         dimension.height,cylinderSegments);
         let quat = new CANNON.Quaternion();
-        quat.setFromAxisAngle(new CANNON.Vec3(1,0,0),-Math.PI/2);
+        quat.setFromAxisAngle(new CANNON.Vec3(1,0,0).normalize(),-Math.PI/2);
         let translation = new CANNON.Vec3(0,0,0);
         result.transformAllPoints(translation,quat);
       break;

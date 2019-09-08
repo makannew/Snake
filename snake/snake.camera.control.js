@@ -5,37 +5,41 @@ export function loadCameraControl(snake){
 
 function animationFrameUpdate ({newAnimationFrame}){
     // main camera
-    let truckPos = roadTrains[0].chassis.body.position;
-    let truckQuat = roadTrains[0].chassis.body.quaternion;
+    let truckPos = roadTrains[0].chassisBody.position;
+    let ori = roadTrains[0].chassisBody.shapeOrientations[0];
+    let threeOri = new THREE.Quaternion(ori.x,ori.y,ori.z,ori.w);
+    let quat = roadTrains[0].chassisBody.quaternion;
+    let threeQuat = new THREE.Quaternion(quat.x,quat.y,quat.z,quat.w);
+    let truckQuat = threeOri.multiply(threeQuat);
     let camera5Pos = cameras.camera6.camera.position;
-    let cam = new THREE.Vector3(0,0,-60);
+    let cam = new THREE.Vector3(0,0,-10);
     cam.applyQuaternion(truckQuat);
     camera5Pos.x = cam.x + truckPos.x;
-    camera5Pos.y = -30;//cam.y+truckPos.y;
+    camera5Pos.y = -47;//cam.y+truckPos.y;
     camera5Pos.z = cam.z + truckPos.z;
     cameras.camera6.camera.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
-    return true;
-  // let cameraPos = cameras.camera1.camera.position;
-  // let vehiclePos = roadTrains[0].chassis.body.position;
-  // let cameraQuat = cameras.camera1.camera.quaternion;
-  // let vehicleQuat = roadTrains[0].chassis.body.quaternion
-  // let threeQuat = new THREE.Quaternion(vehicleQuat.x ,vehicleQuat.y ,vehicleQuat.z ,vehicleQuat.w);
-  // let threeRelativePos = new THREE.Vector3(0,-.1,4); 
-  // let threePos = new THREE.Vector3(vehiclePos.x,vehiclePos.y,vehiclePos.z);
-  // let quat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0) , Math.PI);
+    //return true;
+  let cameraPos = cameras.camera1.camera.position;
+  let vehiclePos = roadTrains[0].chassis.body.position;
+  let cameraQuat = cameras.camera1.camera.quaternion;
+  let vehicleQuat = roadTrains[0].chassis.body.quaternion
+  //let threeQuat = new THREE.Quaternion(vehicleQuat.x ,vehicleQuat.y ,vehicleQuat.z ,vehicleQuat.w);
+  let threeRelativePos = new THREE.Vector3(0,-.1,4); 
+  let threePos = new THREE.Vector3(vehiclePos.x,vehiclePos.y,vehiclePos.z);
+  let quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize() , Math.PI);
   
-  // threeQuat.multiply(quat);
-  // threeRelativePos.applyQuaternion(threeQuat);
-  // threePos.add(threeRelativePos);
+  threeQuat.multiply(quat1);
+  threeRelativePos.applyQuaternion(threeQuat);
+  threePos.add(threeRelativePos);
   
-  // cameraPos.x = threePos.x;
-  // cameraPos.y = threePos.y;
-  // cameraPos.z = threePos.z;
+  cameraPos.x = threePos.x;
+  cameraPos.y = threePos.y;
+  cameraPos.z = threePos.z;
 
-  // cameraQuat.x = threeQuat.x;
-  // cameraQuat.y = threeQuat.y;
-  // cameraQuat.z = threeQuat.z;
-  // cameraQuat.w = threeQuat.w;
+  cameraQuat.x = threeQuat.x;
+  cameraQuat.y = threeQuat.y;
+  cameraQuat.z = threeQuat.z;
+  cameraQuat.w = threeQuat.w;
   // // rear camera
 
   // let rearCameraPos = cameras.camera4.camera.position;

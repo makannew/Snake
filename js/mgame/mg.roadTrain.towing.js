@@ -15,7 +15,7 @@ function linkChassisPosition({towedRoadTrain}){
 
 }
 
-function setConstraint({thisTowingPosition,otherTowingPosition,distance,thisBody ,otherBody}){
+function setConstraint({thisTowingPosition,otherTowingPosition,thisBody ,otherBody}){
   if (setConstraint) return true
   let thisPos = new CANNON.Vec3(thisTowingPosition.x,thisTowingPosition.y,thisTowingPosition.z);
   let otherPos = new CANNON.Vec3(otherTowingPosition.x,otherTowingPosition.y,otherTowingPosition.z);

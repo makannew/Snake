@@ -31,7 +31,7 @@ export function loadRayCastVehicle(snake){
   snake.sceneObjects.rearAxel.set({geometryName:"cylinder" , 
   dimension:{radiusTop:ax.r ,radiusBottom:ax.r,height:ax.wy}, 
   position:{x:x,y:y-ch.wy/2,z:z-ch.hz/2+wh.r} , 
-  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1) , -Math.PI/2),
+  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize() , -Math.PI/2),
   color:0x00ff00 , materialName:"phong" , shinines:0});
 
   snake.sceneObjects.frontAxel={};
@@ -39,7 +39,7 @@ export function loadRayCastVehicle(snake){
   snake.sceneObjects.frontAxel.set({geometryName:"cylinder" , 
   dimension:{radiusTop:ax.r ,radiusBottom:ax.r,height:ax.wy}, 
   position:{x:x,y:y-ch.wy/2,z:z+ch.hz/2-wh.r} , 
-  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1) , -Math.PI/2),
+  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize() , -Math.PI/2),
   color:0x00ff00 , materialName:"phong" , shinines:0});
 
   snake.utils.makePhysicCompound([snake.sceneObjects.chassis,snake.sceneObjects.cockPit,snake.sceneObjects.nose,snake.sceneObjects.rearAxel,snake.sceneObjects.frontAxel]);
@@ -50,7 +50,7 @@ export function loadRayCastVehicle(snake){
   snake.sceneObjects.rearLWheel.set({geometryName:"cylinder" , 
   dimension:{radiusTop:wh.r ,radiusBottom:wh.r,height:wh.wy}, 
   position:{x:x-ax.wy/2-wh.wy/2-wh.clearance,y:y-ch.wy/2,z:z-ch.hz/2+wh.r} , 
-  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1) , -Math.PI/2),
+  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize() , -Math.PI/2),
   color:0x555555 , materialName:"phong" , shinines:0});
   snake.utils.addPhysicBody(snake.sceneObjects.rearLWheel);
   snake.sceneObjects.rearLWheel.set({mass: wheelMass , physicMaterial:"wheelMaterial" });
@@ -60,7 +60,7 @@ export function loadRayCastVehicle(snake){
   snake.sceneObjects.rearRWheel.set({geometryName:"cylinder" , 
   dimension:{radiusTop:wh.r ,radiusBottom:wh.r,height:wh.wy}, 
   position:{x:x+ax.wy/2+wh.wy/2+wh.clearance,y:y-ch.wy/2,z:z-ch.hz/2+wh.r} , 
-  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1) , -Math.PI/2),
+  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize() , -Math.PI/2),
   color:0x555555 , materialName:"phong" , shinines:0});
   snake.utils.addPhysicBody(snake.sceneObjects.rearRWheel);
   snake.sceneObjects.rearRWheel.set({mass: wheelMass , physicMaterial:"wheelMaterial" });
@@ -70,7 +70,7 @@ export function loadRayCastVehicle(snake){
   snake.sceneObjects.frontLWheel.set({geometryName:"cylinder" , 
   dimension:{radiusTop:wh.r ,radiusBottom:wh.r,height:wh.wy}, 
   position:{x:x-ax.wy/2-wh.wy/2-wh.clearance,y:y-ch.wy/2,z:z+ch.hz/2-wh.r} , 
-  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1) , -Math.PI/2),
+  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize() , -Math.PI/2),
   color:0x555555 , materialName:"phong" , shinines:0});
   snake.utils.addPhysicBody(snake.sceneObjects.frontLWheel);
   snake.sceneObjects.frontLWheel.set({mass: wheelMass , physicMaterial:"wheelMaterial" });
@@ -80,7 +80,7 @@ export function loadRayCastVehicle(snake){
   snake.sceneObjects.frontRWheel.set({geometryName:"cylinder" , 
   dimension:{radiusTop:wh.r ,radiusBottom:wh.r,height:wh.wy}, 
   position:{x:x+ax.wy/2+wh.wy/2+wh.clearance,y:y-ch.wy/2,z:z+ch.hz/2-wh.r} , 
-  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1) , -Math.PI/2),
+  quaternion: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize() , -Math.PI/2),
   color:0x555555 , materialName:"phong" , shinines:0});
   snake.utils.addPhysicBody(snake.sceneObjects.frontRWheel);
   snake.sceneObjects.frontRWheel.set({mass: wheelMass , physicMaterial:"wheelMaterial" });

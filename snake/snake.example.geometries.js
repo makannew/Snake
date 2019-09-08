@@ -14,7 +14,7 @@ export function exampleGeometries(snake){
   snake.sceneObjects.box5={};
   snake.utils.addObject(snake.sceneObjects.box5);
   snake.sceneObjects.box5.set({geometryName : "box" , dimension : { height:1.0 , width: 1.0 , length:1.0} , position :{x:25.0,y:-40.5,z:-32.0} , color : 0x11abfb , materialName:"phong" });
-  snake.sceneObjects.box5.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , Math.PI/4);
+  snake.sceneObjects.box5.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0).normalize() , Math.PI/4);
 
   snake.utils.makePhysicCompound([snake.sceneObjects.box1 , snake.sceneObjects.sphere2 , snake.sceneObjects.box5]);
   snake.sceneObjects.box1.set({mass:10 , compoundPosition:{x:25.5,y:-40.5 ,z:-32.0}});
@@ -22,7 +22,7 @@ export function exampleGeometries(snake){
   snake.sceneObjects.box2={};
   snake.utils.addObject(snake.sceneObjects.box2);
   snake.sceneObjects.box2.set({geometryName : "box" , textureFileName:"/characters/0.png" , position :{x:4.5,y:-40.0,z:-40.0}, scale:.1 , materialName:"phong" , shininess:2});
-  snake.sceneObjects.box2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , -Math.PI/8);
+  snake.sceneObjects.box2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0).normalize() , -Math.PI/8);
 
   snake.sceneObjects.sphere1={};
   snake.utils.addObject(snake.sceneObjects.sphere1);
@@ -129,7 +129,7 @@ export function exampleGeometries(snake){
   snake.sceneObjects.cylinder2={};
   snake.utils.addObject(snake.sceneObjects.cylinder2);
   snake.sceneObjects.cylinder2.set({geometryName:"cylinder" , dimension:{radiusTop:1.5,radiusBottom:.5,height:5.0}, position:{x:14.0,y:-40.0,z:-32.5} , color:0xaf11af , materialName:"phong" , shinines:0});
-  snake.sceneObjects.cylinder2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1), Math.PI/8);
+  snake.sceneObjects.cylinder2.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize(), Math.PI/8);
 
   snake.utils.makePhysicCompound([snake.sceneObjects.box3 , snake.sceneObjects.cylinder2]);
   snake.sceneObjects.box3.set({mass:10 , compoundPosition:{x:14.0,y:-40.0,z:-32.5}});

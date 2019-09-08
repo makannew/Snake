@@ -56,7 +56,7 @@ function addChassis({chassis}){
 
 function updateWheels({timeStamp , addWheelToVehicle}){
   let quat = new CANNON.Quaternion();
-  quat.setFromAxisAngle(new CANNON.Vec3(0,0,1),Math.PI/2);
+  quat.setFromAxisAngle(new CANNON.Vec3(0,0,1).normalize(),Math.PI/2);
   for (let i = 0; i < raycastVehicle.wheelInfos.length; i++) {
     raycastVehicle.updateWheelTransform(i);
     let t = raycastVehicle.wheelInfos[i].worldTransform;

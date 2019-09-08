@@ -74,7 +74,7 @@ export function loadRigidVehicle(snake){
     {body:snake.sceneObjects.frontLWheel , axis: new CANNON.Vec3(0, 1, 0) , direction:new CANNON.Vec3(0, 0, -1), engine:false , steering:true , leftHand:true},
     {body:snake.sceneObjects.frontRWheel , axis: new CANNON.Vec3(0, 1, 0) , direction:new CANNON.Vec3(0, 0, -1), engine:false , steering:true, leftHand:false}];
   
-  snake.vehicles.vehicle1.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0) , -Math.PI/4);
+  snake.vehicles.vehicle1.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0).normalize() , -Math.PI/4);
   snake.vehicles.vehicle1.wheelSpeed = 20;
   snake.vehicles.vehicle1.wheelForce = 200;
 

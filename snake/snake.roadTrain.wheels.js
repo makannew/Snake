@@ -1,5 +1,5 @@
 // truck head
-export function loadHeadWheelsInfo(roadTrain){
+export function truckWheelsInfo(){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
   let frontAxel = 3.1 , midleAxel = -1.9 , rearAxel = -3.5;
   let frontStiffness = 700,frontDamping = 80,frontSpringLength = .8;
@@ -136,11 +136,11 @@ export function loadHeadWheelsInfo(roadTrain){
     axelMaterial
   });  
   
-  roadTrain.wheelsInfo = wheelsInfo;
+  return wheelsInfo;
 }
 
 // trailer
-export function loadTrailerWheelsInfo(roadTrain){
+export function trailerWheelsInfo(){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
   let frontAxel = 1 , midleAxel = -2 , rearAxel = -3.5;
   let frontStiffness = 150,frontDamping = 30,frontSpringLength = .8;
@@ -277,7 +277,7 @@ export function loadTrailerWheelsInfo(roadTrain){
     axelMaterial
   });  
   
-  roadTrain.wheelsInfo = wheelsInfo;
+  return wheelsInfo;
 }
 
 

@@ -8,15 +8,16 @@ export function loadCameras(snake){
   // snake.cameras.camera2.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:false , 
   //   position:{x:100,y:100.0,z:100}, quaternion:{x:topViewQuat.x , y:topViewQuat.y, z:topViewQuat.z , w:topViewQuat.w }});
 
-  // // vehicle front camera
-  // snake.cameras.camera1 = {};
-  // snake.utils.addCamera(snake.cameras.camera1);
-  // snake.cameras.camera1.set ({cameraFocalLenght: 55 , cameraNearView: 1 , cameraFarView: 3000 , active:false });
+  // vehicle front camera
+  snake.cameras.camera1 = {};
+  snake.utils.addCamera(snake.cameras.camera1);
+  snake.cameras.camera1.set ({cameraFocalLenght: 55 , cameraNearView: 1 , cameraFarView: 3000 , active:false });
 
   // // ground camera
-  // snake.cameras.camera3 = {};
-  // snake.utils.addCamera(snake.cameras.camera3);
-  // snake.cameras.camera3.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:false });
+  snake.cameras.camera3 = {};
+  snake.utils.addCamera(snake.cameras.camera3);
+  snake.cameras.camera3.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:true,position:{x:90,y:-40,z:120} });
+
 
   // // vehicle rear camera
   // snake.cameras.camera4 = {};
@@ -31,7 +32,7 @@ export function loadCameras(snake){
   // vehicle main camera
   snake.cameras.camera6 = {};
   snake.utils.addCamera(snake.cameras.camera6);
-  snake.cameras.camera6.set ({cameraFocalLenght: 65 , cameraNearView: 1 , cameraFarView: 3000 , active:true })
+  snake.cameras.camera6.set ({cameraFocalLenght: 65 , cameraNearView: 1 , cameraFarView: 3000 , active:false })
 
 
   

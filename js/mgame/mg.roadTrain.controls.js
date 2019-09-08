@@ -11,7 +11,6 @@ export function roadTrainControls(roadTrain){
 }
 
 function setSteering({turningLeft , turningRight ,actualInterval}){
-  // if(steering===undefined) return 0;
   if (!turningRight && !turningLeft) return false;
 
   if (turningRight){

@@ -2,7 +2,7 @@
 export function loadLights(snake){
   snake.lights.ambient1 = {};
   snake.utils.addLight(snake.lights.ambient1);
-  snake.lights.ambient1.set({lightType:"ambient" , intensity:.2});
+  snake.lights.ambient1.set({lightType:"ambient" , intensity:.7});
 
   snake.lights.pointLight1 = {};
   snake.utils.addLight(snake.lights.pointLight1);
