@@ -16,6 +16,7 @@ export function makePhysicCompound(mainComposite , components){
     }else{
       obj.centerOfGravity = undefined;
     }
+    obj.compoundBodyShapeNumber= undefined;
     obj.addFunction(shape);
     obj.addFunction(getMaterial);
 
@@ -25,7 +26,6 @@ export function makePhysicCompound(mainComposite , components){
     obj.addFunction(addToCompoundBody);
     obj.addFunction(updateCompoundBody);
     obj.addFunction(readCompoundBodyShapeNumber);
-    //obj.addFunction(setCompoundQuaternion);
 
 
     mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
@@ -39,14 +39,7 @@ export function makePhysicCompound(mainComposite , components){
 
   }
 }
-function setCompoundQuaternion({body,compoundQuaternion}){
-  body.quaternion.x = compoundQuaternion.x;
-  body.quaternion.y = compoundQuaternion.y;
-  body.quaternion.z = compoundQuaternion.z;
-  body.quaternion.w = compoundQuaternion.w;
 
-
-}
 function readCompoundBodyShapeNumber({compoundBodyShapeNumber}){
   return true;
 }
@@ -64,7 +57,7 @@ function body({mass , physicMaterial , cannon , centerOfGravity , compoundPositi
   if (body) cannon.remove(body);
   let newBody = new CANNON.Body({mass:mass , material:physicMaterial});
   newBody.position.set(compoundPosition.x , compoundPosition.y , compoundPosition.z);
-  newBody.quaternion = new CANNON.Quaternion(0,0,0,1);
+  //newBody.quaternion = new CANNON.Quaternion(0,0,0,1);
   newBody.linearDamping = linearDamping;
   newBody.angularDamping = angularDamping;
 
@@ -75,27 +68,52 @@ function body({mass , physicMaterial , cannon , centerOfGravity , compoundPositi
 
 
 function addToCompoundBody({body , relativePosition , shape , relativeQuaternion}){
-    compoundBodyShapeNumber = body.shapes.length ;
-    body.addShape(shape , relativePosition, relativeQuaternion);
+  if (addToCompoundBody) return addToCompoundBody;
+  compoundBodyShapeNumber = body.shapes.length ;
+  body.addShape(shape , relativePosition, relativeQuaternion);
+
+
   return shape;
 }
 
 const updateCompoundBody = function({timeStamp , addToCompoundBody}){
-  let threeQuaternion = new THREE.Quaternion();
-  threeQuaternion.set(body.quaternion.x , body.quaternion.y  ,body.quaternion.z  ,body.quaternion.w )
-  let orientation = new THREE.Quaternion(relativeQuaternion.x , relativeQuaternion.y ,relativeQuaternion.z , relativeQuaternion.w);
-  let newPos = new THREE.Vector3(relativePosition.x , relativePosition.y ,relativePosition.z );
+  // let threeQuaternion = new THREE.Quaternion();
+  // threeQuaternion.set(body.quaternion.x , body.quaternion.y  ,body.quaternion.z  ,body.quaternion.w )
+  // let orientation = new THREE.Quaternion(relativeQuaternion.x , relativeQuaternion.y ,relativeQuaternion.z , relativeQuaternion.w);
+  // let newPos = new THREE.Vector3(relativePosition.x , relativePosition.y ,relativePosition.z );
+  // let pos = new THREE.Vector3(body.position.x,body.position.y,body.position.z);
+  
+
+
+  let threeQuaternion = new THREE.Quaternion().set(body.quaternion.x , body.quaternion.y  ,body.quaternion.z  ,body.quaternion.w )
+  let orientation = new THREE.Quaternion(body.shapeOrientations[compoundBodyShapeNumber].x , body.shapeOrientations[compoundBodyShapeNumber].y ,body.shapeOrientations[compoundBodyShapeNumber].z , body.shapeOrientations[compoundBodyShapeNumber].w);
+  let newPos = new THREE.Vector3(body.shapeOffsets[compoundBodyShapeNumber].x , body.shapeOffsets[compoundBodyShapeNumber].y ,body.shapeOffsets[compoundBodyShapeNumber].z );
   let pos = new THREE.Vector3(body.position.x,body.position.y,body.position.z);
-  threeQuaternion.multiply(orientation)
+  let qut = new THREE.Quaternion(body.quaternion.x,body.quaternion.y,body.quaternion.z,body.quaternion.w);
+  
+  threeQuaternion.multiply(orientation);
+  //orientation.multiply(threeQuaternion)
+  //orientation.multiply(qut)
+  //newPos.applyQuaternion(orientation);
+
+  //newPos.applyQuaternion(threeQuaternion);
+  //newPos.add(pos);
+
+  //newPos.applyQuaternion(orientation);
 
   newPos.applyQuaternion(threeQuaternion);
+
+  newPos.applyQuaternion(qut);
   newPos.add(pos);
+
+
+
   sceneUpdate.position.x = newPos.x;
   sceneUpdate.position.y = newPos.y;
   sceneUpdate.position.z = newPos.z;
 
   sceneUpdate.quaternion.x = threeQuaternion.x;
   sceneUpdate.quaternion.y = threeQuaternion.y;
-  sceneUpdate.quaternion.z =  threeQuaternion.z;
+  sceneUpdate.quaternion.z = threeQuaternion.z;
   sceneUpdate.quaternion.w = threeQuaternion.w;
 }

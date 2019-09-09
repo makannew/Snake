@@ -31,7 +31,7 @@ loadLights(snake);
 loadRoadTrain(snake);
 
 // game logic updating
-//loadCameraControl(snake);
+loadCameraControl(snake);
 
 // setup game user controls
 loadControls(snake);

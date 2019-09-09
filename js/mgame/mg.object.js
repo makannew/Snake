@@ -79,7 +79,12 @@ const setPosition = function({mesh , position}){
 }
 
 const setQuaternion = function({mesh , quaternion}){
-  mesh.applyQuaternion( quaternion );
+  //mesh.applyQuaternion( quaternion );
+  mesh.quaternion.x = quaternion.x;
+  mesh.quaternion.y = quaternion.y;
+  mesh.quaternion.z = quaternion.z;
+  mesh.quaternion.w = quaternion.w;
+
   return true;
 }
 

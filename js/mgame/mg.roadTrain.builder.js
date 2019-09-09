@@ -91,7 +91,7 @@ function buildRoadTrain({wheelsInfo}){
     mainComposite.utils.addPhysicBody(wheel);
     wheel.set({
       physicMaterial:wheelInfo.wheelMaterial, 
-      mass:0,//wheelInfo.wheelMass, 
+      mass:wheelInfo.wheelMass, 
       wheelLeft:wheelInfo.left, 
       wheelSteering:wheelInfo.steering, 
       driving:wheelInfo.engine, 
@@ -132,7 +132,7 @@ function buildRoadTrain({wheelsInfo}){
     mainComposite.utils.addPhysicBody(suspension);
     suspension.set({
       physicMaterial:wheelInfo.axelMaterial, 
-      mass:0,//wheelInfo.axelMass,
+      mass:wheelInfo.axelMass,
       allowSleep:false
     });
     if (wheelInfo.distance+wheelInfo.axelDiameter*2>chassisFrontEst){
@@ -244,9 +244,9 @@ if (extensionChassisLength!=0){
   //chassisPos.applyQuaternion(threeQuat);
 
   roadTrain.chassis.set({
-    mass:0,//roadTrain.chassisMass , 
+    mass:roadTrain.chassisMass , 
     //compoundPosition:{x:x+chassisPos.x, y:y+chassisPos.y , z:z+chassisPos.z},
-    //compoundPosition:{x:x, y:y , z:z},
+    compoundPosition:{x:x, y:y , z:z},
 
     //compoundQuaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
    });

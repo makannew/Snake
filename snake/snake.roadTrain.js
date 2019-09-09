@@ -6,7 +6,7 @@ export function loadRoadTrain(snake){
   let iniPos={x:95,y:-48,z:90}
   let iniQuat = new THREE.Quaternion();
   
-  iniQuat.setFromAxisAngle(new THREE.Vector3(0,1,1).normalize(), Math.PI/2)
+  iniQuat.setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(), Math.PI/4)
   snake.roadTrains = [];
   snake.roadTrains.push({});
   snake.utils.newRoadTrain(snake.roadTrains[0]);
