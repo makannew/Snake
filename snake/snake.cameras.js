@@ -1,12 +1,12 @@
 
 export function loadCameras(snake){
 
-  // let topViewQuat = new THREE.Quaternion();
-  // topViewQuat.setFromAxisAngle(new THREE.Vector3(1,0,0), -Math.PI/2)
-  // snake.cameras.camera2 = {};
-  // snake.utils.addCamera(snake.cameras.camera2);
-  // snake.cameras.camera2.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:false , 
-  //   position:{x:100,y:100.0,z:100}, quaternion:{x:topViewQuat.x , y:topViewQuat.y, z:topViewQuat.z , w:topViewQuat.w }});
+  let topViewQuat = new THREE.Quaternion();
+  topViewQuat.setFromAxisAngle(new THREE.Vector3(1,0,0), -Math.PI/2)
+  snake.cameras.camera2 = {};
+  snake.utils.addCamera(snake.cameras.camera2);
+  snake.cameras.camera2.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:false , 
+    position:{x:100,y:100.0,z:100}, quaternion:{x:topViewQuat.x , y:topViewQuat.y, z:topViewQuat.z , w:topViewQuat.w }});
 
   // vehicle front camera
   snake.cameras.camera1 = {};

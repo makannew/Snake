@@ -24,6 +24,7 @@ export function addObject(mainComposite , obj){
   obj.color = 0xffffff;
   obj.scale = 1;
   obj.position = new THREE.Vector3(0,0,0);
+  obj.quaternion = new THREE.Quaternion();
   obj.visible = true;
   obj.widthSegments =32;
   obj.heightSegments = 32;
@@ -73,18 +74,11 @@ const setShadow = function({mesh , castShadow , receiveShadow}){
 }
 
 const setPosition = function({mesh , position}){
-  mesh.position.x = position.x;
-  mesh.position.y = position.y;
-  mesh.position.z = position.z;
+  mesh.position.set(position.x,position.y,position.z);
 }
 
 const setQuaternion = function({mesh , quaternion}){
-  //mesh.applyQuaternion( quaternion );
-  mesh.quaternion.x = quaternion.x;
-  mesh.quaternion.y = quaternion.y;
-  mesh.quaternion.z = quaternion.z;
-  mesh.quaternion.w = quaternion.w;
-
+  mesh.quaternion.set(quaternion.x,quaternion.y,quaternion.z,quaternion.w);
   return true;
 }
 

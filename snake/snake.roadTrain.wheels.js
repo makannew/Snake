@@ -2,9 +2,9 @@
 export function truckWheelsInfo(){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
   let frontAxel = 3.1 , midleAxel = -1.9 , rearAxel = -3.5;
-  let frontStiffness = 700,frontDamping = 80,frontSpringLength = .8;
+  let frontStiffness = 600,frontDamping = 80,frontSpringLength = .8;
   let rearStiffness = 300,rearDamping = 40,rearSpringLength = .8;
-  let wheelMass = 10, axelMass = 30;
+  let wheelMass = 1, axelMass = 30;
   let textureFileName = undefined , color=0x777777;
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
   let steeringWheelMass = 20, steeringAxelMass = 70;
@@ -63,7 +63,7 @@ export function truckWheelsInfo(){
     damping:rearDamping,
     springLegth:rearSpringLength,
     steering:false,
-    engine:true,
+    engine:false,
     left:true,
     wheelMass,
     axelMass,
@@ -84,7 +84,7 @@ export function truckWheelsInfo(){
     damping:rearDamping,
     springLegth:rearSpringLength,
     steering:false,
-    engine:true,
+    engine:false,
     left:false,
     wheelMass,
     axelMass,

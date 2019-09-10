@@ -8,25 +8,17 @@ export function addPhysicBody(mainComposite , obj){
   if (obj.physicStatus===undefined) obj.physicStatus = true;
   if (obj.sleep==undefined) obj.sleep = false;
 
-
-
   obj.addFunction(shape);
   obj.addFunction(body);
   obj.addFunction(getMaterial);
   obj.addFunction(updatePhysic);
   obj.addFunction(setStatus);
   obj.addFunction(setActivityStatus);
-
-  //
-  //mainComposite.addLink(mainComposite.cannon , obj.cannon);
-  //mainComposite.addLink(mainComposite.physicSettings.materials , obj.materials);
   obj.cannon = mainComposite.cannon.getProxyLessObject;
-  obj.materials = mainComposite.physicSettings.materials;
-
-  //if (!obj.sleep) mainComposite.addLink(mainComposite.timeStamp , obj.timeStamp);
+  obj.materials = mainComposite.physicSettings.materials.getProxyLessObject;
 }
 
-function setActivityStatus({sleep}){
+export function setActivityStatus({sleep}){
   if (sleep){
     if (timeStamp){
       mainComposite.removeLink(mainComposite.timeStamp,self.timeStamp);
@@ -37,18 +29,11 @@ function setActivityStatus({sleep}){
   }
 }
 
-
 const updatePhysic = function({timeStamp , body}){
-  if (body && mass!=0){
-    sceneUpdate.position.x = body.position.x;
-    sceneUpdate.position.y = body.position.y;
-    sceneUpdate.position.z = body.position.z;
-    //
-    sceneUpdate.quaternion.x = body.quaternion.x;
-    sceneUpdate.quaternion.y = body.quaternion.y;
-    sceneUpdate.quaternion.z = body.quaternion.z;
-    sceneUpdate.quaternion.w = body.quaternion.w;
-  }
+  let pos = body.position;
+  let quat = body.quaternion;
+  position = pos;
+  quaternion = quat;
 }
 
 export function getMaterial({materials , physicMaterial}){
@@ -59,34 +44,21 @@ export function getMaterial({materials , physicMaterial}){
   }
 }
 
-function setStatus({body,physicStatus}){
+export function setStatus({body,physicStatus}){
   if(physicStatus){
     cannon.add(body);
   }else{
     cannon.remove(body);
   }
 }
-const body = function({sceneUpdate , getMaterial , shape , mass , cannon }){
-  if (body){
-    cannon.remove(body);
-  }
-  if (!sceneUpdate){
-    return false;
-  }
-  let cannonBody = new CANNON.Body({mass:mass , shape: shape , material: getMaterial });
-  cannonBody.position.x = sceneUpdate.position.x;
-  cannonBody.position.y = sceneUpdate.position.y;
-  cannonBody.position.z = sceneUpdate.position.z;
-  //
-  cannonBody.quaternion.x = sceneUpdate.quaternion.x;
-  cannonBody.quaternion.y = sceneUpdate.quaternion.y;
-  cannonBody.quaternion.z = sceneUpdate.quaternion.z;
-  cannonBody.quaternion.w = sceneUpdate.quaternion.w;
-  //
-  cannonBody.linearDamping = linearDamping;
-  cannonBody.angularDamping = angularDamping;
-
-  return cannonBody;
+export function body({mesh , getMaterial , shape , mass}){
+  if (body) return body;
+  let newBody = new CANNON.Body({mass , shape , material:getMaterial});
+  newBody.position.set(position.x , position.y , position.z);
+  newBody.quaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
+  newBody.linearDamping = linearDamping;
+  newBody.angularDamping = angularDamping;
+  return newBody;
 }
 
 export function shape ({geometryName , dimension , scale}){

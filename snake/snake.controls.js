@@ -15,10 +15,10 @@ function toushMoveHandler(e){
 
   if (oldTouchX!=undefined){
     if(x-oldTouchX>0 && !roadTrain1.turningRight){
-      roadTrain1.set({turningRight:true,turningLeft:false});
+      roadTrain1.set({turningRight:false,turningLeft:true});
     }
     if(x-oldTouchX<0 && !roadTrain1.turningLeft){
-      roadTrain1.set({turningRight:false,turningLeft:true});
+      roadTrain1.set({turningRight:true,turningLeft:false});
     }
   }
 
@@ -50,9 +50,7 @@ function toushEndHandler(e){
       snake.cameras.camera1.active = true;
     }
     if (e.key == "t"){
-      snake.cameras.camera1.active = false;
-      snake.cameras.camera3.active = false;
-      snake.cameras.camera2.active = true;
+
     }
     if (e.key == "g"){
       snake.cameras.camera1.active = false;
@@ -70,8 +68,7 @@ function toushEndHandler(e){
 
     if (e.key == "m"){
       snake.cameras.camera1.active = false;
-      snake.cameras.camera2.active = false;
-      snake.cameras.camera5.active = true;
+      snake.cameras.camera2.active = true;
 
     }
 
@@ -99,6 +96,9 @@ function toushEndHandler(e){
     }
     if (e.key == "s"){
       roadTrain1.speed = 0;
+    }
+    if (e.key =="t"){
+      ++snake.roadTrains[0].totalTrailers;
     }
     e.preventDefault();
 

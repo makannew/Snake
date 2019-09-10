@@ -1,6 +1,5 @@
 
 export function loadBuilder(roadTrain){
-  //roadTrain.build = function(){build(mainComposite,roadTrain)};
   roadTrain.wheels = undefined;
   roadTrain.wheelsBodies = undefined;
   roadTrain.suspensions = undefined;
@@ -8,7 +7,6 @@ export function loadBuilder(roadTrain){
   roadTrain.gapRatio = .95;
   if (!roadTrain.position) roadTrain.position={x:0,y:0,z:0};
   if (!roadTrain.quaternion) roadTrain.quaternion={x:0,y:0,z:0,w:1};
-
 
   roadTrain.addFunction(buildRoadTrain)
   roadTrain.addFunction(headBodiesLoaded);
@@ -41,12 +39,9 @@ function buildRoadTrain({wheelsInfo}){
 
   let threeQuat = new THREE.Quaternion(quaternion.x,quaternion.y,quaternion.z,quaternion.w)
 
-
-
   let rotation
   let chassisFrontEst=0,chassisRearEst=0;
   let chassisWidthEst , maxChassisWidth;
-  //let wheels = roadTrain.wheels;
 
   for (let wheelInfo of roadTrain.wheelsInfo){
     let wheels = roadTrain.wheels;
@@ -57,10 +52,8 @@ function buildRoadTrain({wheelsInfo}){
     
     let wheelPos = new THREE.Vector3(wheelInfo.axelLength,wheelInfo.radius-wheelInfo.axelHeight,wheelInfo.distance)
     if (wheelInfo.left){
-      //wheelPosX = x + wheelInfo.axelLength;
       rotation = Math.PI/2;
     }else{
-      //wheelPosX = x - wheelInfo.axelLength;
       wheelPos.x = -wheelPos.x;
       rotation = -Math.PI/2;
     }
@@ -68,9 +61,6 @@ function buildRoadTrain({wheelsInfo}){
     let correctionQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize(), rotation);
     let wheelQuat = new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w)
     wheelQuat.multiply(correctionQuat);
-
-    //wheelQuat.multiplyQuaternions(quaternion,wheelQuat)
-
 
     mainComposite.utils.addObject(wheel);
     wheel.set({
@@ -83,13 +73,13 @@ function buildRoadTrain({wheelsInfo}){
       shinines:0,
       textureFileName:wheelInfo.textureFileName
     });
-    //wheel.quaternion = new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w)
-    //wheel.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1), rotation);
 
     let susLength = (wheelInfo.axelLength-wheelInfo.width/2) * roadTrain.gapRatio;
 
     mainComposite.utils.addPhysicBody(wheel);
     wheel.set({
+      angularDamping:0,
+      linearDamping:0,
       physicMaterial:wheelInfo.wheelMaterial, 
       mass:wheelInfo.wheelMass, 
       wheelLeft:wheelInfo.left, 
@@ -104,14 +94,9 @@ function buildRoadTrain({wheelsInfo}){
     // build suspension
     let suspensions = roadTrain.suspensions;
     let susPos = new THREE.Vector3(wheelInfo.axelLength - wheelInfo.width/2 - susLength/2,0,wheelInfo.distance);
-    //let susPos = new THREE.Vector3((wheelInfo.axelLength-wheelInfo.width/2)-susLength+susLength/2,0,wheelInfo.distance);
 
-    //let susXPos;
-    if (wheelInfo.left){
-      //susXPos = x + wheelInfo.axelLength - wheelInfo.width/2 - susLength/2;
-    } else{
+    if (!wheelInfo.left){
       susPos.x*=-1;
-      //susXPos = x - wheelInfo.axelLength + wheelInfo.width/2 + susLength/2;
     }
     susPos.applyQuaternion(threeQuat);
     
@@ -128,7 +113,6 @@ function buildRoadTrain({wheelsInfo}){
       materialName:"phong", 
       shinines:0
     });
-    //suspension.quaternion = new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w)
     mainComposite.utils.addPhysicBody(suspension);
     suspension.set({
       physicMaterial:wheelInfo.axelMaterial, 
@@ -143,11 +127,7 @@ function buildRoadTrain({wheelsInfo}){
     }
 
     // chassis width auto calculation
-    //if (wheelInfo.steering){
       maxChassisWidth = (wheelInfo.axelLength-wheelInfo.radius)*2
-    // }else{
-    //   maxChassisWidth = wheelInfo.axelLength*2*roadTrain.gapRatio;
-    // }
     if (!chassisWidthEst || chassisWidthEst>maxChassisWidth){
       chassisWidthEst = maxChassisWidth;
     }
@@ -210,10 +190,7 @@ function buildRoadTrain({wheelsInfo}){
     geometryName : "box" , 
     dimension : { height:massCenterChassisLength , width: roadTrain.axelsVerticalFreedom/8 , length:roadTrain.chassisWidth}, 
     position :{x:x+chassisPos.x , y:y+chassisPos.y , z:z+chassisPos.z}, 
-    //position:{x:x, y:y , z:z},
-
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
-
     color : roadTrain.chassisColor, 
     materialName:"phong" 
   });
@@ -241,23 +218,18 @@ if (extensionChassisLength!=0){
 }else{
   mainComposite.utils.makePhysicCompound([roadTrain.chassis,roadTrain.chassisTop]);
 }
-  //chassisPos.applyQuaternion(threeQuat);
 
   roadTrain.chassis.set({
     mass:roadTrain.chassisMass , 
-    //compoundPosition:{x:x+chassisPos.x, y:y+chassisPos.y , z:z+chassisPos.z},
-    compoundPosition:{x:x, y:y , z:z},
-
-    //compoundQuaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
    });
-  mainComposite.addLink(roadTrain.chassis.compoundPosition, roadTrain.position);
+  mainComposite.addLink(roadTrain.chassis.position, roadTrain.position);
+  mainComposite.addLink(roadTrain.chassis.quaternion, roadTrain.quaternion);
+
 
   for (let i=0,len=roadTrain.wheels.length;i<len;++i){
     roadTrain.addLink(roadTrain.wheels[i].body , roadTrain.wheelsBodies[i]);
     roadTrain.addLink(roadTrain.suspensions[i].body , roadTrain.suspensionsBodies[i]);
-
   }
   roadTrain.addLink(roadTrain.chassis.body , roadTrain.chassisBody);
-  //roadTrain.built = true;
 
 }
