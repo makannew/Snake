@@ -1,5 +1,7 @@
 
 export function newLockConstraint (mainComposite ,constraintName){
+  constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
   constraintName.constraints = [];
@@ -29,6 +31,8 @@ function addLockConstraint({linkedBodies}){
       }else{
         constraints.push(new CANNON.LockConstraint(linkedBodies[i] , previous , {maxForce:maxForce}));
         cannon.addConstraint(constraints[constraints.length - 1]);
+        loadedObjects.push(constraints[constraints.length - 1]);
+
         previous = linkedBodies[i];
         addedIndex = i;
       }

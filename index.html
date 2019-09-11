@@ -4,11 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <style type="text/css">
+        #myProgress {
+            width: 100%;
+            background-color: grey;
+
+        }
+        #loadingBar {
+            width: 1%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center; /* To center it horizontally (if you want) */
+            line-height: 30px; /* To center it vertically */
+            color: white;
+        }
+    </style>
+    <title>Snake game</title>
 </head>
 <body>
+    <div id="myProgress">
+        <div id="loadingBar">10%</div>
+    </div>
     <script src= "js/mgame/dependencies/three.min.js"></script>
+    <script>
+        let gameLoadingProgress = {progressBar:document.getElementById("loadingBar") , totalObject:425 , loading:true} ;
+        gameLoadingProgress.progressBar.style.width = 30 + '%';
+        gameLoadingProgress.progressBar.innerHTML = 30 + '%';
+    </script>
     <script src= "js/mgame/dependencies/cannon.min.js"></script>
+    <script>
+        gameLoadingProgress.progressBar.style.width = 50 + '%';
+        gameLoadingProgress.progressBar.innerHTML = 50 + '%';
+    </script>
     <script type = "module" src = "snake/snake.js"></script>
+    <script>
+            gameLoadingProgress.progressBar.style.width = 70 + '%';
+            gameLoadingProgress.progressBar.innerHTML = 70 + '%';
+        </script>
+
 </body>
 </html>

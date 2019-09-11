@@ -1,5 +1,8 @@
 
 export function newDistanceConstraint (mainComposite ,constraintName){
+  constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  constraintName.addFunction(addToLoadedObjects);
+
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
   constraintName.active = true;
@@ -9,6 +12,12 @@ export function newDistanceConstraint (mainComposite ,constraintName){
   constraintName.addFunction(addBodyB);
   constraintName.addFunction(distanceConstraint);
   constraintName.addFunction(setStatus);
+}
+
+function addToLoadedObjects({distanceConstraint}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(distanceConstraint);
+  return true;
 }
 
 function addBodyA({bodyA}){

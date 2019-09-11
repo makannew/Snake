@@ -11,6 +11,7 @@ import { loadGround } from './snake.ground.js';
 
 
 const snake = MGame();
+
 //snake.self = snake;
 console.log(snake)
 

@@ -2,6 +2,9 @@ import { addObject } from "./mg.object.js"
 import { addPhysicBody } from "./mg.physic.js"
 
 export function addSkyBox(mainComposite , skyBoxName){
+  skyBoxName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  skyBoxName.addFunction(addToLoadedObjects);
+
   skyBoxName.scale=1;
   skyBoxName.visible=false;
   skyBoxName.WorldPosition={x:0,y:0,z:0};
@@ -26,6 +29,12 @@ export function addSkyBox(mainComposite , skyBoxName){
     mainComposite.addLink(skyBoxName[prop] , skyBoxName.components[0][prop] , skyBoxName.components[1][prop],
       skyBoxName.components[2][prop],skyBoxName.components[3][prop],skyBoxName.components[4][prop],skyBoxName.components[5][prop]);
   }
+}
+
+function addToLoadedObjects({setGeometries}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(selfProxy);
+  return true;
 }
 
 function setGeometries({WorldPosition,worldDimension,allLoaded, thickness}){

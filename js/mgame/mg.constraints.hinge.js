@@ -1,5 +1,8 @@
 
 export function newHingeConstraint (mainComposite ,constraintName){
+  constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  constraintName.addFunction(addToLoadedObjects);
+
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
   constraintName.active = true;
@@ -14,6 +17,12 @@ export function newHingeConstraint (mainComposite ,constraintName){
   constraintName.addFunction(pivotB);
   constraintName.addFunction(setMotor);
   constraintName.addFunction(setMotorSpeed);
+}
+
+function addToLoadedObjects({hingeConstraint}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(hingeConstraint);
+  return true;
 }
 
 function addBodyA({bodyA}){

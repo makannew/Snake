@@ -231,5 +231,5 @@ if (extensionChassisLength!=0){
     roadTrain.addLink(roadTrain.suspensions[i].body , roadTrain.suspensionsBodies[i]);
   }
   roadTrain.addLink(roadTrain.chassis.body , roadTrain.chassisBody);
-
+  return true;
 }

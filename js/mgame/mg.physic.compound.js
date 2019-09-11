@@ -30,11 +30,18 @@ export function makePhysicCompound(mainComposite , components){
     components[0].components.push(components[i].getProxyLessObject);
     if (!components[i].cylinderSegments) components[i].cylinderSegments = 16;
     components[i].addFunction(shape);
+    components[i].addFunction(addPhysicToLoadedObjects);
     components[i].addFunction(addToCompoundBody);
     mainComposite.addLink(components[0].body , components[i].body);
     components[i].compoundBodyShapeNumber = undefined;
 
   }
+}
+
+function addPhysicToLoadedObjects({addToCompoundBody}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(shape);
+  return true;
 }
 
 function addToCompoundBody({body ,shape }){

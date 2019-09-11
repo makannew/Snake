@@ -1,13 +1,15 @@
 
-export function initializeThreeJs(){
+export function initializeThreeJs(mainComposite){
   let result={};
   // three.js setup
   result.scene = new THREE.Scene ();
   result.renderer = new THREE.WebGLRenderer (); //{devicePixelRatio: 100 }
   result.renderer.shadowMap.enabled = true;
   result.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  result.renderer.setSize ( innerWidth , innerHeight);
+  result.renderer.setSize ( window.innerWidth , window.innerHeight);
   document.body.appendChild ( result.renderer.domElement );
+  mainComposite.loadedObjects.push(result);
+
   return result;
 }
 

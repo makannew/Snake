@@ -22,7 +22,8 @@ import { newRoadTrain } from "./mg.roadTrain.js";
 export function MGame(){
 
   let result = CompositeObject();
-  result.three = initializeThreeJs();
+  result.loadedObjects = [];
+  result.three = initializeThreeJs(result);
 
   result.utils = {};
   result.utils.addCamera = function(newCamera){addCamera(result , newCamera);}
@@ -44,12 +45,12 @@ export function MGame(){
   result.utils.start = startEngine;
   result.self = result;
 
-  result.sceneObjects = {};
+  //result.sceneObjects = {};
   result.cameras = {};
   result.worlds = {};
   result.lights ={};
-  result.constraints = {};
-  result.vehicles = {};
+  //result.constraints = {};
+  //result.vehicles = {};
   
 
   cannonSettingsBuilder(result);
@@ -59,13 +60,13 @@ export function MGame(){
   result.running = false;
   //result.needsUpdate = undefined;
 
-  result.addFunction(demandInterval);
+  //result.addFunction(demandInterval);
   // default values
   result.settings = settings;
 
   //result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
- 
+  result.loadedObjects.push(result);
   return result;
 }
 
@@ -82,9 +83,10 @@ const newAnimationFrame = function({timeStamp , three , activeCamera , cannon}){
   return true;
 }
 
-const demandInterval = function({settings}){
-  return 1/settings.frameRate;
 
-}
+// const demandInterval = function({settings}){
+//   return 1/settings.frameRate;
+
+// }
 
 

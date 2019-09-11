@@ -1,5 +1,8 @@
 
 export function newPointsConstraint (mainComposite ,constraintName){
+  constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  constraintName.addFunction(addToLoadedObjects);
+  
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
   constraintName.active = true;
@@ -12,6 +15,12 @@ export function newPointsConstraint (mainComposite ,constraintName){
   constraintName.addFunction(setStatus);
   constraintName.addFunction(pivotA);
   constraintName.addFunction(pivotB);
+}
+
+function addToLoadedObjects({pointConstraint}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(pointConstraint);
+  return true;
 }
 
 function addBodyA({bodyA}){

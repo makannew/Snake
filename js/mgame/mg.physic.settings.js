@@ -3,6 +3,8 @@ export function cannonSettingsBuilder(result){
 
   result.physicSettings = {};
   result.cannon = initializeCannonJs();
+  result.loadedObjects.push(result.cannon.getProxyLessObject);
+  
 
   result.addLink(result.cannon , result.physicSettings.cannon);
 

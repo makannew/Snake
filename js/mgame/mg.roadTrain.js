@@ -3,6 +3,9 @@ import { loadBuilder } from "./mg.roadTrain.builder.js";
 import { roadTrainTowing } from "./mg.roadTrain.towing.js";
 
 export function newRoadTrain(mainComposite , roadTrain){
+  roadTrain.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  roadTrain.addFunction(addToLoadedObjects);
+
   roadTrain.self = roadTrain;
   roadTrain.mainComposite = mainComposite;
   roadTrain.cannon = mainComposite.cannon;
@@ -20,6 +23,13 @@ export function newRoadTrain(mainComposite , roadTrain){
   roadTrain.addFunction(applySteering);
   roadTrain.addFunction(updateEngine);
 }
+
+function addToLoadedObjects({setHingeConstraints}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(self);
+  return true;
+}
+
 
 function updateEngine({setHingeConstraints , engineForce , speed}){
   for (let wheel of allWheels){

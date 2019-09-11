@@ -14,8 +14,15 @@ export function addPhysicBody(mainComposite , obj){
   obj.addFunction(updatePhysic);
   obj.addFunction(setStatus);
   obj.addFunction(setActivityStatus);
+  obj.addFunction(addPhysicToLoadedObjects);
   obj.cannon = mainComposite.cannon.getProxyLessObject;
   obj.materials = mainComposite.physicSettings.materials.getProxyLessObject;
+}
+
+function addPhysicToLoadedObjects({body}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(body);
+  return true;
 }
 
 export function setActivityStatus({sleep}){

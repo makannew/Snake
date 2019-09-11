@@ -1,5 +1,8 @@
 
 export function addCamera(mainComposite , newCamera){
+    newCamera.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+    newCamera.addFunction(addToLoadedObjects);
+
     mainComposite.addLink(mainComposite.activeCamera , newCamera.activeCamera);
     newCamera.three = mainComposite.three.getProxyLessObject;
 
@@ -11,14 +14,24 @@ export function addCamera(mainComposite , newCamera){
     newCamera.addFunction(setQuaternion);
     newCamera.addFunction(setActiveCamera);
     newCamera.addFunction(cameraUpdateFunction);
+
 }
 
+function addToLoadedObjects({camera}){
+  if (addToLoadedObjects) return true;
+  loadedObjects.push(camera);
+  return true;
+}
+
+
 function camera({cameraFocalLenght , cameraNearView , cameraFarView}){
-  return new THREE.PerspectiveCamera ( 
+
+  let result = new THREE.PerspectiveCamera ( 
     cameraFocalLenght , 
     window.innerWidth / window.innerHeight , 
     cameraNearView, 
     cameraFarView);
+  return result;
 }
 
 function setPosition({camera , position}){
@@ -37,22 +50,22 @@ function setQuaternion({camera , quaternion}){
 }
 
 function cameraUpdateFunction({camera,three}){
-  return function () {
+  let result = function () {
     three.renderer.setSize ( window.innerWidth , window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix ();
+    camera.updateProjectionMatrix();
   };
+  return result;
 }
 function activate({active , cameraUpdateFunction}){
-
   if (active){
     if (!activate){
-      document.addEventListener('resize', cameraUpdateFunction);
+      window.addEventListener('resize', cameraUpdateFunction);
     }
     return true;
   }else{
     if (activate){
-      document.removeEventListener('resize' , cameraUpdateFunction);
+      window.removeEventListener('resize' , cameraUpdateFunction);
     }
     return false;
   }

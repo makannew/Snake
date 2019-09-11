@@ -1,6 +1,7 @@
 
 export function loadGround(snake){
-  snake.ground ={
+  snake.ground = {};
+  snake.ground.set({
     blockSize: 20,
     groundDimension:20,
     yHeight:-52,
@@ -12,12 +13,12 @@ export function loadGround(snake){
     fallingBlockColor:0xffffff,
     blockGap:.2,
     garbageBlocks:new Set(),
-    garbageDelay:3000,
+    garbageDelay:1000,
     standLeftBlocks:new Set(),
-    standLeftDelay:3000,
+    standLeftDelay:1000,
     minFallingDepth:-200
     
-  };
+  });
   snake.ground.self=snake.ground;
 
   
