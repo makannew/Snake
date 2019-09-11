@@ -355,8 +355,9 @@ export default function(){
   }
 
   const syncLinkedProps = function(prop){
-    //if (!prop.getRefFrom(metaTree)) console.log(String(prop.arr))
-    let externalLinks = prop.getRefFrom(metaTree)[metaDataKey].externalLinks;
+    let propRef = prop.getRefFrom(metaTree);
+    if (!propRef) return [];
+    let externalLinks = propRef[metaDataKey].externalLinks;
     
     let updatedLinks = [];
     if (externalLinks.length==0) return externalLinks;
@@ -398,11 +399,14 @@ export default function(){
 
     // find affected functions and put in queue if it doesn't already exist
     for (let i=0 , len=needsUpdate.length; i<len ; ++i){
-      let affectedFunctions = needsUpdate[i].getRefFrom(metaTree)[metaDataKey].affectedFunctions;
-      for (let j=0 , lenJ=affectedFunctions.length ; j<lenJ ; ++j){
-        if (!(affectedFunctions[j].existIn(updateQueue))){
-          if (allInputParaDefined(affectedFunctions[j])){
-            updateQueue.push(new Address(affectedFunctions[j].arr));
+      let affectedRef = needsUpdate[i].getRefFrom(metaTree);
+      if (affectedRef){
+        let affectedFunctions = affectedRef[metaDataKey].affectedFunctions;
+        for (let j=0 , lenJ=affectedFunctions.length ; j<lenJ ; ++j){
+          if (!(affectedFunctions[j].existIn(updateQueue))){
+            if (allInputParaDefined(affectedFunctions[j])){
+              updateQueue.push(new Address(affectedFunctions[j].arr));
+            }
           }
         }
       }

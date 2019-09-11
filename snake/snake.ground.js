@@ -100,11 +100,15 @@ function roadTrainBlocks({roadTrains,timeStamp}){
     let wheelsBodies = roadTrains[i].wheelsBodies;
     if (wheelsBodies){
       for (let j=0,len=wheelsBodies.length;j<len;++j){
-        let pos = wheelsBodies[j].position;
-        let blockIndex = (~~(pos.x/blockSize))+(~~(pos.z/blockSize)*groundDimension);
-        if (blockIndex<blocks.length){
-          result.add(blocks[blockIndex]);
+        let thisWheel = wheelsBodies[j];
+        if (thisWheel){
+          let pos = thisWheel.position;
+          let blockIndex = (~~(pos.x/blockSize))+(~~(pos.z/blockSize)*groundDimension);
+          if (blockIndex<blocks.length){
+            result.add(blocks[blockIndex]);
+          }
         }
+
       }
     }
   }

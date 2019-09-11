@@ -16,7 +16,6 @@ console.log(snake)
 
 // load Cameras
 loadCameras(snake);
-
 // lights
 loadLights(snake);
 

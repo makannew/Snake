@@ -32,7 +32,7 @@ export function makePhysicCompound(mainComposite , components){
     components[i].addFunction(shape);
     components[i].addFunction(addToCompoundBody);
     mainComposite.addLink(components[0].body , components[i].body);
-    components[i].compoundBodyShapeNumber= undefined;
+    components[i].compoundBodyShapeNumber = undefined;
 
   }
 }

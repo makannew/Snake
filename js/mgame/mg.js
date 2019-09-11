@@ -50,6 +50,7 @@ export function MGame(){
   result.lights ={};
   result.constraints = {};
   result.vehicles = {};
+  
 
   cannonSettingsBuilder(result);
 
@@ -64,13 +65,20 @@ export function MGame(){
 
   //result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
-
+ 
   return result;
 }
 
-
 const newAnimationFrame = function({timeStamp , three , activeCamera , cannon}){
   three.renderer.render( three.scene , activeCamera);
+  let t = actualInterval;
+  let s = cannonSafeStep;
+  while (t>=s){
+    cannon.step(s);
+    t -=s;
+  }
+  actualInterval = t;
+
   return true;
 }
 
