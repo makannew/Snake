@@ -5,42 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style type="text/css">
-        #myProgress {
-            width: 100%;
-            background-color: grey;
-
+        .loader {
+        margin: auto;
+        width:50%;
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
         }
-        #loadingBar {
-            width: 1%;
-            height: 30px;
-            background-color: #4CAF50;
-            text-align: center; /* To center it horizontally (if you want) */
-            line-height: 30px; /* To center it vertically */
-            color: white;
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
         }
     </style>
     <title>Snake game</title>
 </head>
 <body>
-    <div id="myProgress">
-        <div id="loadingBar">10%</div>
-    </div>
+    <div id="myLoader" class="loader"></div>
     <script src= "js/mgame/dependencies/three.min.js"></script>
     <script>
-        let gameLoadingProgress = {progressBar:document.getElementById("loadingBar") , totalObject:425 , loading:true} ;
-        gameLoadingProgress.progressBar.style.width = 30 + '%';
-        gameLoadingProgress.progressBar.innerHTML = 30 + '%';
+        let gameLoadingProgress = {progressBar:document.getElementById("myLoader") , totalObject:35 , loading:true} ;
     </script>
     <script src= "js/mgame/dependencies/cannon.min.js"></script>
-    <script>
-        gameLoadingProgress.progressBar.style.width = 50 + '%';
-        gameLoadingProgress.progressBar.innerHTML = 50 + '%';
-    </script>
     <script type = "module" src = "snake/snake.js"></script>
-    <script>
-            gameLoadingProgress.progressBar.style.width = 70 + '%';
-            gameLoadingProgress.progressBar.innerHTML = 70 + '%';
-        </script>
-
 </body>
 </html>

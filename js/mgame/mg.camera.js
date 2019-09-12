@@ -3,8 +3,9 @@ export function addCamera(mainComposite , newCamera){
     newCamera.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
     newCamera.addFunction(addToLoadedObjects);
 
-    mainComposite.addLink(mainComposite.activeCamera , newCamera.activeCamera);
+    //mainComposite.addLink(mainComposite.activeCamera , newCamera.activeCamera);
     newCamera.three = mainComposite.three.getProxyLessObject;
+    newCamera.mainComposite = mainComposite;
 
     newCamera.position = {x:0,y:0,z:0};
     newCamera.quaternion = {x:0,y:0,z:0,w:0};
@@ -72,7 +73,7 @@ function activate({active , cameraUpdateFunction}){
 }
 
 function setActiveCamera({activate , camera}){
-  if (activate&& camera){
-    activeCamera = camera;
+  if (activate && camera){
+    mainComposite.activeCamera = camera;
   };
 }

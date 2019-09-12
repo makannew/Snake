@@ -33,6 +33,8 @@ export async function startEngine(gameInstance){
     }else{
       clearInterval(loadingLoopID);
       gameLoadingProgress.progressBar.parentNode.removeChild(gameLoadingProgress.progressBar);
+      document.body.appendChild ( gameInstance.three.renderer.domElement.getProxyLessObject );
+      gameInstance.startUp = true;
       requestAnimationFrame(mainloop);
 
     }

@@ -24,6 +24,7 @@ export function MGame(){
   let result = CompositeObject();
   result.loadedObjects = [];
   result.three = initializeThreeJs(result);
+  result.activeCamera = undefined;
 
   result.utils = {};
   result.utils.addCamera = function(newCamera){addCamera(result , newCamera);}
@@ -82,11 +83,4 @@ const newAnimationFrame = function({timeStamp , three , activeCamera , cannon}){
 
   return true;
 }
-
-
-// const demandInterval = function({settings}){
-//   return 1/settings.frameRate;
-
-// }
-
 

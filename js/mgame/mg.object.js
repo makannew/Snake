@@ -2,6 +2,8 @@
 export function addObject(mainComposite , obj){
   obj.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
   obj.addFunction(addToLoadedObjects);
+  obj.addFunction(addTextureToLoadedObjects);
+
 
  // mainComposite.addLink(mainComposite.three , obj.three);
   obj.three = mainComposite.three.getProxyLessObject;
@@ -39,6 +41,12 @@ export function addObject(mainComposite , obj){
   obj.mainComposite = mainComposite;
 
   //obj.quaternion = new THREE.Quaternion();//.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), 0 );
+}
+
+function addTextureToLoadedObjects({texture}){
+  if (addTextureToLoadedObjects) return true;
+  loadedObjects.push(texture);
+  return true;
 }
 
 function addToLoadedObjects({mesh}){

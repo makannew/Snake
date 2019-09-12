@@ -7,7 +7,6 @@ export function initializeThreeJs(mainComposite){
   result.renderer.shadowMap.enabled = true;
   result.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   result.renderer.setSize ( window.innerWidth , window.innerHeight);
-  document.body.appendChild ( result.renderer.domElement );
   mainComposite.loadedObjects.push(result);
 
   return result;

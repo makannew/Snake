@@ -14,14 +14,14 @@ export function loadCameras(snake){
   // snake.cameras.camera1.set ({cameraFocalLenght: 55 , cameraNearView: 1 , cameraFarView: 3000 , active:false });
 
   // // ground camera
-  // snake.cameras.camera3 = {};
-  // snake.utils.addCamera(snake.cameras.camera3);
-  // snake.cameras.camera3.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:false,position:{x:90,y:-40,z:120} });
+  snake.cameras.camera3 = {};
+  snake.utils.addCamera(snake.cameras.camera3);
+  snake.cameras.camera3.set ({cameraFocalLenght: 75 , cameraNearView: 1 , cameraFarView: 3000 , active:true});
 
   // vehicle main camera
-  snake.cameras.camera6 = {};
-  snake.utils.addCamera(snake.cameras.camera6);
-  snake.cameras.camera6.set ({cameraFocalLenght: 65 , cameraNearView: 1 , cameraFarView: 3000 , active:true })
+  // snake.cameras.camera6 = {};
+  // snake.utils.addCamera(snake.cameras.camera6);
+  // snake.cameras.camera6.set ({cameraFocalLenght: 65 , cameraNearView: 1 , cameraFarView: 3000 , active:true })
 
 
   
