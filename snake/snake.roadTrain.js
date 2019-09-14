@@ -2,7 +2,7 @@ import { truckWheelsInfo, trailerWheelsInfo } from "./snake.roadTrain.wheels.js"
 
 export function loadRoadTrain(snake){
   //let z=90,l=11,t=.5;
-  let iniPos={x:95,y:-48,z:90}
+  let iniPos={x:0,y:-46,z:0}
   let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(), Math.PI/4);
 
   snake.roadTrains = [];

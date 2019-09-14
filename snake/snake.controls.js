@@ -6,11 +6,13 @@ export function loadControls(snake){
   document.addEventListener( "keyup" , keyUpHandler , false );
   document.addEventListener( 'touchstart' ,toushStartHandler , { passive: false })
   document.addEventListener( 'touchend' ,toushEndHandler , { passive: false })
-  document.addEventListener( 'touchmove' ,toushMoveHandler , { passive: false })
+  document.addEventListener( 'touchmove' ,touchMoveHandler , { passive: false })
 
-function toushMoveHandler(e){
+function touchMoveHandler(e){
   e.preventDefault();
-  let vehicle = snake.car;
+  //let vehicle = snake.car;
+  let vehicle = snake.roadTrains[0];
+
   let x=e.changedTouches[0].clientX;
 
   if (oldTouchX!=undefined){
@@ -27,7 +29,9 @@ function toushMoveHandler(e){
 function toushStartHandler(e){
   e.preventDefault();
   oldTouchX=undefined;
-  let vehicle = snake.car;
+  //let vehicle = snake.car;
+  let vehicle = snake.roadTrains[0];
+
   if (vehicle.speed ==0){
     vehicle.speed = 20;
   }
@@ -35,7 +39,9 @@ function toushStartHandler(e){
 
 function toushEndHandler(e){
   e.preventDefault();
-  let vehicle = snake.car;
+  //let vehicle = snake.car;
+  let vehicle = snake.roadTrains[0];
+
   vehicle.set({turningRight:false,turningLeft:false});
 
   oldTouchX=undefined;
@@ -47,7 +53,7 @@ function toushEndHandler(e){
     if (e.key == "f"){
     }
     if (e.key == "t"){
-      snake.cameras.camera3.active = true;
+      //snake.cameras.camera3.active = true;
 
     }
     if (e.key == "g"){
@@ -62,7 +68,9 @@ function toushEndHandler(e){
 
     }
 
-    let vehicle = snake.car;
+    //let vehicle = snake.car;
+    let vehicle = snake.roadTrains[0];
+
     if (e.key == "Right" || e.key == "ArrowRight"){
       if (!vehicle.turningRight){
         vehicle.set({turningRight:true,turningLeft:false});
@@ -88,13 +96,15 @@ function toushEndHandler(e){
       vehicle.speed = 0;
     }
     if (e.key =="t"){
-      //++vehicle.totalTrailers;
+      ++vehicle.totalTrailers;
     }
     e.preventDefault();
 
   }
   function keyUpHandler ( e ){
-    let vehicle = snake.car;
+    //let vehicle = snake.car;
+    let vehicle = snake.roadTrains[0];
+
     if (e.key == "Right" || e.key == "ArrowRight" ){
       vehicle.turningRight = false;
     }

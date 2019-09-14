@@ -1,5 +1,5 @@
 
-import { shape , getMaterial , setActivityStatus , setStatus ,body} from "./mg.physic.js"
+import { shape , getMaterial , setActivityStatus , setStatus ,body , setAllowSleep} from "./mg.physic.js"
 
 export function makePhysicCompound(mainComposite , components){
 
@@ -14,6 +14,8 @@ export function makePhysicCompound(mainComposite , components){
   if (!components[0].physicMaterial) components[0].physicMaterial= "objectMaterial";
   if (!components[0].linearDamping) components[0].linearDamping = 0.15;
   if (!components[0].angularDamping) components[0].angularDamping = 0.15;
+  if (!components[0].allowSleep) components[0].allowSleep = false;
+
   if (components[0].physicStatus===undefined) components[0].physicStatus = true;
   if (components[0].sleep==undefined) components[0].sleep = false;
 
@@ -23,6 +25,8 @@ export function makePhysicCompound(mainComposite , components){
   components[0].addFunction(shape);
   components[0].addFunction(body);
   components[0].addFunction(updateCompoundBody);
+  components[0].addFunction(setAllowSleep);
+
 
   components[0].components = [];
 

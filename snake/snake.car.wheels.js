@@ -2,8 +2,8 @@
 export function carWheelsInfo(){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
   let frontAxel = 3.1 , midleAxel = -1.9 , rearAxel = -3.5;
-  let frontStiffness = 600,frontDamping = 80,frontSpringLength = .8;
-  let rearStiffness = 300,rearDamping = 40,rearSpringLength = .8;
+  let frontStiffness = 600,frontDamping = 40,frontSpringLength = .8;
+  let rearStiffness = 520,rearDamping = 40,rearSpringLength = .8;
   let wheelMass = 1, axelMass = 30;
   let textureFileName = undefined , color=0x777777;
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
@@ -21,7 +21,7 @@ export function carWheelsInfo(){
     damping:frontDamping,
     springLegth:frontSpringLength,
     steering:true,
-    engine:false,
+    engine:true,
     left:true,
     wheelMass:steeringWheelMass,
     axelMass:steeringAxelMass,
@@ -42,7 +42,7 @@ export function carWheelsInfo(){
     damping:frontDamping,
     springLegth:frontSpringLength,
     steering:true,
-    engine:false,
+    engine:true,
     left:false,
     wheelMass:steeringWheelMass,
     axelMass:steeringAxelMass,
@@ -52,47 +52,47 @@ export function carWheelsInfo(){
     axelMaterial
   });
   //middle left
-  wheelsInfo.push({
-    radius,
-    width,
-    axelLength,
-    axelHeight,
-    axelDiameter,
-    distance:midleAxel,
-    stiffness:rearStiffness,
-    damping:rearDamping,
-    springLegth:rearSpringLength,
-    steering:false,
-    engine:false,
-    left:true,
-    wheelMass,
-    axelMass,
-    textureFileName,
-    color,
-    wheelMaterial:fakeMaterial,
-    axelMaterial
-  });
+  // wheelsInfo.push({
+  //   radius,
+  //   width,
+  //   axelLength,
+  //   axelHeight,
+  //   axelDiameter,
+  //   distance:midleAxel,
+  //   stiffness:rearStiffness,
+  //   damping:rearDamping,
+  //   springLegth:rearSpringLength,
+  //   steering:false,
+  //   engine:false,
+  //   left:true,
+  //   wheelMass,
+  //   axelMass,
+  //   textureFileName,
+  //   color,
+  //   wheelMaterial:fakeMaterial,
+  //   axelMaterial
+  // });
   //middle right
-  wheelsInfo.push({
-    radius,
-    width,
-    axelLength,
-    axelHeight,
-    axelDiameter,
-    distance:midleAxel,
-    stiffness:rearStiffness,
-    damping:rearDamping,
-    springLegth:rearSpringLength,
-    steering:false,
-    engine:false,
-    left:false,
-    wheelMass,
-    axelMass,
-    textureFileName,
-    color,
-    wheelMaterial:fakeMaterial,
-    axelMaterial
-  });
+  // wheelsInfo.push({
+  //   radius,
+  //   width,
+  //   axelLength,
+  //   axelHeight,
+  //   axelDiameter,
+  //   distance:midleAxel,
+  //   stiffness:rearStiffness,
+  //   damping:rearDamping,
+  //   springLegth:rearSpringLength,
+  //   steering:false,
+  //   engine:false,
+  //   left:false,
+  //   wheelMass,
+  //   axelMass,
+  //   textureFileName,
+  //   color,
+  //   wheelMaterial:fakeMaterial,
+  //   axelMaterial
+  // });
   //rear left
   wheelsInfo.push({
     radius,

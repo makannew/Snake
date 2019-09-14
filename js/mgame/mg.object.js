@@ -140,6 +140,11 @@ const geometry = function({geometryName , dimension}){
       result = new THREE.CylinderGeometry( dimension.radiusTop, dimension.radiusBottom , 
         dimension.height, radialSegments, cylinderHeightSegments );
       break;
+    case "polyhedron":// use basic or lambert material to make sharp edges
+      if (!dimension.radius) dimension.radius = 1;
+      if (dimension.detail===undefined) dimension.detail = 1;
+      result = new THREE.PolyhedronGeometry(dimension.vertices , dimension.faces , dimension.radius , dimension.detail);
+      break;
 
   }
   return result;

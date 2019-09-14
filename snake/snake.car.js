@@ -19,9 +19,4 @@ export function loadCar(snake){
     wheelsInfo:carWheelsInfo(),
   });
 
-  //snake.roadTrains[0].addFunction(addTrailer);
-  //snake.roadTrains[0].totalTrailers = 1;
-  //snake.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
-
-
 }

@@ -8,14 +8,17 @@ export function loadStartUp(snake){
 
 function startUpProcess ({newAnimationFrame , startUp}){
     let startUpDuration =3500;
+    let t = timeStamp;
+    if (t>startUpDuration) t=startUpDuration;
     
     // fade in lights
     let blackDuration =700;
     let ambIntensity = .5;
     let pointIntensity = 1.1;
-    if (timeStamp>blackDuration){
-      self.lights.pointLight1.intensity= pointIntensity *(timeStamp-blackDuration)/(startUpDuration-blackDuration);
-      self.lights.ambient1.intensity =  ambIntensity * (timeStamp-blackDuration)/(startUpDuration-blackDuration);
+    if (t>blackDuration){
+      self.lights.pointLight1.intensity= pointIntensity *(t-blackDuration)/(startUpDuration-blackDuration);
+      self.lights.ambient1.intensity =  ambIntensity * (t-blackDuration)/(startUpDuration-blackDuration);
+      
     }
 
 

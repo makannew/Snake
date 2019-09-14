@@ -23,8 +23,8 @@ export function cannonSettingsBuilder(result){
 
   result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .3, restitution: .4 };
 
-  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: .6, restitution: 0 };
-  result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: .3, restitution: 0};
+  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: 1.4, restitution: 0 };
+  result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: 1.4, restitution: 0};
 
   result.physicSettings.contactMaterials[3]={material1: "objectMaterial" , material2: "fakeWheelMaterial" , friction: 0.1, restitution: 0};
   result.physicSettings.contactMaterials[4]={material1: "groundMaterial" , material2: "fakeWheelMaterial" , friction: 0.1, restitution: 0};
@@ -58,7 +58,7 @@ const initializeCannonJs = function(){
   //result.broadphase = new CANNON.SAPBroadphase(result);
   // result.quatNormalizeFast = false;
   // result.quatNormalizeSkip = 0;
-  //result.allowSleep = true;
+  result.allowSleep = true;
 
   result.solver.iterations = 20;// 7
   //result.solver.tolerance = 1e-7;
