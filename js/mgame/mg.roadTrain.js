@@ -16,12 +16,17 @@ export function newRoadTrain(mainComposite , roadTrain){
   loadBuilder(roadTrain);
 
   roadTrain.allWheels = [];
-  roadTrain.suspensionRestLenght = 0;
-  roadTrain.speed = 0;
-  roadTrain.engineForce =30;
+  roadTrain.axelSprings = [];
+
+  if (!roadTrain.enable) roadTrain.enable = false;
+  if (!roadTrain.suspensionRestLenght) roadTrain.suspensionRestLenght = 0;
+  if (!roadTrain.speed) roadTrain.speed = 0;
+  if (!roadTrain.engineForce) roadTrain.engineForce = 30;
   roadTrain.addFunction(setHingeConstraints);
   roadTrain.addFunction(applySteering);
   roadTrain.addFunction(updateEngine);
+  roadTrain.addFunction(roadtrainStatus);
+  roadTrain.addFunction(setPosition);
 }
 
 function addToLoadedObjects({setHingeConstraints}){
@@ -30,49 +35,111 @@ function addToLoadedObjects({setHingeConstraints}){
   return true;
 }
 
+function setPosition({newPos,newQuat,setHingeConstraints , setNewPos}){
+  if (enable) return false;
+  let chassisLocalPos = new THREE.Vector3(0,-axelsVerticalFreedom,0);
+  chassisLocalPos.applyQuaternion( new THREE.Quaternion(newQuat.x,newQuat.y,newQuat.z,newQuat.w));
+  chassisBody.position = new CANNON.Vec3(chassisLocalPos.x+ newPos.x,chassisLocalPos.y+newPos.y,chassisLocalPos.z+newPos.z);
+  chassisBody.quaternion = new CANNON.Quaternion(newQuat.x,newQuat.y,newQuat.z,newQuat.w);
 
-function updateEngine({setHingeConstraints , engineForce , speed}){
-  for (let wheel of allWheels){
-    if (wheel.driving){
-      let c = wheel.wheelConstraint;
-      if (engineForce==0){
-        c.disableMotor()
-      }else{
-        c.setMotorMaxForce(engineForce);
-        if (wheel.isLeft){
-          c.setMotorSpeed(speed);
+  for (let i=0,len=allWheels.length;i<len;++i){
+    let threeQuat = new THREE.Quaternion(newQuat.x,newQuat.y,newQuat.z,newQuat.w)
+    let localPos = new THREE.Vector3(wheels[i].localPos.x,wheels[i].localPos.y,wheels[i].localPos.z);
+    let correctionQuat =  new THREE.Quaternion(wheels[i].correctionQuat.x,wheels[i].correctionQuat.y,wheels[i].correctionQuat.z,wheels[i].correctionQuat.w);
+    localPos.applyQuaternion(threeQuat);
+    localPos.add(newPos);
+    threeQuat.multiply(correctionQuat);
+    wheels[i].body.position = new CANNON.Vec3(localPos.x,localPos.y,localPos.z);
+    wheels[i].body.quaternion =new CANNON.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w);
+    //
+    let localSusPos = new THREE.Vector3(suspensions[i].localSusPos.x,suspensions[i].localSusPos.y,suspensions[i].localSusPos.z);
+    threeQuat = new THREE.Quaternion(newQuat.x,newQuat.y,newQuat.z,newQuat.w);
+    localSusPos.applyQuaternion(threeQuat);
+    localSusPos.add(newPos);
+    suspensions[i].body.position = new CANNON.Vec3(localSusPos.x,localSusPos.y,localSusPos.z);
+    suspensions[i].body.quaternion =new CANNON.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w);
+
+
+
+    
+
+  }
+  enable=true;
+}
+
+
+function updateEngine({roadtrainStatus , engineForce , speed}){
+  if (roadtrainStatus){
+    for (let wheel of allWheels){
+      if (wheel.driving){
+        let c = wheel.wheelConstraint;
+        if (engineForce==0){
+          c.disableMotor()
         }else{
-          c.setMotorSpeed(-speed);
+          c.setMotorMaxForce(engineForce);
+          if (wheel.isLeft){
+            c.setMotorSpeed(speed);
+          }else{
+            c.setMotorSpeed(-speed);
+          }
+          c.enableMotor();
         }
-        c.enableMotor();
       }
-    }
-
-  }
-}
-
-function applySteering({steering , setHingeConstraints}){
-  let x = Math.cos(steering);
-  let z = Math.sin(steering);
-  for (let wheel of allWheels){
-    if (wheel.steering){
-      if (wheel.isLeft){
-        wheel.wheelConstraint.axisA.x = x;
-        wheel.wheelConstraint.axisA.z = z;
-      }else{
-        wheel.wheelConstraint.axisA.x = -x;
-        wheel.wheelConstraint.axisA.z = -z;
-      }
-      wheel.wheelConstraint.update();
+  
     }
   }
+
 }
 
+function applySteering({steering , roadtrainStatus}){
+  if (roadtrainStatus){
+    let x = Math.cos(steering);
+    let z = Math.sin(steering);
+    for (let wheel of allWheels){
+      if (wheel.steering){
+        if (wheel.isLeft){
+          wheel.wheelConstraint.axisA.x = x;
+          wheel.wheelConstraint.axisA.z = z;
+        }else{
+          wheel.wheelConstraint.axisA.x = -x;
+          wheel.wheelConstraint.axisA.z = -z;
+        }
+        wheel.wheelConstraint.update();
+      }
+    }
+  }
+
+}
+
+function roadtrainStatus({setHingeConstraints , enable}){
+  if (enable && roadtrainStatus) return true;
+  if (!enable && !roadtrainStatus) return false;
+  if (enable && !roadtrainStatus){
+    for (let i=0,len=allWheels.length;i<len;++i){
+      self.wheels[i].set({visible:true,physicStatus:true});
+      self.suspensions[i].set({visible:true,physicStatus:true});
+      cannon.addConstraint(allWheels[i].wheelConstraint);
+      cannon.addConstraint(allWheels[i].suspensionConstraint);
+    }
+    self.chassis.set({visible:true,physicStatus:true});
+    return true;
+  }
+  if (!enable && roadtrainStatus){
+    for (let i=0,len=allWheels.length;i<len;++i){
+      self.wheels[i].set({visible:false,physicStatus:false});
+      self.suspensions[i].set({visible:false,physicStatus:false});
+      cannon.removeConstraint(allWheels[i].wheelConstraint);
+      cannon.removeConstraint(allWheels[i].suspensionConstraint);
+    }
+    self.chassis.set({visible:false,physicStatus:false});
+    return false;
+  }
+
+}
 function setHingeConstraints({headBodiesLoaded , cannon}){
   if (setHingeConstraints) return true;
   let zero = new CANNON.Vec3(0,0,0);
   let axisA,axisB;
-  let axelSprings=[];
   let backQuat = new THREE.Quaternion(
     chassisBody.quaternion.x,
     chassisBody.quaternion.y,
@@ -112,7 +179,6 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
       collideConnected:false
     });
     thisWheel.wheelConstraint.collideConnected = false;
-    cannon.addConstraint(thisWheel.wheelConstraint);
 
     if (wheels[i].wheelSteering){
       thisWheel.steering =true;
@@ -157,7 +223,6 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
         maxForce:1e6
       }
     );
-    cannon.addConstraint(thisWheel.suspensionConstraint);
 
     let susRelPos = new THREE.Vector3(
       wheelsBodies[i].position.x - chassisBody.position.x, 
@@ -179,15 +244,15 @@ function setHingeConstraints({headBodiesLoaded , cannon}){
 
     allWheels.push(thisWheel);
   }
+
   cannon.addEventListener("postStep",function(event){
-    for (let i=0,len=axelSprings.length;i<len;++i){
-      axelSprings[i].applyForce();
+    if (roadtrainStatus){
+      for (let i=0,len=axelSprings.length;i<len;++i){
+        axelSprings[i].applyForce();
+      }
     }
   });
 
 
   return true;
 }
-
-
-

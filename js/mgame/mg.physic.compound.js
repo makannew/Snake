@@ -37,6 +37,8 @@ export function makePhysicCompound(mainComposite , components){
     components[i].addFunction(addPhysicToLoadedObjects);
     components[i].addFunction(addToCompoundBody);
     mainComposite.addLink(components[0].body , components[i].body);
+    mainComposite.addLink(components[0].visible , components[i].visible);
+
     components[i].compoundBodyShapeNumber = undefined;
 
   }

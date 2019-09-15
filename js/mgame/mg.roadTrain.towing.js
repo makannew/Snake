@@ -8,6 +8,8 @@ export function roadTrainTowing(roadTrain){
 
   roadTrain.frontTowing.loadedObjects = roadTrain.mainComposite.loadedObjects.getProxyLessObject;
   roadTrain.frontTowing.addFunction(addToLoadedObjects);
+  roadTrain.frontTowing.addFunction(enableConstraint);
+
 
 
 }
@@ -21,6 +23,10 @@ function addToLoadedObjects({setConstraint}){
 function linkChassisPosition({towedRoadTrain}){
   roadTrain.addLink(towedRoadTrain.chassis.body , roadTrain.frontTowing.otherBody);
   roadTrain.addLink(roadTrain.chassis.body , roadTrain.frontTowing.thisBody);
+  roadTrain.addLink(roadTrain.enable , roadTrain.frontTowing.thisEnable);
+  roadTrain.addLink(towedRoadTrain.enable , roadTrain.frontTowing.otherEnable);
+
+
 
 
 }
@@ -31,6 +37,17 @@ function setConstraint({thisTowingPosition,otherTowingPosition,thisBody ,otherBo
   let otherPos = new CANNON.Vec3(otherTowingPosition.x,otherTowingPosition.y,otherTowingPosition.z);
 
   constraint = new CANNON.PointToPointConstraint(thisBody,thisPos,otherBody,otherPos );
-  roadTrain.cannon.addConstraint(constraint);
   return constraint;
+}
+
+function enableConstraint({setConstraint,thisEnable,otherEnable}){
+  if (setConstraint && thisEnable && otherEnable && !enableConstraint){
+    roadTrain.cannon.addConstraint(setConstraint);
+    return true;
+  }else{
+    if (enableConstraint) roadTrain.cannon.removeConstraint(setConstraint);
+    return false;
+
+  }
+
 }

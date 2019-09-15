@@ -4,6 +4,7 @@ export function loadRoadTrain(snake){
   //let z=90,l=11,t=.5;
   let iniPos={x:0,y:-510,z:0}
   let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(), Math.PI);
+  let trailersNumber = 6
 
   snake.roadTrains = [];
   snake.roadTrains.push({});
@@ -20,42 +21,14 @@ export function loadRoadTrain(snake){
     wheelsInfo:truckWheelsInfo(),
   });
 
-  snake.roadTrains[0].addFunction(addTrailer);
-  snake.roadTrains[0].totalTrailers = 1;
-  snake.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
-
-
-}
-
-function addTrailer({totalTrailers,chassisBody}){
-  let roadTrains = mainComposite.roadTrains;
-  if ( roadTrains.length < totalTrailers){
-    let l=11,t=.5;
-    //z = z - l;
-    //let roadTrains = mainComposite.roadTrains;
-    let i=roadTrains.length-1;
-    let pos = roadTrains[i].position;
-    let quat = new THREE.Quaternion(
-      roadTrains[i].quaternion.x,
-      roadTrains[i].quaternion.y,
-      roadTrains[i].quaternion.z,
-      roadTrains[i].quaternion.w
-      );
-    let newPos = new THREE.Vector3(0,0,-l);
-    newPos.applyQuaternion(quat);
-  
-    let trailerPos = new THREE.Vector3(
-      pos.x + newPos.x,
-      pos.y + newPos.y,
-      pos.z + newPos.z
-      );
-  
-    roadTrains.push({});
-    i= roadTrains.length-1;
-    mainComposite.utils.newRoadTrain(roadTrains[i]);
-    roadTrains[i].set({
-      position:trailerPos , 
-      quaternion: quat,
+  // load trailers but not enabled
+  for (let i=0;i<trailersNumber;++i){
+    snake.roadTrains.push({});
+    let last = snake.roadTrains.length - 1;
+    snake.utils.newRoadTrain(snake.roadTrains[last]);
+    snake.roadTrains[last].set({
+      position:{x:0,y:0,z:0} , 
+      quaternion: {x:0,y:0,z:0,w:1},
       axelsVerticalFreedom:.2 , 
       chassisMass:20,
       chassisTickness:.05,
@@ -63,9 +36,45 @@ function addTrailer({totalTrailers,chassisBody}){
       chassisRearLength:-4.5 , 
       chassisColor:0x936974,
       wheelsInfo:trailerWheelsInfo()
-
     });
-    roadTrains[i].frontTowing.set({thisTowingPosition:{x:0,y:0,z:l*(1-t)} , otherTowingPosition:{x:0,y:0,z:-l*t},towedRoadTrain:roadTrains[i-1]});
+  }
 
+  snake.roadTrains[0].addFunction(addTrailer);
+
+
+  snake.roadTrains[0].visibleTrailers = 0;
+  //snake.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
+
+
+}
+
+function addTrailer({visibleTrailers,chassisBody}){
+  let roadTrains = mainComposite.roadTrains;
+  if ( visibleTrailers>0 &&visibleTrailers<roadTrains.length-1 && roadTrains[visibleTrailers-1].enable==true && !roadTrains[visibleTrailers].enable){
+    let towingGap=11,towingRatio=.5;
+    //z = z - l;
+    //let roadTrains = mainComposite.roadTrains;
+    let prev=visibleTrailers - 1;
+    let pos = roadTrains[prev].position;
+    let quat = new THREE.Quaternion(
+      roadTrains[prev].quaternion.x,
+      roadTrains[prev].quaternion.y,
+      roadTrains[prev].quaternion.z,
+      roadTrains[prev].quaternion.w
+      );
+    let newPos = new THREE.Vector3(0,axelsVerticalFreedom,-towingGap);
+    newPos.applyQuaternion(quat);
+  
+    let trailerPos = new THREE.Vector3(
+      pos.x + newPos.x,
+      pos.y + newPos.y,
+      pos.z + newPos.z
+      );
+    roadTrains[visibleTrailers].set({newPos:trailerPos,newQuat:quat,setNewPos:true});
+
+    roadTrains[visibleTrailers].frontTowing.set({
+      thisTowingPosition:{x:0,y:0,z:towingGap*(1-towingRatio)} , 
+      otherTowingPosition:{x:0,y:0,z:-towingGap*towingRatio},
+      towedRoadTrain:roadTrains[prev]});
   }
 }

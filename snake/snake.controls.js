@@ -82,7 +82,13 @@ function toushEndHandler(e){
       vehicle.speed = 0;
     }
     if (e.key =="t"){
-      ++vehicle.totalTrailers;
+      ++vehicle.visibleTrailers;
+    }
+    if (e.key == "a"){
+      vehicle.enable = true;
+    }
+    if (e.key == "r"){
+      vehicle.enable = false;
     }
     e.preventDefault();
 

@@ -57,8 +57,10 @@ function buildRoadTrain({wheelsInfo}){
       wheelPos.x = -wheelPos.x;
       rotation = -Math.PI/2;
     }
+    wheel.localPos = new THREE.Vector3(wheelPos.x,wheelPos.y,wheelPos.z); // save local pos relative to chassis
     wheelPos.applyQuaternion(threeQuat);
     let correctionQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1).normalize(), rotation);
+    wheel.correctionQuat = new THREE.Quaternion(correctionQuat.x,correctionQuat.y,correctionQuat.z,correctionQuat.w);
     let wheelQuat = new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w)
     wheelQuat.multiply(correctionQuat);
 
@@ -71,7 +73,8 @@ function buildRoadTrain({wheelsInfo}){
       quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
       materialName:"phong", 
       shinines:0,
-      textureFileName:wheelInfo.textureFileName
+      textureFileName:wheelInfo.textureFileName,
+      visible:false
     });
 
     let susLength = (wheelInfo.axelLength-wheelInfo.width/2) * roadTrain.gapRatio;
@@ -89,7 +92,8 @@ function buildRoadTrain({wheelsInfo}){
       damping:wheelInfo.damping, 
       springLenght:wheelInfo.springLegth,
       allowSleep:false,
-      susLength
+      susLength,
+      physicStatus:false
     });
     // build suspension
     let suspensions = roadTrain.suspensions;
@@ -98,26 +102,30 @@ function buildRoadTrain({wheelsInfo}){
     if (!wheelInfo.left){
       susPos.x*=-1;
     }
-    susPos.applyQuaternion(threeQuat);
+
     
     suspensions.push({});
     let suspension = suspensions[suspensions.length - 1];
+    suspension.localSusPos = new THREE.Vector3(susPos.x,susPos.y,susPos.z); // save local pos relative to chassis
+    susPos.applyQuaternion(threeQuat);
+    
     mainComposite.utils.addObject(suspension);
     suspension.set({
       geometryName:"box", 
       dimension:{ height:wheelInfo.axelDiameter , width: wheelInfo.axelDiameter , length:susLength }, 
       position:{x:x+susPos.x , y:y+susPos.y , z:z+susPos.z}, 
       quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
-
       color:wheelInfo.color, 
       materialName:"phong", 
-      shinines:0
+      shinines:0,
+      visible:false
     });
     mainComposite.utils.addPhysicBody(suspension);
     suspension.set({
       physicMaterial:wheelInfo.axelMaterial, 
       mass:wheelInfo.axelMass,
-      allowSleep:false
+      allowSleep:false,
+      physicStatus:false
     });
     if (wheelInfo.distance+wheelInfo.axelDiameter*2>chassisFrontEst){
       chassisFrontEst = wheelInfo.distance+wheelInfo.axelDiameter*2;
@@ -174,7 +182,8 @@ function buildRoadTrain({wheelsInfo}){
     position :{x:x+chassisTopPos.x , y:y+chassisTopPos.y , z:z+chassisTopPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
-    materialName:"phong" 
+    materialName:"phong",
+    visible:false
   });
 
   roadTrain.chassis={};
@@ -192,7 +201,8 @@ function buildRoadTrain({wheelsInfo}){
     position :{x:x+chassisPos.x , y:y+chassisPos.y , z:z+chassisPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
-    materialName:"phong" 
+    materialName:"phong" ,
+    visible:false
   });
 
   
@@ -212,7 +222,8 @@ if (extensionChassisLength!=0){
     position :{x:x+chassisExtensionPos.x , y:y+chassisExtensionPos.y , z:z+chassisExtensionPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
-    materialName:"phong" 
+    materialName:"phong",
+    visible:false
   });
   mainComposite.utils.makePhysicCompound([roadTrain.chassis,roadTrain.chassisExtension,roadTrain.chassisTop]);
 }else{
@@ -221,6 +232,7 @@ if (extensionChassisLength!=0){
 
   roadTrain.chassis.set({
     mass:roadTrain.chassisMass , 
+    physicStatus:false
    });
   mainComposite.addLink(roadTrain.chassis.position, roadTrain.position);
   mainComposite.addLink(roadTrain.chassis.quaternion, roadTrain.quaternion);
