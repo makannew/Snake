@@ -4,6 +4,8 @@ export function loadBuilder(roadTrain){
   roadTrain.wheelsBodies = undefined;
   roadTrain.suspensions = undefined;
   roadTrain.suspensionsBodies = undefined;
+  roadTrain.cabinParts = undefined;
+
   roadTrain.gapRatio = .95;
   if (!roadTrain.position) roadTrain.position={x:0,y:0,z:0};
   if (!roadTrain.quaternion) roadTrain.quaternion={x:0,y:0,z:0,w:1};
@@ -31,6 +33,7 @@ function buildRoadTrain({wheelsInfo}){
   wheelsBodies = [];
   suspensions = [];
   suspensionsBodies = [];
+  cabinParts = [];
   gapRatio = .95;
 
   let x = position.x;
@@ -108,7 +111,7 @@ function buildRoadTrain({wheelsInfo}){
     let suspension = suspensions[suspensions.length - 1];
     suspension.localSusPos = new THREE.Vector3(susPos.x,susPos.y,susPos.z); // save local pos relative to chassis
     susPos.applyQuaternion(threeQuat);
-    
+
     mainComposite.utils.addObject(suspension);
     suspension.set({
       geometryName:"box", 
@@ -182,7 +185,7 @@ function buildRoadTrain({wheelsInfo}){
     position :{x:x+chassisTopPos.x , y:y+chassisTopPos.y , z:z+chassisTopPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
-    materialName:"phong",
+    materialName:"lambert",
     visible:false
   });
 
@@ -201,11 +204,12 @@ function buildRoadTrain({wheelsInfo}){
     position :{x:x+chassisPos.x , y:y+chassisPos.y , z:z+chassisPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
-    materialName:"phong" ,
+    materialName:"lambert" ,
     visible:false
   });
 
-  
+
+let compoundParts = [roadTrain.chassis,roadTrain.chassisTop];
 if (extensionChassisLength!=0){
   roadTrain.chassisExtension={};
   mainComposite.utils.addObject(roadTrain.chassisExtension);
@@ -222,13 +226,29 @@ if (extensionChassisLength!=0){
     position :{x:x+chassisExtensionPos.x , y:y+chassisExtensionPos.y , z:z+chassisExtensionPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
-    materialName:"phong",
+    materialName:"lambert",
     visible:false
   });
-  mainComposite.utils.makePhysicCompound([roadTrain.chassis,roadTrain.chassisExtension,roadTrain.chassisTop]);
-}else{
-  mainComposite.utils.makePhysicCompound([roadTrain.chassis,roadTrain.chassisTop]);
+  compoundParts.push(roadTrain.chassisExtension)
 }
+
+if (roadTrain.cabinInfo){
+  for (let cabin of cabinInfo){
+    roadTrain.cabinParts.push(cabin)
+    let cabinPart = roadTrain.cabinParts[roadTrain.cabinParts.length - 1];
+    mainComposite.utils.addObject(cabinPart);
+    cabin.localPosition.applyQuaternion(threeQuat);
+    cabin.localPosition.add(new THREE.Vector3(x,y,z))
+    cabin.localQuaternion.multiply(threeQuat);
+    cabinPart.set({position:cabin.localPosition,quaternion:cabin.localQuaternion , visible:false});
+    compoundParts.push(cabinPart);
+
+
+  }
+
+}
+
+mainComposite.utils.makePhysicCompound(compoundParts);
 
   roadTrain.chassis.set({
     mass:roadTrain.chassisMass , 

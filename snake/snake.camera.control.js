@@ -25,7 +25,7 @@ function updateRoadTrainCameras ({newAnimationFrame}){
 
   let truckPos = roadTrains[0].position;
   let quat = roadTrains[0].quaternion;
-  let trailersNumber = roadTrains.length;
+  let trailersNumber = roadTrains[0].visibleTrailers + 1;
   let pos = cameras.camera3.camera.position;
   let cam = new THREE.Vector3(0,0,-10*trailersNumber);
   cam.applyQuaternion(quat);

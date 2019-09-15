@@ -23,20 +23,20 @@ export function addObject(mainComposite , obj){
   obj.addFunction(setQuaternion);
   obj.addFunction(setPlaneHeightField);
   // default values
-  obj.geometryName = "plane";
-  obj.materialName = "lambert"
-  obj.color = 0xffffff;
-  obj.scale = 1;
-  obj.position = new THREE.Vector3(0,0,0);
-  obj.quaternion = new THREE.Quaternion();
-  obj.visible = true;
-  obj.widthSegments =32;
-  obj.heightSegments = 32;
-  obj.radialSegments = 32;
-  obj.cylinderHeightSegments = 1;
-  obj.shininess = 30.0;
-  obj.castShadow =true;
-  obj.receiveShadow =true;
+  if (obj.geometryName == undefined )obj.geometryName = "plane";
+  if (obj.materialName == undefined)obj.materialName = "lambert"
+  if (obj.color == undefined)obj.color = 0xffffff;
+  if (obj.scale == undefined)obj.scale = 1;
+  if (obj.positio == undefined)obj.position = new THREE.Vector3(0,0,0);
+  if (obj.quaternio == undefined)obj.quaternion = new THREE.Quaternion();
+  if (obj.visible == undefined)obj.visible = true;
+  if(obj.widthSegments == undefined)obj.widthSegments =32;
+  if(obj.heightSegments == undefined)obj.heightSegments = 32;
+  if(obj.radialSegments == undefined)obj.radialSegments = 32;
+  if(obj.cylinderHeightSegments == undefined)obj.cylinderHeightSegments = 1;
+  if(obj.shininess == undefined)obj.shininess = 30.0;
+  if(obj.castShadow == undefined)obj.castShadow =true;
+  if(obj.receiveShadow == undefined)obj.receiveShadow =true;
   obj.self = obj;
   obj.mainComposite = mainComposite;
 

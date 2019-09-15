@@ -1,4 +1,6 @@
 import { truckWheelsInfo, trailerWheelsInfo } from "./snake.roadTrain.wheels.js";
+import { loadTruckCabin} from "./snake.roadTrain.cabin.js";
+
 
 export function loadRoadTrain(snake){
   //let z=90,l=11,t=.5;
@@ -19,6 +21,7 @@ export function loadRoadTrain(snake){
     chassisRearLength:-4.4  , 
     chassisColor:0x936974,
     wheelsInfo:truckWheelsInfo(),
+    cabinInfo:loadTruckCabin()
   });
 
   // load trailers but not enabled

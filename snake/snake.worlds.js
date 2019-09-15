@@ -7,8 +7,10 @@ export function loadWorlds(snake){
     worldDimension:{x:2048,y:1024,z:2048},
     worldFileNames:["skyBox1_back","skyBox1_front","skyBox1_left","skyBox1_right","skyBox1_top","skyBox1_ground"],
   });
+
   snake.utils.addSkyBox(snake.worlds.skyBox1); 
   snake.worlds.skyBox1.visible = true;
+  snake.worlds.skyBox1.components[5].color=0xff0000
   
   // snake.worlds.skyBox2={};
   // snake.worlds.skyBox2.set ({textureFilePath:"world/world2/",
