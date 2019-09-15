@@ -7,7 +7,6 @@ export function loadRoad(snake){
   let vAxis = new THREE.Vector3(1,0,0);
   let hAxis = new THREE.Vector3(0,1,0);
 
-
   for (let i=0,len=roadInfo.length;i<len;++i){
     let d = roadInfo[i];
     if(d.width!==undefined) width = d.width;
@@ -19,13 +18,6 @@ export function loadRoad(snake){
     if(d.offset!==undefined) offset = d.offset;
     //if(d.textureFileName!==undefined) textureFileName = d.textureFileName;
     if("textureFileName" in d) textureFileName = d.textureFileName;
-
-
-
-
-
-
-
 
     // calculate position and quaternion relative to previous one
     if(d.position===undefined){
@@ -48,7 +40,6 @@ export function loadRoad(snake){
       }
 
     }
-
 
     if(d.position!==undefined) position = new THREE.Vector3(d.position.x,d.position.y,d.position.z);
     if(d.quaternion!==undefined) quaternion = new THREE.Quaternion(d.quaternion.x,d.quaternion.y,d.quaternion.z,d.quaternion.w);
@@ -74,6 +65,4 @@ export function loadRoad(snake){
     snake.utils.addPhysicBody(snake.road[i].block);
     snake.road[i].block.set({mass:0,allowSleep:true,sleep:true});
   }
-
-
 }

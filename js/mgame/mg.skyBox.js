@@ -19,9 +19,12 @@ export function addSkyBox(mainComposite , skyBoxName){
     addObject(mainComposite,skyBoxName.components[i]);
     addPhysicBody(mainComposite,skyBoxName.components[i]);
     mainComposite.addLink(skyBoxName.components[i].texture,skyBoxName["texture"+ String(i)]);
-    skyBoxName.components[i].geometryName = "box";
-    skyBoxName.components[i].set({mass:0 , physicMaterial:"groundMaterial"});
-    skyBoxName.components[i].textureFileName = skyBoxName.textureFilePath + skyBoxName.worldFileNames[i] + skyBoxName.filesExtension;
+    skyBoxName.components[i].set({
+      mass:0 , physicMaterial:"groundMaterial" ,
+      geometryName:"box" , 
+      receiveShadow:(i==5) ? true:false,// only ground receive shadow
+      textureFileName: skyBoxName.textureFilePath + skyBoxName.worldFileNames[i] + skyBoxName.filesExtension
+    });
   }
   skyBoxName.addFunction(allLoaded);
   skyBoxName.addFunction(setGeometries);
@@ -44,27 +47,27 @@ function setGeometries({WorldPosition,worldDimension,allLoaded, thickness}){
   let t = thickness;
   // front
   selfProxy.components[1].position = {x:0,y:0,z:-h/2};
-  selfProxy.components[1].dimension = {length:l,width:w,height:t};
+  selfProxy.components[1].dimension = {length:l*scale,width:w*scale,height:t*scale};
 
   // back
   selfProxy.components[0].position = {x:0,y:0,z:h/2};
-  selfProxy.components[0].dimension = {length:l,width:w,height:t};
+  selfProxy.components[0].dimension = {length:l*scale,width:w*scale,height:t*scale};
 
   // top
   selfProxy.components[4].position = {x:0,y:w/2,z:0};
-  selfProxy.components[4].dimension = {length:l,width:t,height:h};
+  selfProxy.components[4].dimension = {length:l*scale,width:t*scale,height:h*scale};
 
   // ground
   selfProxy.components[5].position = {x:0,y:-w/2,z:0};
-  selfProxy.components[5].dimension = {length:l,width:t,height:h};
+  selfProxy.components[5].dimension = {length:l*scale,width:t*scale,height:h*scale};
 
   // left
   selfProxy.components[2].position = {x:-l/2,y:0,z:0};
-  selfProxy.components[2].dimension = {length:t,width:w,height:h};
+  selfProxy.components[2].dimension = {length:t*scale,width:w*scale,height:h*scale};
 
   // right
   selfProxy.components[3].position = {x:+l/2,y:0,z:0};
-  selfProxy.components[3].dimension = {length:t,width:w,height:h};
+  selfProxy.components[3].dimension = {length:t*scale,width:w*scale,height:h*scale};
   return true;
 }
 

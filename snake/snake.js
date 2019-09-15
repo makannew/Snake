@@ -13,6 +13,7 @@ import { loadDrawLine } from './snake.drawLine.js';
 import { loadStartUp } from './snake,startUp.js';
 import { loadField } from './snake.field.js';
 import { loadRoad } from './snake.road.js';
+import { loadHorizenWorld } from './snake.horizenWorld.js';
 
 
 const snake = MGame();
@@ -28,6 +29,7 @@ loadLights(snake);
 
 // load world texture
 loadWorlds(snake);
+//loadHorizenWorld(snake);
 //
 
 // load road map
@@ -42,6 +44,7 @@ loadRoad(snake);
 
 // load field objects
 //loadField(snake);
+
 
 // load example geometries
 //exampleGeometries(snake);

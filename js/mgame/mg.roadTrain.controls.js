@@ -1,11 +1,12 @@
 
 export function roadTrainControls(roadTrain){
-  roadTrain.turningSpeed = (Math.PI/6)/.5; // rad per sec
+  roadTrain.turningSpeed = (Math.PI/6)/1.2; // rad per sec
   roadTrain.absMaxSteering = Math.PI/6;
   roadTrain.turningLeft = false;
   roadTrain.turningRight = false;
   roadTrain.drivingForward = true;
   roadTrain.steering = 0;
+  roadTrain.touchSpan = 100;
   roadTrain.addFunction(setSteering);
 
 }

@@ -78,7 +78,7 @@ function buildRoadTrain({wheelsInfo}){
 
     mainComposite.utils.addPhysicBody(wheel);
     wheel.set({
-      angularDamping:0,
+      angularDamping:wheelInfo.angularDamping,
       linearDamping:0,
       physicMaterial:wheelInfo.wheelMaterial, 
       mass:wheelInfo.wheelMass, 
@@ -170,7 +170,7 @@ function buildRoadTrain({wheelsInfo}){
 
   roadTrain.chassisTop.set({
     geometryName : "box", 
-    dimension : { height:roadTrain.chassisLength , width: roadTrain.axelsVerticalFreedom/8 , length: roadTrain.chassisWidth}, 
+    dimension : { height:roadTrain.chassisLength , width: roadTrain.chassisTickness , length: roadTrain.chassisWidth}, 
     position :{x:x+chassisTopPos.x , y:y+chassisTopPos.y , z:z+chassisTopPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
@@ -188,7 +188,7 @@ function buildRoadTrain({wheelsInfo}){
 
   roadTrain.chassis.set({
     geometryName : "box" , 
-    dimension : { height:massCenterChassisLength , width: roadTrain.axelsVerticalFreedom/8 , length:roadTrain.chassisWidth}, 
+    dimension : { height:massCenterChassisLength , width: roadTrain.chassisTickness , length:roadTrain.chassisWidth}, 
     position :{x:x+chassisPos.x , y:y+chassisPos.y , z:z+chassisPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
@@ -208,7 +208,7 @@ if (extensionChassisLength!=0){
 
   roadTrain.chassisExtension.set({
     geometryName : "box" , 
-    dimension : { height:extensionChassisLength , width: roadTrain.axelsVerticalFreedom/8 , length:roadTrain.chassisWidth}, 
+    dimension : { height:extensionChassisLength , width: roadTrain.chassisTickness , length:roadTrain.chassisWidth}, 
     position :{x:x+chassisExtensionPos.x , y:y+chassisExtensionPos.y , z:z+chassisExtensionPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 

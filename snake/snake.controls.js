@@ -2,6 +2,14 @@
 export function loadControls(snake){
   // game controls
   let oldTouchX=undefined;
+  let vehicle = snake.roadTrains[0];
+  //let vehicle = snake.car;
+  let touchSpan = vehicle.touchSpan;
+  let maxSteering = vehicle.absMaxSteering;
+  let prevSteering = vehicle.steering;
+  let steering;
+
+
   document.addEventListener( "keydown" , keyDownHandler , false );
   document.addEventListener( "keyup" , keyUpHandler , false );
   document.addEventListener( 'touchstart' ,toushStartHandler , { passive: false })
@@ -10,28 +18,15 @@ export function loadControls(snake){
 
 function touchMoveHandler(e){
   e.preventDefault();
-  //let vehicle = snake.car;
-  let vehicle = snake.roadTrains[0];
-
   let x=e.changedTouches[0].clientX;
-
-  if (oldTouchX!=undefined){
-    if(x-oldTouchX>0 && !vehicle.turningRight){
-      vehicle.set({turningRight:false,turningLeft:true});
-    }
-    if(x-oldTouchX<0 && !vehicle.turningLeft){
-      vehicle.set({turningRight:true,turningLeft:false});
-    }
-  }
-
-  oldTouchX=x;
+  steering = maxSteering * (x - oldTouchX)/touchSpan;
+  if (steering>maxSteering) steering = maxSteering;
+  if (steering<-maxSteering) steering = -maxSteering;
+  vehicle.steering = steering;
 }
 function toushStartHandler(e){
   e.preventDefault();
-  oldTouchX=undefined;
-  //let vehicle = snake.car;
-  let vehicle = snake.roadTrains[0];
-
+  oldTouchX = e.touches[0].clientX;
   if (vehicle.speed ==0){
     vehicle.speed = 20;
   }
@@ -39,13 +34,6 @@ function toushStartHandler(e){
 
 function toushEndHandler(e){
   e.preventDefault();
-  //let vehicle = snake.car;
-  let vehicle = snake.roadTrains[0];
-
-  vehicle.set({turningRight:false,turningLeft:false});
-
-  oldTouchX=undefined;
-
 }
 
   function keyDownHandler ( e ){
@@ -68,8 +56,6 @@ function toushEndHandler(e){
 
     }
 
-    //let vehicle = snake.car;
-    let vehicle = snake.roadTrains[0];
 
     if (e.key == "Right" || e.key == "ArrowRight"){
       if (!vehicle.turningRight){
@@ -102,8 +88,6 @@ function toushEndHandler(e){
 
   }
   function keyUpHandler ( e ){
-    //let vehicle = snake.car;
-    let vehicle = snake.roadTrains[0];
 
     if (e.key == "Right" || e.key == "ArrowRight" ){
       vehicle.turningRight = false;

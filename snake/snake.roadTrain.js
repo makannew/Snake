@@ -2,8 +2,8 @@ import { truckWheelsInfo, trailerWheelsInfo } from "./snake.roadTrain.wheels.js"
 
 export function loadRoadTrain(snake){
   //let z=90,l=11,t=.5;
-  let iniPos={x:0,y:-46,z:0}
-  let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(), Math.PI/4);
+  let iniPos={x:0,y:-510,z:0}
+  let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(), Math.PI);
 
   snake.roadTrains = [];
   snake.roadTrains.push({});
@@ -12,9 +12,10 @@ export function loadRoadTrain(snake){
     position:{x:iniPos.x , y:iniPos.y , z:iniPos.z} , 
     quaternion:new THREE.Quaternion(iniQuat.x , iniQuat.y , iniQuat.z , iniQuat.w),
     axelsVerticalFreedom:.2 , 
-    chassisMass:100 , 
-    chassisFrontLength:4 ,
-    chassisRearLength:-4.5  , 
+    chassisTickness:.05,
+    chassisMass:30 , 
+    chassisFrontLength:4.1 ,
+    chassisRearLength:-4.4  , 
     chassisColor:0x936974,
     wheelsInfo:truckWheelsInfo(),
   });
@@ -57,6 +58,7 @@ function addTrailer({totalTrailers,chassisBody}){
       quaternion: quat,
       axelsVerticalFreedom:.2 , 
       chassisMass:20,
+      chassisTickness:.05,
       chassisFrontLength:4,
       chassisRearLength:-4.5 , 
       chassisColor:0x936974,
