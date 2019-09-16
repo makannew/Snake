@@ -3,17 +3,13 @@ import { shape , getMaterial , setActivityStatus , setStatus ,body , setAllowSle
 
 export function makePhysicCompound(mainComposite , components){
 
-  if (components.length<2){
-    console.error("at least two object needed to make physic compound");
-    
-  }
-
   components[0].cannon = mainComposite.cannon.getProxyLessObject;
   components[0].materials = mainComposite.physicSettings.materials.getProxyLessObject;
 
   if (!components[0].physicMaterial) components[0].physicMaterial= "objectMaterial";
   if (!components[0].linearDamping) components[0].linearDamping = 0.15;
   if (!components[0].angularDamping) components[0].angularDamping = 0.15;
+  if (!components[0].cylinderSegments) components[0].cylinderSegments = 16;
   if (!components[0].allowSleep) components[0].allowSleep = false;
 
   if (components[0].physicStatus===undefined) components[0].physicStatus = true;

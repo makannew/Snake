@@ -10,11 +10,12 @@ export function truckWheelsInfo(){
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
   let steeringWheelMass = 1, steeringAxelMass = 25;
   let wheelsInfo=[];
+  let  doubleWheelGap = .07;
   //front left
   wheelsInfo.push({
     radius,
     width,
-    axelLength,
+    axelLength:axelLength + width + doubleWheelGap,
     axelHeight,
     axelDiameter,
     distance:frontAxel,
@@ -36,7 +37,7 @@ export function truckWheelsInfo(){
   wheelsInfo.push({
     radius,
     width,
-    axelLength,
+    axelLength:axelLength + width + doubleWheelGap,
     axelHeight,
     axelDiameter,
     distance:frontAxel,
@@ -57,7 +58,7 @@ export function truckWheelsInfo(){
   //middle left
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -74,12 +75,14 @@ export function truckWheelsInfo(){
     color,
     wheelMaterial:fakeMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
+
   });
   //middle right
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -96,12 +99,14 @@ export function truckWheelsInfo(){
     color,
     wheelMaterial:fakeMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
+
   });
   //rear left
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -118,12 +123,14 @@ export function truckWheelsInfo(){
     color,
     wheelMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
+
   });
   //rear right
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -140,7 +147,9 @@ export function truckWheelsInfo(){
     color,
     wheelMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
+
   });  
   
   return wheelsInfo;

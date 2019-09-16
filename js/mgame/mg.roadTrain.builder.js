@@ -52,11 +52,16 @@ function buildRoadTrain({wheelsInfo}){
     // build wheels
     wheels.push({});
     let wheel = wheels[wheels.length - 1];
+    let wheelOutPos = new THREE.Vector3(wheelInfo.doubleWheelGap/2 + (wheelInfo.width-wheelInfo.doubleWheelGap)/4 ,0 ,0);
+    let wheelInPos = new THREE.Vector3(wheelInfo.doubleWheelGap/2 + (wheelInfo.width-wheelInfo.doubleWheelGap)/4 ,0 ,0);
+
     
     let wheelPos = new THREE.Vector3(wheelInfo.axelLength,wheelInfo.radius-wheelInfo.axelHeight,wheelInfo.distance)
     if (wheelInfo.left){
       rotation = Math.PI/2;
+      wheelInPos.x = -wheelInPos.x;
     }else{
+      wheelOutPos.x = -wheelOutPos.x;
       wheelPos.x = -wheelPos.x;
       rotation = -Math.PI/2;
     }
@@ -67,10 +72,13 @@ function buildRoadTrain({wheelsInfo}){
     let wheelQuat = new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w)
     wheelQuat.multiply(correctionQuat);
 
+    let wheelPhysicCompound =[];
+
+    let radius = (wheelInfo.doubleWheelGap) ? wheelInfo.axelDiameter:wheelInfo.radius;
     mainComposite.utils.addObject(wheel);
     wheel.set({
       geometryName:"cylinder", 
-      dimension:{radiusTop:wheelInfo.radius,radiusBottom:wheelInfo.radius,height:wheelInfo.width}, 
+      dimension:{radiusTop:radius,radiusBottom:radius,height:wheelInfo.width}, 
       position:{x:x+wheelPos.x , y:y+wheelPos.y , z:z+wheelPos.z}, 
       color:wheelInfo.color, 
       quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
@@ -79,10 +87,48 @@ function buildRoadTrain({wheelsInfo}){
       textureFileName:wheelInfo.textureFileName,
       visible:false
     });
+    wheelPhysicCompound.push(wheel);
+    if (wheelInfo.doubleWheelGap){
+      wheelInPos.applyQuaternion(threeQuat);
+      wheelOutPos.applyQuaternion(threeQuat);
+      wheelInPos.add(wheel.position);
+      wheelOutPos.add(wheel.position);
+      wheel.wheelIn ={};
+      mainComposite.utils.addObject(wheel.wheelIn);
+      wheel.wheelIn.set({
+        geometryName:"cylinder", 
+        dimension:{radiusTop:wheelInfo.radius,radiusBottom:wheelInfo.radius,height:(wheelInfo.width - wheelInfo.doubleWheelGap)/2}, 
+        position:{x:wheelInPos.x , y:wheelInPos.y , z:wheelInPos.z}, 
+        color:wheelInfo.color, 
+        quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
+        materialName:"phong", 
+        shinines:0,
+        textureFileName:wheelInfo.textureFileName,
+        visible:false
+      });
+      wheelPhysicCompound.push(wheel.wheelIn);
+      wheel.wheelOut ={};
+      mainComposite.utils.addObject(wheel.wheelOut);
+      wheel.wheelOut.set({
+        geometryName:"cylinder", 
+        dimension:{radiusTop:wheelInfo.radius,radiusBottom:wheelInfo.radius,height:(wheelInfo.width - wheelInfo.doubleWheelGap)/2}, 
+        position:{x:wheelOutPos.x , y:wheelOutPos.y , z:wheelOutPos.z}, 
+        color:wheelInfo.color, 
+        quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
+        materialName:"phong", 
+        shinines:0,
+        textureFileName:wheelInfo.textureFileName,
+        visible:false
+      });
+      wheelPhysicCompound.push(wheel.wheelOut);
+
+    }
+
 
     let susLength = (wheelInfo.axelLength-wheelInfo.width/2) * roadTrain.gapRatio;
 
-    mainComposite.utils.addPhysicBody(wheel);
+    //mainComposite.utils.addPhysicBody(wheel);
+    mainComposite.utils.makePhysicCompound(wheelPhysicCompound);
     wheel.set({
       angularDamping:wheelInfo.angularDamping,
       linearDamping:0,

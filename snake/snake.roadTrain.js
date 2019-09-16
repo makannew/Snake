@@ -18,7 +18,7 @@ export function loadRoadTrain(snake){
     chassisTickness:.05,
     chassisMass:30 , 
     chassisFrontLength:4.1 ,
-    chassisRearLength:-4.4  , 
+    chassisRearLength:-3.6  , 
     chassisColor:0x936974,
     wheelsInfo:truckWheelsInfo(),
     cabinInfo:loadTruckCabin()

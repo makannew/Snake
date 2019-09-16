@@ -73,10 +73,10 @@ function toushEndHandler(e){
 
     }
     if (e.key == "Up" || e.key == "ArrowUp"){
-      vehicle.speed = 20;
+      vehicle.speed = 30;
     }
     if (e.key == "Down" || e.key == "ArrowDown"){
-      vehicle.speed = -20;
+      vehicle.speed = -30;
     }
     if (e.key == "s"){
       vehicle.speed = 0;

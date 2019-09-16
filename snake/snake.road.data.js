@@ -24,6 +24,7 @@ export function roadData(){
     {right:slope*2},
     {right:slope*2},
     {up:slope},
+    {left:slope*2},
     {up:slope},
     {up:slope},
     {down:slope},

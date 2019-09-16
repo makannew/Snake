@@ -11,6 +11,10 @@ export function loadWorlds(snake){
   snake.utils.addSkyBox(snake.worlds.skyBox1); 
   snake.worlds.skyBox1.visible = true;
   snake.worlds.skyBox1.components[5].color=0xff0000
+  for (let i=0;i<5;++i){
+    snake.worlds.skyBox1.components[i].color=0xff0000
+  }
+
   
   // snake.worlds.skyBox2={};
   // snake.worlds.skyBox2.set ({textureFilePath:"world/world2/",
