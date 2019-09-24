@@ -1,19 +1,28 @@
 
-import { shape , getMaterial , setActivityStatus , setStatus ,body , setAllowSleep} from "./mg.physic.js"
+import { shape , getMaterial , setActivityStatus , setStatus ,body , setAllowSleep, collisionGroupCode , contactGroupsMask , setBodyCollisionGroups} from "./mg.physic.js"
 
 export function makePhysicCompound(mainComposite , components){
-
   components[0].cannon = mainComposite.cannon.getProxyLessObject;
   components[0].materials = mainComposite.physicSettings.materials.getProxyLessObject;
+  components[0].collisionGroupsNames = mainComposite.collisionGroupsNames.getProxyLessObject;
+  //mainComposite.addLink(mainComposite.collisionGroupsNames , components[0].collisionGroupsNames);
 
   if (!components[0].physicMaterial) components[0].physicMaterial= "objectMaterial";
   if (!components[0].linearDamping) components[0].linearDamping = 0.15;
   if (!components[0].angularDamping) components[0].angularDamping = 0.15;
   if (!components[0].cylinderSegments) components[0].cylinderSegments = 16;
+  if(components[0].widthSegments == undefined)components[0].widthSegments =32;
+  if(components[0].heightSegments == undefined)components[0].heightSegments = 32;
+  if(components[0].radialSegments == undefined)components[0].radialSegments = 32;
+  if(components[0].cylinderHeightSegments == undefined)components[0].cylinderHeightSegments = 1;
   if (!components[0].allowSleep) components[0].allowSleep = false;
 
   if (components[0].physicStatus===undefined) components[0].physicStatus = true;
   if (components[0].sleep==undefined) components[0].sleep = false;
+  if (components[0].bodyType==undefined) components[0].bodyType = "dynamic";
+  if (components[0].groupName==undefined) components[0].groupName = "all";
+  if (components[0].collisionGroups==undefined) components[0].collisionGroups = ["all"];
+
 
   components[0].addFunction(setStatus);
   components[0].addFunction(setActivityStatus);
@@ -22,6 +31,10 @@ export function makePhysicCompound(mainComposite , components){
   components[0].addFunction(body);
   components[0].addFunction(updateCompoundBody);
   components[0].addFunction(setAllowSleep);
+  components[0].addFunction(collisionGroupCode);
+  components[0].addFunction(contactGroupsMask);
+  components[0].addFunction(setBodyCollisionGroups);
+
 
 
   components[0].components = [];
@@ -34,6 +47,11 @@ export function makePhysicCompound(mainComposite , components){
     components[i].addFunction(addToCompoundBody);
     mainComposite.addLink(components[0].body , components[i].body);
     mainComposite.addLink(components[0].visible , components[i].visible);
+    if (!components[i].cylinderSegments) components[i].cylinderSegments = 16;
+    if(components[i].widthSegments == undefined)components[i].widthSegments =32;
+    if(components[i].heightSegments == undefined)components[i].heightSegments = 32;
+    if(components[i].radialSegments == undefined)components[i].radialSegments = 32;
+    if(components[i].cylinderHeightSegments == undefined)components[i].cylinderHeightSegments = 1;
 
     components[i].compoundBodyShapeNumber = undefined;
 

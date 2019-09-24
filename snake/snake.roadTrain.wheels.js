@@ -2,8 +2,8 @@
 export function truckWheelsInfo(){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.15  ;
   let frontAxel = 3.1 , midleAxel = -1.9 , rearAxel = -3.5;
-  let frontStiffness = 280,frontDamping = 60,frontSpringLength = .8;
-  let rearStiffness = 140,rearDamping = 30,rearSpringLength = .8;
+  let frontStiffness = 220,frontDamping = 60,frontSpringLength = .8;
+  let rearStiffness = 170,rearDamping = 30,rearSpringLength = .8;
   let angularDamping=0;
   let wheelMass = 1, axelMass = 25;
   let textureFileName = undefined , color=0x777777;
@@ -15,7 +15,7 @@ export function truckWheelsInfo(){
   wheelsInfo.push({
     radius,
     width,
-    axelLength:axelLength + width + doubleWheelGap,
+    axelLength:axelLength + width - doubleWheelGap,
     axelHeight,
     axelDiameter,
     distance:frontAxel,
@@ -37,7 +37,7 @@ export function truckWheelsInfo(){
   wheelsInfo.push({
     radius,
     width,
-    axelLength:axelLength + width + doubleWheelGap,
+    axelLength:axelLength + width - doubleWheelGap,
     axelHeight,
     axelDiameter,
     distance:frontAxel,
@@ -158,14 +158,15 @@ export function truckWheelsInfo(){
 // trailer
 export function trailerWheelsInfo(){
   let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
-  let frontAxel = 1 , midleAxel = -2 , rearAxel = -3.5;
-  let frontStiffness = 150,frontDamping = 30,frontSpringLength = .8;
-  let rearStiffness = 150,rearDamping = 20,rearSpringLength = .8;
+  let frontAxel = 1 , midleAxel = .5 , rearAxel = -1.5;
+  let frontStiffness = 50,frontDamping = 30,frontSpringLength = .8;
+  let rearStiffness = 70,rearDamping = 30,rearSpringLength = .8;
   let angularDamping=0;
 
-  let wheelMass = .5 , axelMass = 1;
+  let wheelMass = 1 , axelMass = 5;
   let textureFileName = undefined , color=0x777777;
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
+  let  doubleWheelGap = .07;
 
   let wheelsInfo=[];
   //front left
@@ -215,7 +216,7 @@ export function trailerWheelsInfo(){
   //middle left
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -232,12 +233,13 @@ export function trailerWheelsInfo(){
     color,
     wheelMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
   });
   //middle right
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -254,12 +256,13 @@ export function trailerWheelsInfo(){
     color,
     wheelMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
   });
   //rear left
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -274,14 +277,15 @@ export function trailerWheelsInfo(){
     axelMass,
     textureFileName,
     color,
-    wheelMaterial:fakeMaterial,
+    wheelMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
   });
   //rear right
   wheelsInfo.push({
     radius,
-    width,
+    width:(width * 2) + doubleWheelGap,
     axelLength,
     axelHeight,
     axelDiameter,
@@ -296,9 +300,167 @@ export function trailerWheelsInfo(){
     axelMass,
     textureFileName,
     color,
-    wheelMaterial:fakeMaterial,
+    wheelMaterial,
     axelMaterial,
-    angularDamping
+    angularDamping,
+    doubleWheelGap
+  });  
+  
+  return wheelsInfo;
+}
+// additional trailer
+export function additionalTrailerWheelsInfo(){
+  let  radius=.65,width=.3,axelLength=1.4,axelHeight=.8,axelDiameter=.1;
+  let frontAxel = 7 , midleAxel = .5 , rearAxel = -1.5;
+  let frontStiffness = 40,frontDamping = 30,frontSpringLength = .8;
+  let rearStiffness = 40,rearDamping = 30,rearSpringLength = .8;
+  let angularDamping=0;
+
+  let wheelMass = 1 , axelMass = 5;
+  let textureFileName = undefined , color=0x777777;
+  let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
+  let  doubleWheelGap = .07;
+
+  let wheelsInfo=[];
+  //front left
+  wheelsInfo.push({
+    radius,
+    width,//:(width * 2) + doubleWheelGap,
+    axelLength,
+    axelHeight,
+    axelDiameter,
+    distance:frontAxel,
+    stiffness:frontStiffness,
+    damping:frontDamping,
+    springLegth:frontSpringLength,
+    steering:false,
+    engine:false,
+    left:true,
+    wheelMass,
+    axelMass,
+    textureFileName,
+    color,
+    wheelMaterial,
+    axelMaterial,
+    angularDamping,
+    //doubleWheelGap
+
+  });
+ // front right
+  wheelsInfo.push({
+    radius,
+    width,//:(width * 2) + doubleWheelGap,
+    axelLength,
+    axelHeight,
+    axelDiameter,
+    distance:frontAxel,
+    stiffness:frontStiffness,
+    damping:frontDamping,
+    springLegth:frontSpringLength,
+    steering:false,
+    engine:false,
+    left:false,
+    wheelMass,
+    axelMass,
+    textureFileName,
+    color,
+    wheelMaterial,
+    axelMaterial,
+    angularDamping,
+    //doubleWheelGap
+
+  });
+  //middle left
+  // wheelsInfo.push({
+  //   radius,
+  //   width:(width * 2) + doubleWheelGap,
+  //   axelLength,
+  //   axelHeight,
+  //   axelDiameter,
+  //   distance:midleAxel,
+  //   stiffness:rearStiffness,
+  //   damping:rearDamping,
+  //   springLegth:rearSpringLength,
+  //   steering:false,
+  //   engine:false,
+  //   left:true,
+  //   wheelMass,
+  //   axelMass,
+  //   textureFileName,
+  //   color,
+  //   wheelMaterial,
+  //   axelMaterial,
+  //   angularDamping,
+  //   doubleWheelGap
+  // });
+  //middle right
+  // wheelsInfo.push({
+  //   radius,
+  //   width:(width * 2) + doubleWheelGap,
+  //   axelLength,
+  //   axelHeight,
+  //   axelDiameter,
+  //   distance:midleAxel,
+  //   stiffness:rearStiffness,
+  //   damping:rearDamping,
+  //   springLegth:rearSpringLength,
+  //   steering:false,
+  //   engine:false,
+  //   left:false,
+  //   wheelMass,
+  //   axelMass,
+  //   textureFileName,
+  //   color,
+  //   wheelMaterial,
+  //   axelMaterial,
+  //   angularDamping,
+  //   doubleWheelGap
+  // });
+  //rear left
+  wheelsInfo.push({
+    radius,
+    width,//:(width * 2) + doubleWheelGap,
+    axelLength,
+    axelHeight,
+    axelDiameter,
+    distance:rearAxel,
+    stiffness:rearStiffness,
+    damping:rearDamping,
+    springLegth:rearSpringLength,
+    steering:false,
+    engine:false,
+    left:true,
+    wheelMass,
+    axelMass,
+    textureFileName,
+    color,
+    wheelMaterial,
+    axelMaterial,
+    angularDamping,
+    //doubleWheelGap
+  });
+  //rear right
+  wheelsInfo.push({
+    radius,
+    width,//:(width * 2) + doubleWheelGap,
+    axelLength,
+    axelHeight,
+    axelDiameter,
+    distance:rearAxel,
+    stiffness:rearStiffness,
+    damping:rearDamping,
+    springLegth:rearSpringLength,
+    steering:false,
+    engine:false,
+    left:false,
+    wheelMass,
+    axelMass,
+    textureFileName,
+    color,
+    wheelMaterial,
+    axelMaterial,
+    angularDamping,
+    //doubleWheelGap
   });  
   
   return wheelsInfo;

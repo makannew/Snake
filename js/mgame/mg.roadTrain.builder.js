@@ -85,7 +85,9 @@ function buildRoadTrain({wheelsInfo}){
       materialName:"phong", 
       shinines:0,
       textureFileName:wheelInfo.textureFileName,
-      visible:false
+      visible:false,
+      groupName:"wheel",
+      collisionGroups:["ground","obstacle"]
     });
     wheelPhysicCompound.push(wheel);
     if (wheelInfo.doubleWheelGap){
@@ -174,7 +176,9 @@ function buildRoadTrain({wheelsInfo}){
       physicMaterial:wheelInfo.axelMaterial, 
       mass:wheelInfo.axelMass,
       allowSleep:false,
-      physicStatus:false
+      physicStatus:false,
+      groupName:"suspension",
+      collisionGroups:["chassis"]
     });
     if (wheelInfo.distance+wheelInfo.axelDiameter*2>chassisFrontEst){
       chassisFrontEst = wheelInfo.distance+wheelInfo.axelDiameter*2;
@@ -251,7 +255,10 @@ function buildRoadTrain({wheelsInfo}){
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
     materialName:"lambert" ,
-    visible:false
+    visible:false,
+    groupName:"chassis",
+    collisionGroups:["suspension","obstacle","ground","chassis"],
+    physicMaterial:"chassisMaterial"
   });
 
 
@@ -283,15 +290,23 @@ if (roadTrain.cabinInfo){
     roadTrain.cabinParts.push(cabin)
     let cabinPart = roadTrain.cabinParts[roadTrain.cabinParts.length - 1];
     mainComposite.utils.addObject(cabinPart);
-    cabin.localPosition.applyQuaternion(threeQuat);
-    cabin.localPosition.add(new THREE.Vector3(x,y,z))
-    cabin.localQuaternion.multiply(threeQuat);
-    cabinPart.set({position:cabin.localPosition,quaternion:cabin.localQuaternion , visible:false});
-    compoundParts.push(cabinPart);
+    let cabinLocalPos = new THREE.Vector3(cabin.localPosition.x,cabin.localPosition.y,cabin.localPosition.z);
+    let cabinLocalQuat =  new THREE.Quaternion(cabin.localQuaternion.x,cabin.localQuaternion.y,cabin.localQuaternion.z,cabin.localQuaternion.w);
+    cabinLocalPos.applyQuaternion(threeQuat);
+    cabinLocalPos.add(new THREE.Vector3(x,y,z))
+    cabinLocalQuat.multiply(threeQuat);
+    cabinPart.set({position:cabinLocalPos,quaternion:cabinLocalQuat , visible:false});
+    if (roadTrain.cabinPhysic){
+      compoundParts.push(cabinPart);
+    }else{
+      mainComposite.addLink(roadTrain.position,cabinPart.chassisPos);
+      mainComposite.addLink(roadTrain.quaternion,cabinPart.chassisQuat);
+      mainComposite.addLink(roadTrain.chassis.visible,cabinPart.visible);
+      mainComposite.addLink(mainComposite.timeStamp,cabinPart.timeStamp);
 
-
+      cabinPart.addFunction(updateFromChassis);
+    }
   }
-
 }
 
 mainComposite.utils.makePhysicCompound(compoundParts);
@@ -310,4 +325,19 @@ mainComposite.utils.makePhysicCompound(compoundParts);
   }
   roadTrain.addLink(roadTrain.chassis.body , roadTrain.chassisBody);
   return true;
+  function updateFromChassis({chassisPos,chassisQuat,mesh,timeStamp}){
+    let cabinLocalPos = new THREE.Vector3(localPosition.x,localPosition.y,localPosition.z);
+    let cabinLocalQuat =  new THREE.Quaternion(localQuaternion.x,localQuaternion.y,localQuaternion.z,localQuaternion.w);
+    let chassisPosThree = new THREE.Vector3(chassisPos.x,chassisPos.y,chassisPos.z);
+    let chassisQuatThree =  new THREE.Quaternion(chassisQuat.x,chassisQuat.y,chassisQuat.z,chassisQuat.w);
+
+    cabinLocalPos.applyQuaternion(chassisQuatThree);
+    cabinLocalPos.add(chassisPosThree)
+    cabinLocalQuat.multiply(chassisQuatThree);
+    mesh.position.set(cabinLocalPos.x,cabinLocalPos.y,cabinLocalPos.z);
+    mesh.quaternion.set(cabinLocalQuat.x,cabinLocalQuat.y,cabinLocalQuat.z,cabinLocalQuat.w);
+
+  }
 }
+
+

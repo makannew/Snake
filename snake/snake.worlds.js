@@ -10,9 +10,11 @@ export function loadWorlds(snake){
 
   snake.utils.addSkyBox(snake.worlds.skyBox1); 
   snake.worlds.skyBox1.visible = true;
-  snake.worlds.skyBox1.components[5].color=0xff0000
+  snake.worlds.skyBox1.components[5].set({color:0xff0000,groupName:"ground",collisionGroups: ["wheel","obstacle","chassis"]});
+
   for (let i=0;i<5;++i){
-    snake.worlds.skyBox1.components[i].color=0xff0000
+    snake.worlds.skyBox1.components[i].set({color:0xff0000,groupName:"wall",collisionGroups: ["obstacle"]});
+
   }
 
   

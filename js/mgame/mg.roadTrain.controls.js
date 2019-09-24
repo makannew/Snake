@@ -6,7 +6,7 @@ export function roadTrainControls(roadTrain){
   roadTrain.turningRight = false;
   roadTrain.drivingForward = true;
   roadTrain.steering = 0;
-  roadTrain.touchSpan = 100;
+  roadTrain.touchSpan = 200;
   roadTrain.addFunction(setSteering);
 
 }

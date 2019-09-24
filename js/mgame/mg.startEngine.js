@@ -2,6 +2,7 @@ export async function startEngine(gameInstance){
   // let lastInterval=0;
   // let dI = 1/gameInstance.settings.frameRate;
   let lastTime = 0;
+  let lastFrameTime;
   gameInstance.running = true;
   gameInstance.cannonSafeStep = .016;
   let cannonStep = gameInstance.cannonSafeStep;
@@ -15,8 +16,10 @@ export async function startEngine(gameInstance){
       }
       lastTime = t;
       //
+      if (lastFrameTime==undefined) lastFrameTime = t;
       if (frameInterval >= cannonStep && gameInstance.compositeRunningFunctions==0){
-        gameInstance.set({timeStamp:t, actualInterval:frameInterval,rendering:true })
+        gameInstance.set({timeStamp:t, actualInterval:frameInterval,rendering:true ,framesInterval:t-lastFrameTime});
+        lastFrameTime = t;
       }
     }
 

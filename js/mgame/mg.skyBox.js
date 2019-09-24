@@ -20,7 +20,9 @@ export function addSkyBox(mainComposite , skyBoxName){
     addPhysicBody(mainComposite,skyBoxName.components[i]);
     mainComposite.addLink(skyBoxName.components[i].texture,skyBoxName["texture"+ String(i)]);
     skyBoxName.components[i].set({
-      mass:0 , physicMaterial:"groundMaterial" ,
+      bodyType:"static",
+      mass:0 , 
+      physicMaterial:"groundMaterial" ,
       geometryName:"box" , 
       receiveShadow:(i==5) ? true:false,// only ground receive shadow
       textureFileName: skyBoxName.textureFilePath + skyBoxName.worldFileNames[i] + skyBoxName.filesExtension

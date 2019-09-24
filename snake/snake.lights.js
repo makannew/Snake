@@ -6,5 +6,5 @@ export function loadLights(snake){
 
   snake.lights.pointLight1 = {};
   snake.utils.addLight(snake.lights.pointLight1);
-  snake.lights.pointLight1.set ({lightType :"point" , intensity:0 , position:{x:0,y:30,z:0}});
+  snake.lights.pointLight1.set ({lightType :"point" , intensity:0 , position:{x:0,y:-330,z:0}});
 }

@@ -8,6 +8,9 @@ export function loadControls(snake){
   let maxSteering = vehicle.absMaxSteering;
   let prevSteering = vehicle.steering;
   let steering;
+  let upKeyPressed = false;
+  let downKeyPressed = false;
+
 
 
   document.addEventListener( "keydown" , keyDownHandler , false );
@@ -28,7 +31,7 @@ function toushStartHandler(e){
   e.preventDefault();
   oldTouchX = e.touches[0].clientX;
   if (vehicle.speed ==0){
-    vehicle.speed = 20;
+    vehicle.speed = 5;
   }
 }
 
@@ -41,20 +44,13 @@ function toushEndHandler(e){
     if (e.key == "f"){
     }
     if (e.key == "t"){
-      //snake.cameras.camera3.active = true;
 
     }
     if (e.key == "g"){
 
     }
 
-    if (e.key == "r"){
 
-    }
-
-    if (e.key == "m"){
-
-    }
 
 
     if (e.key == "Right" || e.key == "ArrowRight"){
@@ -73,22 +69,34 @@ function toushEndHandler(e){
 
     }
     if (e.key == "Up" || e.key == "ArrowUp"){
-      vehicle.speed = 30;
+      if (vehicle.speed ==0){
+        vehicle.speed = 5;
+      }
+      // if (!upKeyPressed){
+      //   vehicle.set({speed:21,engineForce: 30});
+      //   upKeyPressed = true;
+      // }
+
+
     }
     if (e.key == "Down" || e.key == "ArrowDown"){
-      vehicle.speed = -30;
+      // if(!downKeyPressed){
+      //   vehicle.set({speed:-21,engineForce: 30});
+      //   downKeyPressed = true;
+      // }
+
     }
     if (e.key == "s"){
-      vehicle.speed = 0;
+      //vehicle.speed = 0;
     }
     if (e.key =="t"){
       ++vehicle.visibleTrailers;
     }
     if (e.key == "a"){
-      vehicle.enable = true;
+      //vehicle.enable = true;
     }
-    if (e.key == "r"){
-      vehicle.enable = false;
+    if (e.key == "d"){
+      //vehicle.enable = false;
     }
     e.preventDefault();
 
@@ -103,6 +111,33 @@ function toushEndHandler(e){
       vehicle.turningLeft = false;
     }
 
+    if (e.key == "Down" || e.key == "ArrowDown"){
+      // downKeyPressed =false;
+      // vehicle.engineForce = 0;
+    }
+    if (e.key == "Up" || e.key == "ArrowUp"){
+      // upKeyPressed = false;
+
+      // vehicle.engineForce = 0;
+    }
+
+    if (e.key == "1"){
+      snake.cameras.camera7.active = true;
+
+    }
+
+    if (e.key == "2"){
+      snake.cameras.camera3.active = true;
+
+    }
+    if (e.key == "3"){
+      snake.cameras.camera8.active = true;
+
+    }
+    if (e.key == "4"){
+      snake.cameras.camera9.active = true;
+
+    }
 
 
   }

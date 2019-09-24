@@ -1,12 +1,14 @@
-import { truckWheelsInfo, trailerWheelsInfo } from "./snake.roadTrain.wheels.js";
-import { loadTruckCabin} from "./snake.roadTrain.cabin.js";
+import { truckWheelsInfo, trailerWheelsInfo, additionalTrailerWheelsInfo } from "./snake.roadTrain.wheels.js";
+import { loadTruckCabin, loadTrailerContainer, loadAdditionalTrailer} from "./snake.roadTrain.cabin.js";
 
 
 export function loadRoadTrain(snake){
   //let z=90,l=11,t=.5;
-  let iniPos={x:0,y:-510,z:0}
-  let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(), Math.PI);
-  let trailersNumber = 6
+  //let iniPos={x:350,y:-280,z:-330}
+  let iniPos={x:0,y:-510,z:30}
+
+  let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(),   Math.PI);
+  let trailersNumber = 5
 
   snake.roadTrains = [];
   snake.roadTrains.push({});
@@ -18,13 +20,16 @@ export function loadRoadTrain(snake){
     chassisTickness:.05,
     chassisMass:30 , 
     chassisFrontLength:4.1 ,
-    chassisRearLength:-3.6  , 
+    chassisRearLength:-4.3  , 
     chassisColor:0x936974,
     wheelsInfo:truckWheelsInfo(),
-    cabinInfo:loadTruckCabin()
+    cabinInfo:loadTruckCabin(),
+    cabinPhysic:true,
+    enable:true
   });
 
   // load trailers but not enabled
+  
   for (let i=0;i<trailersNumber;++i){
     snake.roadTrains.push({});
     let last = snake.roadTrains.length - 1;
@@ -33,12 +38,17 @@ export function loadRoadTrain(snake){
       position:{x:0,y:0,z:0} , 
       quaternion: {x:0,y:0,z:0,w:1},
       axelsVerticalFreedom:.2 , 
-      chassisMass:20,
+      chassisMass:10,
       chassisTickness:.05,
-      chassisFrontLength:4,
-      chassisRearLength:-4.5 , 
+      chassisFrontLength:(i==0)?1.2:8,
+      chassisRearLength:-2 , 
       chassisColor:0x936974,
-      wheelsInfo:trailerWheelsInfo()
+      wheelsInfo:(i==0)?trailerWheelsInfo():additionalTrailerWheelsInfo(),
+      cabinInfo:(i==0)?loadTrailerContainer():loadAdditionalTrailer(),
+      towingGap:(i==0)?10:16,
+      towingRatio:(i==0)?.4:.18,
+      cabinPhysic:true
+
     });
   }
 
@@ -54,7 +64,8 @@ export function loadRoadTrain(snake){
 function addTrailer({visibleTrailers,chassisBody}){
   let roadTrains = mainComposite.roadTrains;
   if ( visibleTrailers>0 &&visibleTrailers<roadTrains.length-1 && roadTrains[visibleTrailers-1].enable==true && !roadTrains[visibleTrailers].enable){
-    let towingGap=11,towingRatio=.5;
+    let towingGap=roadTrains[visibleTrailers].towingGap;
+    let towingRatio=roadTrains[visibleTrailers].towingRatio;
     //z = z - l;
     //let roadTrains = mainComposite.roadTrains;
     let prev=visibleTrailers - 1;

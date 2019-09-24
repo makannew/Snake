@@ -8,12 +8,12 @@ export function addLight(mainComposite , newLight){
     newLight.visible = true;
     newLight.position = new THREE.Vector3(0,0,0);
     newLight.targetPosition = new THREE.Vector3(0,0,0);
-    newLight.castShadow = true ;
+    newLight.castShadow = false ;
     newLight.shadowMapDarkness = 1;
-    newLight.shadowMapSizeWidth = 2048;  
-    newLight.shadowMapSizeHeight = 2048; 
+    newLight.shadowMapSizeWidth = 2048*2;  
+    newLight.shadowMapSizeHeight = 2048*2; 
     newLight.shadowCameraNear = 0.5;      
-    newLight.shadowCameraFar = 2048;   
+    newLight.shadowCameraFar = 2048*2;   
     newLight.skyColor = 0xffffbb;  
     newLight.groundColor = 0x080820;
     newLight.distance = 0;

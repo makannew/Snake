@@ -27,6 +27,7 @@ export function newRoadTrain(mainComposite , roadTrain){
   roadTrain.addFunction(updateEngine);
   roadTrain.addFunction(roadtrainStatus);
   roadTrain.addFunction(setPosition);
+  
 }
 
 function addToLoadedObjects({setHingeConstraints}){

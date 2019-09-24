@@ -19,15 +19,20 @@ export function cannonSettingsBuilder(result){
   result.physicSettings.materials.objectMaterial= new CANNON.Material({name:"objectMaterial"});
   result.physicSettings.materials.wheelMaterial= new CANNON.Material({name:"wheelMaterial"});
   result.physicSettings.materials.fakeWheelMaterial= new CANNON.Material({name:"fakeWheelMaterial"});
+  result.physicSettings.materials.chassisMaterial= new CANNON.Material({name:"chassisMaterial"});
 
 
-  result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .3, restitution: .4 };
 
-  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: 3.4, restitution: 0 };
-  result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: 3.4, restitution: 0};
+  result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .3, restitution: .2 };
+
+  result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: 1.4, restitution: 0 };
+  result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: 1.2, restitution: .2};
 
   result.physicSettings.contactMaterials[3]={material1: "objectMaterial" , material2: "fakeWheelMaterial" , friction: 0.2, restitution: 0};
   result.physicSettings.contactMaterials[4]={material1: "groundMaterial" , material2: "fakeWheelMaterial" , friction: 0.2, restitution: 0};
+
+  result.physicSettings.contactMaterials[5]={material1: "objectMaterial" , material2: "chassisMaterial" , friction: .3, restitution: .2};
+
 
 
 }
@@ -58,10 +63,13 @@ const initializeCannonJs = function(){
   //result.broadphase = new CANNON.SAPBroadphase(result);
   // result.quatNormalizeFast = false;
   // result.quatNormalizeSkip = 0;
+
+  let solver = new CANNON.GSSolver();
+  result.solver = new CANNON.SplitSolver(solver);
   result.allowSleep = true;
 
-  result.solver.iterations = 20;// 7
-  //result.solver.tolerance = 1e-7;
+  result.solver.iterations = 17;// 7
+  result.solver.tolerance = 1e-2;
 
   result.defaultContactMaterial.contactEquationStiffness = 1e6;
   result.defaultContactMaterial.contactEquationRelaxation = 10;

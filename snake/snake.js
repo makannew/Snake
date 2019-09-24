@@ -12,7 +12,7 @@ import { loadCar } from './snake.car.js';
 import { loadDrawLine } from './snake.drawLine.js';
 import { loadStartUp } from './snake,startUp.js';
 import { loadField } from './snake.field.js';
-import { loadRoad } from './snake.road.js';
+import { loadRoad, loadRoadUpdateManager } from './snake.road.js';
 import { loadHorizenWorld } from './snake.horizenWorld.js';
 
 
@@ -28,12 +28,13 @@ loadLights(snake);
 
 
 // load world texture
-loadWorlds(snake);
+//loadWorlds(snake);
 //loadHorizenWorld(snake);
 //
 
 // load road map
 loadRoad(snake);
+loadRoadUpdateManager(snake);
 
 
 // load car
@@ -67,6 +68,3 @@ loadStartUp(snake);
 
 // start game
 snake.utils.start(snake);
-
-
-

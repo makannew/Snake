@@ -25,6 +25,7 @@ export function MGame(){
   result.loadedObjects = [];
   result.three = initializeThreeJs(result);
   result.activeCamera = undefined;
+  result.collisionGroupsNames = ["all"];
 
   result.utils = {};
   result.utils.addCamera = function(newCamera){addCamera(result , newCamera);}

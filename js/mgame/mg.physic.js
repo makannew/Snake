@@ -1,13 +1,22 @@
 
 export function addPhysicBody(mainComposite , obj){
+  obj.cannon = mainComposite.cannon.getProxyLessObject;
+  obj.collisionGroupsNames = mainComposite.collisionGroupsNames.getProxyLessObject;
+  obj.materials = mainComposite.physicSettings.materials.getProxyLessObject;
+  //mainComposite.addLink(mainComposite.collisionGroupsNames , obj.collisionGroupsNames);
+
+
   if (!obj.physicMaterial) obj.physicMaterial= "objectMaterial";
   if (!obj.linearDamping) obj.linearDamping = 0.15;
   if (!obj.angularDamping) obj.angularDamping = 0.15;
   if (!obj.allowSleep) obj.allowSleep = false; // allow cannon put sleep non-intracting object
-
   if (!obj.cylinderSegments) obj.cylinderSegments = 16;
   if (obj.physicStatus===undefined) obj.physicStatus = true; //temporaryly remove from physic world if false
   if (obj.sleep==undefined) obj.sleep = false; // temporarily detach from updating loop
+  if (obj.bodyType==undefined) obj.bodyType = "dynamic";
+  if (obj.groupName==undefined) obj.groupName = "all";
+  if (obj.collisionGroups==undefined) obj.collisionGroups = ["all"];
+
 
   obj.addFunction(shape);
   obj.addFunction(body);
@@ -17,8 +26,36 @@ export function addPhysicBody(mainComposite , obj){
   obj.addFunction(setActivityStatus);
   obj.addFunction(addPhysicToLoadedObjects);
   obj.addFunction(setAllowSleep);
-  obj.cannon = mainComposite.cannon.getProxyLessObject;
-  obj.materials = mainComposite.physicSettings.materials.getProxyLessObject;
+  obj.addFunction(collisionGroupCode);
+  obj.addFunction(contactGroupsMask);
+  obj.addFunction(setBodyCollisionGroups);
+
+
+}
+
+export function setBodyCollisionGroups({collisionGroupCode,contactGroupsMask,body}){
+  body.collisionFilterGroup = collisionGroupCode;
+  body.collisionFilterMask = contactGroupsMask;
+}
+
+export function collisionGroupCode({groupName}){
+  if (!collisionGroupsNames.includes(groupName)){
+    collisionGroupsNames.push(groupName);
+  }
+  return Math.pow(2, collisionGroupsNames.indexOf(groupName));
+
+}
+
+export function contactGroupsMask({collisionGroups}){
+  let result = 0;
+  for (let collisionGroup of collisionGroups){
+    if (!collisionGroupsNames.includes(collisionGroup)){
+      collisionGroupsNames.push(collisionGroup);
+    }
+    if (collisionGroup=="all") return ~0;
+    result = result | Math.pow(2, collisionGroupsNames.indexOf(collisionGroup));
+  }
+  return result;
 }
 
 export function setAllowSleep({body,allowSleep}){
@@ -59,7 +96,7 @@ export function getMaterial({materials , physicMaterial}){
 
 export function setStatus({body,physicStatus}){
   if(physicStatus){
-    cannon.add(body);
+    cannon.addBody(body);
   }else{
     cannon.remove(body);
   }
@@ -71,6 +108,18 @@ export function body({mesh , getMaterial , shape , mass}){
   newBody.quaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
   newBody.linearDamping = linearDamping;
   newBody.angularDamping = angularDamping;
+    switch (bodyType){
+      case "dynamic":
+        newBody.type = CANNON.Body.DYNAMIC;
+        break;
+      case "kinematic":
+        newBody.type = CANNON.Body.KINEMATIC;
+        break;
+      case "static":
+        newBody.type = CANNON.Body.STATIC ;
+        break;
+    }
+
   return newBody;
 }
 
