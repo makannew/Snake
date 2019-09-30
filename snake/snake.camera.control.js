@@ -5,6 +5,8 @@ export function loadCameraControl(snake){
   snake.addFunction(updateReverseCamera);
   snake.addFunction(updateSideCamera);
   snake.addFunction(updateTopCamera);
+  snake.addFunction(updateCockpitCamera);
+
 
 
 
@@ -86,9 +88,28 @@ function updateTopCamera ({newAnimationFrame}){
   let beam = new THREE.Vector3(0,0,-10*trailersNumber);
   beam.applyQuaternion(truckQuat);
   pos.x = beam.x + truckPos.x;
-  pos.y = -460;//beam.y + truckPos.y +2+(trailersNumber*2) //-47+(trailersNumber*2);//beam.y+truckPos.y;
-  pos.z = beam.z + truckPos.z;
+  pos.y = -502;//beam.y + truckPos.y +2+(trailersNumber*2) //-47+(trailersNumber*2);//beam.y+truckPos.y;
+  pos.z = beam.z + truckPos.z-10;
   thisCam.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
+
+}
+
+function updateCockpitCamera ({newAnimationFrame}){
+  let thisCam = cameras.camera10.camera;
+  if (activeCamera != thisCam) return;
+  let truckPos = roadTrains[0].position;
+  let truckQuat = roadTrains[0].quaternion;
+  //let trailersNumber = roadTrains[0].visibleTrailers + 1;
+  let pos = thisCam.position;
+  let beam = new THREE.Vector3(0,4,2);
+  let lookPoint = new THREE.Vector3(0,2,8);
+  lookPoint.applyQuaternion(truckQuat);
+  lookPoint.add(truckPos);
+  beam.applyQuaternion(truckQuat);
+  pos.x = beam.x + truckPos.x;
+  pos.y = beam.y + truckPos.y  //-47+(trailersNumber*2);//beam.y+truckPos.y;
+  pos.z = beam.z + truckPos.z;
+  thisCam.lookAt(lookPoint);
 
 }
 

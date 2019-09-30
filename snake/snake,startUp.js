@@ -14,7 +14,7 @@ function startUpProcess ({newAnimationFrame , startUp}){
     // fade in lights
     let blackDuration =700;
     let ambIntensity = .5;
-    let pointIntensity = 1.1;
+    let pointIntensity = .7;
     if (t>blackDuration){
       self.lights.pointLight1.intensity= pointIntensity *(t-blackDuration)/(startUpDuration-blackDuration);
       self.lights.ambient1.intensity =  ambIntensity * (t-blackDuration)/(startUpDuration-blackDuration);

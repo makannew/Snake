@@ -78,7 +78,7 @@ function buildRoadTrain({wheelsInfo}){
     mainComposite.utils.addObject(wheel);
     wheel.set({
       geometryName:"cylinder", 
-      dimension:{radiusTop:radius,radiusBottom:radius,height:wheelInfo.width}, 
+      dimension:{radiusTop:radius,radiusBottom:radius,height:wheelInfo.width*.99}, 
       position:{x:x+wheelPos.x , y:y+wheelPos.y , z:z+wheelPos.z}, 
       color:wheelInfo.color, 
       quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
@@ -86,6 +86,7 @@ function buildRoadTrain({wheelsInfo}){
       shinines:0,
       textureFileName:wheelInfo.textureFileName,
       visible:false,
+      sleep:true,
       groupName:"wheel",
       collisionGroups:["ground","obstacle"]
     });
@@ -106,7 +107,8 @@ function buildRoadTrain({wheelsInfo}){
         materialName:"phong", 
         shinines:0,
         textureFileName:wheelInfo.textureFileName,
-        visible:false
+        visible:false,
+        sleep:true
       });
       wheelPhysicCompound.push(wheel.wheelIn);
       wheel.wheelOut ={};
@@ -120,7 +122,8 @@ function buildRoadTrain({wheelsInfo}){
         materialName:"phong", 
         shinines:0,
         textureFileName:wheelInfo.textureFileName,
-        visible:false
+        visible:false,
+        sleep:true
       });
       wheelPhysicCompound.push(wheel.wheelOut);
 
@@ -166,10 +169,11 @@ function buildRoadTrain({wheelsInfo}){
       dimension:{ height:wheelInfo.axelDiameter , width: wheelInfo.axelDiameter , length:susLength }, 
       position:{x:x+susPos.x , y:y+susPos.y , z:z+susPos.z}, 
       quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
-      color:wheelInfo.color, 
+      color:wheelInfo.susColor, 
       materialName:"phong", 
       shinines:0,
-      visible:false
+      visible:false,
+      sleep:true
     });
     mainComposite.utils.addPhysicBody(suspension);
     suspension.set({
@@ -235,8 +239,10 @@ function buildRoadTrain({wheelsInfo}){
     position :{x:x+chassisTopPos.x , y:y+chassisTopPos.y , z:z+chassisTopPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
+    textureFileName:["/textures/bed.png"],
     materialName:"lambert",
-    visible:false
+    visible:false,
+    sleep:true
   });
 
   roadTrain.chassis={};
@@ -254,8 +260,10 @@ function buildRoadTrain({wheelsInfo}){
     position :{x:x+chassisPos.x , y:y+chassisPos.y , z:z+chassisPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
+    textureFileName:["/textures/bed.png"],
     materialName:"lambert" ,
     visible:false,
+    sleep:true,
     groupName:"chassis",
     collisionGroups:["suspension","obstacle","ground","chassis"],
     physicMaterial:"chassisMaterial"
@@ -279,8 +287,10 @@ if (extensionChassisLength!=0){
     position :{x:x+chassisExtensionPos.x , y:y+chassisExtensionPos.y , z:z+chassisExtensionPos.z}, 
     quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
     color : roadTrain.chassisColor, 
+    textureFileName:["/textures/bed.png"],
     materialName:"lambert",
-    visible:false
+    visible:false,
+    sleep:true
   });
   compoundParts.push(roadTrain.chassisExtension)
 }
@@ -295,7 +305,7 @@ if (roadTrain.cabinInfo){
     cabinLocalPos.applyQuaternion(threeQuat);
     cabinLocalPos.add(new THREE.Vector3(x,y,z))
     cabinLocalQuat.multiply(threeQuat);
-    cabinPart.set({position:cabinLocalPos,quaternion:cabinLocalQuat , visible:false});
+    cabinPart.set({position:cabinLocalPos,quaternion:cabinLocalQuat , visible:false,sleep:true});
     if (roadTrain.cabinPhysic){
       compoundParts.push(cabinPart);
     }else{

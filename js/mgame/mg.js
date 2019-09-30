@@ -22,6 +22,8 @@ import { newRoadTrain } from "./mg.roadTrain.js";
 export function MGame(){
 
   let result = CompositeObject();
+  result.composerConfig({upPropagation:false});
+
   result.loadedObjects = [];
   result.three = initializeThreeJs(result);
   result.activeCamera = undefined;

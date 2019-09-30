@@ -117,22 +117,22 @@ function roadtrainStatus({setHingeConstraints , enable}){
   if (!enable && !roadtrainStatus) return false;
   if (enable && !roadtrainStatus){
     for (let i=0,len=allWheels.length;i<len;++i){
-      self.wheels[i].set({visible:true,physicStatus:true});
-      self.suspensions[i].set({visible:true,physicStatus:true});
+      self.wheels[i].set({visible:true,physicStatus:true,sleep:false});
+      self.suspensions[i].set({visible:true,physicStatus:true,sleep:false});
       cannon.addConstraint(allWheels[i].wheelConstraint);
       cannon.addConstraint(allWheels[i].suspensionConstraint);
     }
-    self.chassis.set({visible:true,physicStatus:true});
+    self.chassis.set({visible:true,physicStatus:true,sleep:false});
     return true;
   }
   if (!enable && roadtrainStatus){
     for (let i=0,len=allWheels.length;i<len;++i){
-      self.wheels[i].set({visible:false,physicStatus:false});
-      self.suspensions[i].set({visible:false,physicStatus:false});
+      self.wheels[i].set({visible:false,physicStatus:false,sleep:true});
+      self.suspensions[i].set({visible:false,physicStatus:false,sleep:true});
       cannon.removeConstraint(allWheels[i].wheelConstraint);
       cannon.removeConstraint(allWheels[i].suspensionConstraint);
     }
-    self.chassis.set({visible:false,physicStatus:false});
+    self.chassis.set({visible:false,physicStatus:false,sleep:true});
     return false;
   }
 

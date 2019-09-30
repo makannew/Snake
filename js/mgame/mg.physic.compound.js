@@ -19,6 +19,7 @@ export function makePhysicCompound(mainComposite , components){
 
   if (components[0].physicStatus===undefined) components[0].physicStatus = true;
   if (components[0].sleep==undefined) components[0].sleep = false;
+  if (components[0].timeStamp==undefined) components[0].timeStamp = 0;
   if (components[0].bodyType==undefined) components[0].bodyType = "dynamic";
   if (components[0].groupName==undefined) components[0].groupName = "all";
   if (components[0].collisionGroups==undefined) components[0].collisionGroups = ["all"];

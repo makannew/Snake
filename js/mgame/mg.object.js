@@ -1,12 +1,10 @@
 
 export function addObject(mainComposite , obj){
   obj.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  obj.three = mainComposite.three.getProxyLessObject;
+
   obj.addFunction(addToLoadedObjects);
   obj.addFunction(addTextureToLoadedObjects);
-
-
- // mainComposite.addLink(mainComposite.three , obj.three);
-  obj.three = mainComposite.three.getProxyLessObject;
   // functions
   obj.addFunction(texture);
   obj.addFunction(needsUpdate);
@@ -22,6 +20,8 @@ export function addObject(mainComposite , obj){
   obj.addFunction(sceneUpdate);
   obj.addFunction(setQuaternion);
   obj.addFunction(setPlaneHeightField);
+  obj.addFunction(threeMaterial);
+
   // default values
   if (obj.geometryName == undefined )obj.geometryName = "plane";
   if (obj.materialName == undefined)obj.materialName = "lambert"
@@ -79,7 +79,9 @@ const needsUpdate = function({mesh , visible}){
 
 const setGeneralProperties = function({mesh , shininess}){
   if (materialName == "phong"){
-    material.shininess = shininess;
+    for (let i=0,len=material.length;i<len;++i){
+      mesh.material[i].shininess = shininess;
+    }
   }
   
 }
@@ -98,30 +100,147 @@ const setQuaternion = function({mesh , quaternion}){
   return true;
 }
 
-const mesh = function({geometry , material}){
-  let result={};
-  result = new THREE.Mesh( geometry, material );
+const mesh = function({geometry , material , readyToCreateMesh}){
+  let result = new THREE.Mesh( geometry, material );
   return result;
 }
 
-const material = function({materialName , dimension}){
-  let result ={};
+const threeMaterial = function({materialName , dimension}){
+  let result=[];
   switch (materialName){
     case "lambert":
-      result = new THREE.MeshLambertMaterial();
+      for (let i=0;i<6;++i){
+        result.push(new THREE.MeshLambertMaterial())
+      }
       break;
     case "basic":
-      result = new THREE.MeshBasicMaterial();
+      for (let i=0;i<6;++i){
+        result.push(new THREE.MeshBasicMaterial())
+      }
       break;
     case "phong":
-      result = new THREE.MeshPhongMaterial();
+      for (let i=0;i<6;++i){
+        result.push(new THREE.MeshPhongMaterial())
+      }
       break;
+    default:
+    console.error(`materialName ${materialName} not found`);
+    
   }
   return result;
 }
 
-const mapTexture = function({texture , material }){
-  material.map = texture.threeTexture;
+const material = function({threeMaterial , dimension , geometryName }){
+  let result = [];
+
+  switch (geometryName){
+    case "plane":
+      result.push(threeMaterial[0])
+      break;
+    case "box":
+      for (let i=0;i<6;++i){
+      result.push(threeMaterial[i])
+      }
+      break;
+    case "sphere":
+      for (let i=0;i<3;++i){
+        result.push(threeMaterial[i])
+      }
+      break;
+    case "cylinder":
+      for (let i=0;i<3;++i){
+        result.push(threeMaterial[i])
+        }
+      break;
+    case "polyhedron":
+      result.push(threeMaterial[0])
+    default:
+      console.error(`geometryName ${geometryName} not found`);
+
+  }
+  if (textureFileName==undefined) readyToCreateMesh = true;
+  return result;
+}
+
+const mapTexture = function({texture , material , geometry }){
+  for (let i=0,len=material.length;i<len;++i){
+    if (i>=texture.length){
+      material[i].map = texture[texture.length-1];
+    }else{
+      material[i].map = texture[i];
+    }
+  }
+  let materialIndex = 0;
+  
+  switch (geometryName){
+    case "plane":
+        for (let i=0;i<geometry.faces.length;++i){
+          geometry.faces[i].materialIndex = materialIndex;
+          ++materialIndex;
+          if (materialIndex>=material.length) materialIndex=0;
+        }
+      break;
+    case "box":
+      for (let i=0;i<geometry.faces.length;i=i+2){
+        geometry.faces[i].materialIndex = materialIndex;
+        geometry.faces[i+1].materialIndex = materialIndex;
+        ++materialIndex;
+        if (materialIndex>=material.length) materialIndex=0;
+      }
+      break;
+    case "sphere":
+        for (let i=0;i<geometry.faces.length;++i){
+          geometry.faces[i].materialIndex = materialIndex;
+          ++materialIndex;
+          if (materialIndex>=material.length) materialIndex=0;
+        }
+      break;
+    case "cylinder":
+        let startRad = dimension.radiusBottom;
+        let startRadHalf = startRad/2;
+        let endRad = dimension.radiusTop;
+        let endRadHalf = endRad/2;
+        //let radius_half = dimension.radius/2;
+        for (let i=0;i<geometry.faces.length;++i){
+          let face = geometry.faces[i];
+          let xzAreZero = !face.normal.x && !face.normal.z;
+          if (face.normal.y < -.98 && face.normal.y > -1.01 && xzAreZero) {
+              geometry.faceVertexUvs[0][i][0].u = (geometry.vertices[face.a].x + startRadHalf) / startRad;
+              geometry.faceVertexUvs[0][i][0].v = (geometry.vertices[face.a].z + startRadHalf) / startRad;
+              geometry.faceVertexUvs[0][i][1].u = (geometry.vertices[face.b].x + startRadHalf) / startRad;
+              geometry.faceVertexUvs[0][i][1].v = (geometry.vertices[face.b].z + startRadHalf) / startRad;
+              geometry.faceVertexUvs[0][i][2].u = (geometry.vertices[face.c].x + startRadHalf) / startRad;
+              geometry.faceVertexUvs[0][i][2].v = (geometry.vertices[face.c].z + startRadHalf) / startRad;
+              face.materialIndex = 2;
+          } else if (face.normal.y > .98 && face.normal.y < 1.01 && xzAreZero) {
+              geometry.faceVertexUvs[0][i][0].u = (geometry.vertices[face.a].x + endRadHalf) / endRad ;
+              geometry.faceVertexUvs[0][i][0].v = (geometry.vertices[face.a].z + endRadHalf) / endRad ;
+              geometry.faceVertexUvs[0][i][1].u = (geometry.vertices[face.b].x + endRadHalf) / endRad ;
+              geometry.faceVertexUvs[0][i][1].v = (geometry.vertices[face.b].z + endRadHalf) / endRad ;
+              geometry.faceVertexUvs[0][i][2].u = (geometry.vertices[face.c].x + endRadHalf) / endRad ;
+              geometry.faceVertexUvs[0][i][2].v = (geometry.vertices[face.c].z + endRadHalf) / endRad ;
+              face.materialIndex = 0;
+          } else {
+              face.materialIndex = 1;
+          }
+
+        }
+      break;
+    case "polyhedron":
+        for (let i=0;i<geometry.faces.length;++i){
+          geometry.faces[i].materialIndex = materialIndex;
+          ++materialIndex;
+          if (materialIndex>=material.length) materialIndex=0;
+        }
+    default:
+      console.error(`geometryName ${geometryName} not found`);
+
+  }
+
+
+
+  readyToCreateMesh = true;
+  return true;
 }
 
 const geometry = function({geometryName , dimension}){
@@ -145,7 +264,8 @@ const geometry = function({geometryName , dimension}){
       if (dimension.detail===undefined) dimension.detail = 1;
       result = new THREE.PolyhedronGeometry(dimension.vertices , dimension.faces , dimension.radius , dimension.detail);
       break;
-
+    default:
+      console.error(`geometryName ${geometryName} not found`);
   }
   return result;
 }
@@ -156,33 +276,24 @@ const setScale = function({scale , mesh}){
 }
 
 const setColor = function({color , mesh}){
-  mesh.material.color.setHex(color);
+  for (let i=0,len=material.length;i<len;++i){
+    mesh.material[i].color.setHex(color);
+  }
   return true;
 }
 
-const texture = function({textureFileName}){
-  let texture={};
-  texture.canvas = document.createElement("CANVAS");
-  texture.context = texture.canvas.getContext("2d");
-  texture.image = document.createElement("IMG");
-  let result =new Promise ((resolve , reject)=>{
-    texture.image.onload = ()=> {
-      texture.canvas.width = texture.image.width;
-      texture.canvas.height = texture.image.height;
-      texture.context.drawImage(texture.image, 0, 0);
-      texture.threeTexture = new THREE.Texture(texture.canvas);
-      texture.threeTexture.needsUpdate = true;
-      // if (!dimension){
-      //   dimension = {};
-      //   dimension.length = texture.image.width;
-      //   dimension.width = texture.image.height;
-      //   dimension.height = texture.image.height;
-      //   dimension.radius = texture.image.height;
-      // }
-      resolve(texture)
-    };
-    texture.image.onerror = ()=> resolve(undefined);
-  })
-  texture.image.src = textureFileName;
+const texture = async function({textureFileName}){
+  let result = [];
+  let textureFileNameArray = [];
+  if (Array.isArray(textureFileName)){
+    textureFileNameArray = [...textureFileName];
+  }else{
+    textureFileNameArray.push(textureFileName);
+  }
+  for (let i=0,len=textureFileNameArray.length;i<len;++i){
+    result.push(new THREE.TextureLoader().load(textureFileNameArray[i]));
+    result.anisotropy = 16
+
+  }
   return result;
 }

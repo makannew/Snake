@@ -6,7 +6,7 @@ export function truckWheelsInfo(){
   let rearStiffness = 170,rearDamping = 30,rearSpringLength = .8;
   let angularDamping=0;
   let wheelMass = 1, axelMass = 25;
-  let textureFileName = undefined , color=0x777777;
+  let textureFileName = ["/textures/tyreInside.png","/textures/tyreTexture.png","/textures/tyreOutside.png"] , color=0xffffff , susColor=0x333333;
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
   let steeringWheelMass = 1, steeringAxelMass = 25;
   let wheelsInfo=[];
@@ -29,6 +29,7 @@ export function truckWheelsInfo(){
     axelMass:steeringAxelMass,
     textureFileName,
     color,
+    susColor,
     wheelMaterial,
     axelMaterial,
     angularDamping
@@ -51,6 +52,7 @@ export function truckWheelsInfo(){
     axelMass:steeringAxelMass,
     textureFileName,
     color,
+    susColor,
     wheelMaterial,
     axelMaterial,
     angularDamping
@@ -73,6 +75,7 @@ export function truckWheelsInfo(){
     axelMass,
     textureFileName,
     color,
+    susColor,
     wheelMaterial:fakeMaterial,
     axelMaterial,
     angularDamping,
@@ -96,6 +99,7 @@ export function truckWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial:fakeMaterial,
     axelMaterial,
@@ -120,6 +124,7 @@ export function truckWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -144,6 +149,7 @@ export function truckWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -164,7 +170,7 @@ export function trailerWheelsInfo(){
   let angularDamping=0;
 
   let wheelMass = 1 , axelMass = 5;
-  let textureFileName = undefined , color=0x777777;
+  let textureFileName = ["/textures/tyreInside.png","/textures/tyreTexture.png","/textures/tyreOutside.png"] , color=0xffffff, susColor=0x333333;
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
   let  doubleWheelGap = .07;
 
@@ -230,6 +236,7 @@ export function trailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -253,6 +260,7 @@ export function trailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -276,6 +284,7 @@ export function trailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -299,6 +308,7 @@ export function trailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -317,7 +327,7 @@ export function additionalTrailerWheelsInfo(){
   let angularDamping=0;
 
   let wheelMass = 1 , axelMass = 5;
-  let textureFileName = undefined , color=0x777777;
+  let textureFileName = ["/textures/tyreInside.png","/textures/tyreTexture.png","/textures/tyreOutside.png"] , color=0xffffff, susColor=0x333333;
   let wheelMaterial="wheelMaterial", axelMaterial="objectMaterial", fakeMaterial="fakeWheelMaterial";
   let  doubleWheelGap = .07;
 
@@ -339,6 +349,7 @@ export function additionalTrailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -363,6 +374,7 @@ export function additionalTrailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -433,6 +445,7 @@ export function additionalTrailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,
@@ -456,6 +469,7 @@ export function additionalTrailerWheelsInfo(){
     wheelMass,
     axelMass,
     textureFileName,
+    susColor,
     color,
     wheelMaterial,
     axelMaterial,

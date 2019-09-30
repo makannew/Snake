@@ -87,7 +87,7 @@ export function loadRoad(snake){
       textureFileName,
       sleep:true,
       physicStatus:(i==0)? true:false,
-      visible:true,
+      visible:false,
        });
 
     snake.utils.addPhysicBody(snake.road[i].block);
@@ -154,6 +154,7 @@ function roadActiveBlocks({currentStandingBlock}){
   function enable(blockNum){
     self.road[blockNum].block.set({
       physicStatus:true,
+      visible:true
     });
     if (road[blockNum].blockObstacles){
       let obstacles = road[blockNum].blockObstacles;
@@ -161,6 +162,7 @@ function roadActiveBlocks({currentStandingBlock}){
         for (obj of obstacle.objects){
           obj.self.set({
             sleep:false,
+            visible:true,
             physicStatus:true,
           })
         }
@@ -172,6 +174,7 @@ function roadActiveBlocks({currentStandingBlock}){
   function disable(blockNum){
     self.road[blockNum].block.set({
       physicStatus:false,
+      visible:false
     })
     if (road[blockNum].blockObstacles){
       let obstacles = road[blockNum].blockObstacles;
@@ -180,7 +183,7 @@ function roadActiveBlocks({currentStandingBlock}){
           obj.self.set({
             sleep:true,
             physicStatus:false,
-            visible:true,
+            visible:false,
           })
         }
       }

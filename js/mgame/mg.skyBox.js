@@ -25,6 +25,7 @@ export function addSkyBox(mainComposite , skyBoxName){
       physicMaterial:"groundMaterial" ,
       geometryName:"box" , 
       receiveShadow:(i==5) ? true:false,// only ground receive shadow
+      sleep:true,
       textureFileName: skyBoxName.textureFilePath + skyBoxName.worldFileNames[i] + skyBoxName.filesExtension
     });
   }

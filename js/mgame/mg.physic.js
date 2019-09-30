@@ -71,10 +71,10 @@ function addPhysicToLoadedObjects({body}){
 export function setActivityStatus({sleep}){
   if (sleep){
     if (timeStamp){
-      mainComposite.removeLink(mainComposite.timeStamp,self.timeStamp);
+      mainComposite.removeLink(self.timeStamp);
     }
   }else{
-    mainComposite.addLink(mainComposite.timeStamp,self.timeStamp);
+    mainComposite.addLink(mainComposite.timeStamp , self.timeStamp);
 
   }
 }

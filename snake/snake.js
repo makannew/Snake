@@ -14,10 +14,10 @@ import { loadStartUp } from './snake,startUp.js';
 import { loadField } from './snake.field.js';
 import { loadRoad, loadRoadUpdateManager } from './snake.road.js';
 import { loadHorizenWorld } from './snake.horizenWorld.js';
+import { loadStarfield } from './snake.starfield.js';
 
 
 const snake = MGame();
-
 //snake.self = snake;
 console.log(snake)
 
@@ -30,6 +30,7 @@ loadLights(snake);
 // load world texture
 //loadWorlds(snake);
 //loadHorizenWorld(snake);
+loadStarfield(snake);
 //
 
 // load road map
@@ -45,6 +46,7 @@ loadRoadUpdateManager(snake);
 
 // load field objects
 //loadField(snake);
+
 
 
 // load example geometries
