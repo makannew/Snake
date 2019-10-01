@@ -29,13 +29,14 @@ export async function startEngine(gameInstance){
   }
 
   function whileLoading(){
-    if (gameLoadingProgress && gameLoadingProgress.loading && gameInstance.compositeRunningFunctions!=0){
-      if (gameInstance.loadedObjects.length >=gameLoadingProgress.totalObject){
-        gameLoadingProgress.loading = false;
+    if (window.gameLoadingProgress && window.gameLoadingProgress.loading && gameInstance.compositeRunningFunctions!=0){
+
+      if (gameInstance.loadedObjects.length >=window.gameLoadingProgress.totalObject){
+        window.gameLoadingProgress.loading = false;
       }
     }else{
       clearInterval(loadingLoopID);
-      gameLoadingProgress.progressBar.parentNode.removeChild(gameLoadingProgress.progressBar);
+      window.gameLoadingProgress.progressBar.parentNode.removeChild(window.gameLoadingProgress.progressBar);
       document.body.appendChild ( gameInstance.three.renderer.domElement.getProxyLessObject );
       gameInstance.startUp = true;
       requestAnimationFrame(mainloop);
