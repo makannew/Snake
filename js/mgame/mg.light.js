@@ -2,6 +2,7 @@
 export function addLight(mainComposite , newLight){
   newLight.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
   newLight.addFunction(addToLoadedObjects);
+  newLight.mainComposite = mainComposite;
 
     newLight.color = 0xffffff;
     newLight.intensity = .5;
@@ -32,7 +33,7 @@ export function addLight(mainComposite , newLight){
 
 function addToLoadedObjects({light}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(light);
+  mainComposite.loadedObjects.push(light);
   return true;
 }
 

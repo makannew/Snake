@@ -4,6 +4,7 @@ import { addPhysicBody } from "./mg.physic.js"
 export function addSkyBox(mainComposite , skyBoxName){
   skyBoxName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
   skyBoxName.addFunction(addToLoadedObjects);
+  skyBoxName.mainComposite = mainComposite;
 
   skyBoxName.scale=1;
   skyBoxName.visible=false;
@@ -39,7 +40,7 @@ export function addSkyBox(mainComposite , skyBoxName){
 
 function addToLoadedObjects({setGeometries}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(selfProxy);
+  mainComposite.loadedObjects.push(selfProxy);
   return true;
 }
 

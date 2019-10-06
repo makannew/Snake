@@ -2,7 +2,7 @@
 export function newPointsConstraint (mainComposite ,constraintName){
   constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
   constraintName.addFunction(addToLoadedObjects);
-  
+  constraintName.mainComposite = mainComposite;
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
   constraintName.active = true;
@@ -19,7 +19,7 @@ export function newPointsConstraint (mainComposite ,constraintName){
 
 function addToLoadedObjects({pointConstraint}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(pointConstraint);
+  mainComposite.loadedObjects.push(pointConstraint);
   return true;
 }
 

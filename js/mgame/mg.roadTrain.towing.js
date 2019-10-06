@@ -3,6 +3,7 @@ export function roadTrainTowing(roadTrain){
 
   roadTrain.frontTowing = {roadTrain};
   roadTrain.frontTowing.constraint = undefined;
+  roadTrain.frontTowing.mainComposite =  roadTrain.mainComposite
   roadTrain.frontTowing.addFunction(linkChassisPosition);
   roadTrain.frontTowing.addFunction(setConstraint)
 
@@ -16,7 +17,7 @@ export function roadTrainTowing(roadTrain){
 
 function addToLoadedObjects({setConstraint}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(setConstraint);
+  mainComposite.loadedObjects.push(setConstraint);
   return true;
 }
 

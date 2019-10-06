@@ -1,6 +1,8 @@
 
 export function newDistanceConstraint (mainComposite ,constraintName){
   constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
+  constraintName.mainComposite = mainComposite;
+
   constraintName.addFunction(addToLoadedObjects);
 
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
@@ -16,7 +18,7 @@ export function newDistanceConstraint (mainComposite ,constraintName){
 
 function addToLoadedObjects({distanceConstraint}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(distanceConstraint);
+  mainComposite.loadedObjects.push(distanceConstraint);
   return true;
 }
 

@@ -2,7 +2,7 @@
 export function newHingeConstraint (mainComposite ,constraintName){
   constraintName.loadedObjects = mainComposite.loadedObjects.getProxyLessObject;
   constraintName.addFunction(addToLoadedObjects);
-
+  constraintName.mainComposite = mainComposite;
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
   constraintName.active = true;
@@ -21,7 +21,7 @@ export function newHingeConstraint (mainComposite ,constraintName){
 
 function addToLoadedObjects({hingeConstraint}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(hingeConstraint);
+  mainComposite.loadedObjects.push(hingeConstraint);
   return true;
 }
 

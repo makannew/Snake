@@ -19,4 +19,6 @@ let starsMaterial = new THREE.PointsMaterial( { color: 0x888888 } );
 let starField = new THREE.Points( starsGeometry, starsMaterial );
 
 threeScene.add( starField );
+snake.loadedObjects.push(starField);
+
 }

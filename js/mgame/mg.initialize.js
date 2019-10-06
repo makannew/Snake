@@ -6,7 +6,7 @@ export function initializeThreeJs(mainComposite){
   result.renderer = new THREE.WebGLRenderer (); //{devicePixelRatio: 100 }
   result.renderer.shadowMap.enabled = true;
   result.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  result.renderer.setPixelRatio( window.devicePixelRatio );
+  result.renderer.setPixelRatio( (window.devicePixelRatio>2)?2:window.devicePixelRatio);
   result.renderer.setSize ( window.innerWidth , window.innerHeight);
   mainComposite.loadedObjects.push(result);
 

@@ -32,7 +32,7 @@ export function newRoadTrain(mainComposite , roadTrain){
 
 function addToLoadedObjects({setHingeConstraints}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(self);
+  mainComposite.loadedObjects.push(self);
   return true;
 }
 

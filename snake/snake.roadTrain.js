@@ -5,10 +5,10 @@ import { loadTruckCabin, loadTrailerContainer, loadAdditionalTrailer} from "./sn
 export function loadRoadTrain(snake){
   //let z=90,l=11,t=.5;
   //let iniPos={x:350,y:-280,z:-330}
-  let iniPos={x:0,y:-510,z:30}
+  let iniPos={x:0,y:1,z:10}
 
   let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(),   Math.PI);
-  let trailersNumber = 5
+  let trailersNumber = 4
 
   snake.roadTrains = [];
   snake.roadTrains.push({});
@@ -54,12 +54,22 @@ export function loadRoadTrain(snake){
   }
 
   snake.roadTrains[0].addFunction(addTrailer);
+  snake.roadTrains[0].addFunction(addTrailerToLoadObjects);
+
 
 
   snake.roadTrains[0].visibleTrailers = 0;
   //snake.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
+  snake.loadedObjects.push(snake.roadTrains);
 
 
+}
+
+function addTrailerToLoadObjects({addTrailer}){
+  if (addTrailerToLoadObjects) return true;
+  mainComposite.loadedObjects.push(addTrailer);
+
+  return true;
 }
 
 function addTrailer({visibleTrailers,chassisBody}){
@@ -92,4 +102,5 @@ function addTrailer({visibleTrailers,chassisBody}){
       otherTowingPosition:{x:0,y:0,z:-towingGap*towingRatio},
       towedRoadTrain:roadTrains[prev]});
   }
+  return true;
 }

@@ -29,6 +29,7 @@ function updateCarCameras ({newAnimationFrame}){
 }
 
 function updateBackChasingCamera ({newAnimationFrame}){
+  if(startUp) return; 
   let thisCam = cameras.camera3.camera;
   if (activeCamera != thisCam) return;
   let truckPos = roadTrains[0].position;

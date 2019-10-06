@@ -12,12 +12,14 @@ export function loadControls(snake){
   let downKeyPressed = false;
 
 
+  snake.activateControls = function(){
+    document.addEventListener( "keydown" , keyDownHandler , false );
+    document.addEventListener( "keyup" , keyUpHandler , false );
+    document.addEventListener( 'touchstart' ,toushStartHandler , { passive: false })
+    document.addEventListener( 'touchend' ,toushEndHandler , { passive: false })
+    document.addEventListener( 'touchmove' ,touchMoveHandler , { passive: false })
+  }
 
-  document.addEventListener( "keydown" , keyDownHandler , false );
-  document.addEventListener( "keyup" , keyUpHandler , false );
-  document.addEventListener( 'touchstart' ,toushStartHandler , { passive: false })
-  document.addEventListener( 'touchend' ,toushEndHandler , { passive: false })
-  document.addEventListener( 'touchmove' ,touchMoveHandler , { passive: false })
 
 function touchMoveHandler(e){
   e.preventDefault();

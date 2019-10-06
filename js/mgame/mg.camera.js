@@ -20,7 +20,7 @@ export function addCamera(mainComposite , newCamera){
 
 function addToLoadedObjects({camera}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(camera);
+  mainComposite.loadedObjects.push(camera);
   return true;
 }
 

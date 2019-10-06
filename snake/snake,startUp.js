@@ -7,21 +7,26 @@ export function loadStartUp(snake){
 }
 
 function startUpProcess ({newAnimationFrame , startUp}){
-    let startUpDuration =3500;
-    let t = timeStamp;
-    if (t>startUpDuration) t=startUpDuration;
-    
-    // fade in lights
-    let blackDuration =700;
-    let ambIntensity = .5;
-    let pointIntensity = .7;
-    if (t>blackDuration){
-      self.lights.pointLight1.intensity= pointIntensity *(t-blackDuration)/(startUpDuration-blackDuration);
-      self.lights.ambient1.intensity =  ambIntensity * (t-blackDuration)/(startUpDuration-blackDuration);
-      
-    }
+    let startUpDuration =2500;
+    let t = timeStamp - startUp;
+    let thisCam = cameras.camera3.camera;
+    let truckPos = roadTrains[0].position;
+    let truckQuat = roadTrains[0].quaternion;
+    let trailersNumber = roadTrains[0].visibleTrailers + 1;
+    let pos = thisCam.position;
+    let d = t;
+    if (d>startUpDuration) d= startUpDuration;
+    d = Math.pow(1-d/startUpDuration,2)*startUpDuration;
+    let beam = new THREE.Vector3(0,0,-(10+d));
+    beam.applyQuaternion(truckQuat);
+    pos.x = beam.x + truckPos.x;
+    pos.y = beam.y + truckPos.y +2+(trailersNumber*2) //-47+(trailersNumber*2);//beam.y+truckPos.y;
+    pos.z = beam.z + truckPos.z;
+    thisCam.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
 
+    if (t > startUpDuration){
+      startUp = undefined;
+      self.activateControls();
+    } 
 
-    if (timeStamp > startUpDuration) startUp = undefined;
- 
 }

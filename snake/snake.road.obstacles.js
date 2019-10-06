@@ -1,5 +1,5 @@
 
-export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -16,7 +16,7 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     position :new THREE.Vector3(0,2,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , 
     textureFileName:["/textures/barrierSide.png"],
     color : 0xffffff , 
-    materialName:"phong" 
+    materialName:"basic" 
   });
   //snake.utils.addPhysicBody(obj.objects[0]);
 
@@ -46,7 +46,7 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
@@ -57,7 +57,7 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
 
 }
 
-export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1) , visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -72,8 +72,9 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
   dimension : { height:1 , width: .1 , length:1} , 
   position :new THREE.Vector3(0,.05,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat ,
    color : 0xffffff , 
-   textureFileName:["/textures/coneBaseSide.png","/textures/coneBaseSide.png","/textures/coneBaseTop.png","/textures/coneBaseSide.png","/textures/coneBaseBottom.png","/textures/coneBaseSide.png"],
-   materialName:"phong" 
+   textureFileName:["/textures/coneBaseSide.png","/textures/coneBaseTop.png","/textures/coneBaseBottom.png"],
+   materialIndex:[0,0,0,0,1,1,2,2,2,2,0,0],
+   materialName:"basic" 
   });
 
   snake.utils.addObject(obj.parts[0]);
@@ -82,8 +83,10 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
     position :new THREE.Vector3(0,.8,0).add(localPos).applyQuaternion(quat).add(pos),
     quaternion:thisQuat ,
      color : 0xaffffff , 
-     materialName:"phong" ,
+     materialName:"basic" ,
      textureFileName:["/textures/coneTop.png","/textures/coneSide.png"],
+     materialIndex:[0,1,0],
+
 
     });
 //.set({geometryName:"cylinder" , dimension:{radiusTop:.1,radiusBottom:.5,height:1.5}, position:{x:9.0,y:-48.0,z:-32.0} , color:0x1f11ff , materialName:"phong" , shinines:0})
@@ -94,7 +97,7 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
@@ -102,7 +105,7 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
 
 }
 
-export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -132,7 +135,7 @@ export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) ,
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
@@ -140,7 +143,7 @@ export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) ,
 
 }
 
-export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -165,14 +168,14 @@ export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
   });
 }
 
-export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -197,14 +200,14 @@ export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
   });
 }
 
-export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -229,14 +232,14 @@ export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
   });
 }
 
-export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -261,14 +264,14 @@ export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
   });
 }
 
-export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1)){
+export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
   let snake = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
@@ -293,7 +296,7 @@ export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
     allowSleep:true,
     sleep:true,
     physicStatus:false,
-    visible:false,
+    visible,
     groupName:"obstacle",
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"

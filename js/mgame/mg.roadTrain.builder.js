@@ -12,6 +12,14 @@ export function loadBuilder(roadTrain){
 
   roadTrain.addFunction(buildRoadTrain)
   roadTrain.addFunction(headBodiesLoaded);
+  roadTrain.addFunction(addBuilderToLoadedObjects);
+
+}
+function addBuilderToLoadedObjects({headBodiesLoaded,buildRoadTrain}){
+  if (addBuilderToLoadedObjects) return true;
+  mainComposite.loadedObjects.push(headBodiesLoaded);
+  mainComposite.loadedObjects.push(buildRoadTrain);
+  return true;
 }
 
 function headBodiesLoaded({wheelsBodies,suspensionsBodies,chassisBody}){
@@ -82,9 +90,10 @@ function buildRoadTrain({wheelsInfo}){
       position:{x:x+wheelPos.x , y:y+wheelPos.y , z:z+wheelPos.z}, 
       color:wheelInfo.color, 
       quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
-      materialName:"phong", 
+      materialName:"basic", 
       shinines:0,
       textureFileName:wheelInfo.textureFileName,
+      materialIndex:[0,1,2],
       visible:false,
       sleep:true,
       groupName:"wheel",
@@ -104,9 +113,10 @@ function buildRoadTrain({wheelsInfo}){
         position:{x:wheelInPos.x , y:wheelInPos.y , z:wheelInPos.z}, 
         color:wheelInfo.color, 
         quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
-        materialName:"phong", 
+        materialName:"lambert", 
         shinines:0,
         textureFileName:wheelInfo.textureFileName,
+        materialIndex:[0,1,2],
         visible:false,
         sleep:true
       });
@@ -119,9 +129,10 @@ function buildRoadTrain({wheelsInfo}){
         position:{x:wheelOutPos.x , y:wheelOutPos.y , z:wheelOutPos.z}, 
         color:wheelInfo.color, 
         quaternion:new THREE.Quaternion(wheelQuat.x,wheelQuat.y,wheelQuat.z,wheelQuat.w),
-        materialName:"phong", 
+        materialName:"lambert", 
         shinines:0,
         textureFileName:wheelInfo.textureFileName,
+        materialIndex:[0,1,2],
         visible:false,
         sleep:true
       });
@@ -170,7 +181,7 @@ function buildRoadTrain({wheelsInfo}){
       position:{x:x+susPos.x , y:y+susPos.y , z:z+susPos.z}, 
       quaternion:new THREE.Quaternion(threeQuat.x,threeQuat.y,threeQuat.z,threeQuat.w),
       color:wheelInfo.susColor, 
-      materialName:"phong", 
+      materialName:"basic", 
       shinines:0,
       visible:false,
       sleep:true

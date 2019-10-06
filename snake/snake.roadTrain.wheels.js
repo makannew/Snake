@@ -28,6 +28,7 @@ export function truckWheelsInfo(){
     wheelMass:steeringWheelMass,
     axelMass:steeringAxelMass,
     textureFileName,
+    
     color,
     susColor,
     wheelMaterial,

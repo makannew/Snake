@@ -5,6 +5,7 @@ export function makePhysicCompound(mainComposite , components){
   components[0].cannon = mainComposite.cannon.getProxyLessObject;
   components[0].materials = mainComposite.physicSettings.materials.getProxyLessObject;
   components[0].collisionGroupsNames = mainComposite.collisionGroupsNames.getProxyLessObject;
+  components[0].mainComposite = mainComposite;
   //mainComposite.addLink(mainComposite.collisionGroupsNames , components[0].collisionGroupsNames);
 
   if (!components[0].physicMaterial) components[0].physicMaterial= "objectMaterial";
@@ -46,6 +47,7 @@ export function makePhysicCompound(mainComposite , components){
     components[i].addFunction(shape);
     components[i].addFunction(addPhysicToLoadedObjects);
     components[i].addFunction(addToCompoundBody);
+    components[i].mainComposite = mainComposite;
     mainComposite.addLink(components[0].body , components[i].body);
     mainComposite.addLink(components[0].visible , components[i].visible);
     if (!components[i].cylinderSegments) components[i].cylinderSegments = 16;
@@ -61,7 +63,7 @@ export function makePhysicCompound(mainComposite , components){
 
 function addPhysicToLoadedObjects({addToCompoundBody}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(shape);
+  mainComposite.loadedObjects.push(shape);
   return true;
 }
 

@@ -3,6 +3,7 @@ export function addPhysicBody(mainComposite , obj){
   obj.cannon = mainComposite.cannon.getProxyLessObject;
   obj.collisionGroupsNames = mainComposite.collisionGroupsNames.getProxyLessObject;
   obj.materials = mainComposite.physicSettings.materials.getProxyLessObject;
+  obj.mainComposite = mainComposite;
   //mainComposite.addLink(mainComposite.collisionGroupsNames , obj.collisionGroupsNames);
 
 
@@ -64,7 +65,7 @@ export function setAllowSleep({body,allowSleep}){
 
 function addPhysicToLoadedObjects({body}){
   if (addToLoadedObjects) return true;
-  loadedObjects.push(body);
+  mainComposite.loadedObjects.push(body);
   return true;
 }
 

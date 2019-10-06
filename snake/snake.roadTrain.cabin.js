@@ -11,7 +11,8 @@ export function loadTruckCabin(){
     localQuaternion:new THREE.Quaternion(0,0,0,1),
     color : 0xffffff, 
     materialName:"lambert",
-    textureFileName:["/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/hoodFront.png","/textures/bodyColor.png"],
+    textureFileName:["/textures/bodyColor.png","/textures/hoodFront.png"],
+    materialIndex:[0,0,0,0,0,0,0,0,1,1,0,0],
     groupName:"cabin",
   });
   //cabin
@@ -22,7 +23,9 @@ export function loadTruckCabin(){
     localQuaternion:new THREE.Quaternion(0,0,0,1),
     color : 0xffffff, 
     materialName:"lambert",
-    textureFileName:["/textures/cabinLeft.png","/textures/cabinRight.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/windShield.png","/textures/bodyColor.png"]
+    textureFileName:["/textures/cabinLeft.png","/textures/cabinRight.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/windShield.png","/textures/bodyColor.png"],
+    materialIndex:[0,0,1,1,3,3,3,3,4,4,3,3]
+ 
   });
   //rear vertical
   cabin.push({
@@ -30,7 +33,8 @@ export function loadTruckCabin(){
     dimension : { height:.1 , width: .5 , length:3.4}, 
     localPosition :new THREE.Vector3( 0 , 0 , -4.35 ), 
     localQuaternion:new THREE.Quaternion(0,0,0,1),
-    textureFileName:["/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/backLights.png"],
+    textureFileName:["/textures/bodyColor.png","/textures/backLights.png"],
+    materialIndex:[0,0,0,0,0,0,0,0,0,0,1,1],
     color : 0xffffff, 
     materialName:"lambert",
   });
@@ -41,7 +45,8 @@ export function loadTruckCabin(){
     localPosition :new THREE.Vector3( 0 , .6 , 4.15 ), 
     localQuaternion:new THREE.Quaternion(0,0,0,1),
     color : 0xffffff, 
-    textureFileName:["/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/bodyColor.png","/textures/frontLights.png","/textures/bodyColor.png"],
+    textureFileName:["/textures/bodyColor.png","/textures/frontLights.png"],
+    materialIndex:[0,0,0,0,0,0,0,0,1,1,0,0],
     materialName:"lambert",
   });
 
@@ -127,6 +132,7 @@ export function loadTruckCabin(){
       localPosition :new THREE.Vector3( 0 , .4 , -2 ), 
       localQuaternion:new THREE.Quaternion(0,0,0,1),
       textureFileName:["/textures/fifthWheel.png","/textures/fifthWheelSide.png","/textures/fifthWheel.png"],
+      materialIndex:[0,1,2],
       color : 0xffffff, 
       materialName:"lambert",
     });
