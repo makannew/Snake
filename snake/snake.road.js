@@ -172,8 +172,8 @@ function runPlots({currentStandingBlock}){
 }
 
 function roadActiveBlocks({currentStandingBlock}){
-  standingTime = 0;
   if (currentStandingBlock==roadActiveBlocks) return currentStandingBlock;
+  standingTime = 0;
   let thisBlock = road[currentStandingBlock];
   if (thisBlock.checkPoint){
     checkPoint.speed  = thisBlock.checkPoint.speed;
@@ -312,7 +312,7 @@ function performReset({newAnimationFrame}){
     }
 
     roadActiveBlocks = undefined;
-    currentStandingBlock = checkPoint.block;
+    self.currentStandingBlock = checkPoint.block;
   }
   return ;
 }

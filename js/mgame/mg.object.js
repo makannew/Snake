@@ -245,15 +245,11 @@ const setScale = function({scale , mesh}){
 }
 
 const setColor = function({color , mesh}){
-  if (material.length==1 && textureFileName===undefined && texture===undefined){
-    mesh.material.color.setHex(color);
-  }else{
-    for (let i=0,len=material.length;i<len;++i){
-      mesh.material[i].color.setHex(color);
-    }
+  if (material.length>0){
+      for (let i=0,len=material.length;i<len;++i){
+        material[i].color.setHex(color);
+      }
   }
-
-
   return true;
 }
 
