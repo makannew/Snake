@@ -40,7 +40,11 @@ export function loadCameras(snake){
   snake.cameras.camera9 = {};
   snake.utils.addCamera(snake.cameras.camera9);
   snake.cameras.camera9.set ({cameraFocalLenght: 75 , cameraNearView: .01 , cameraFarView: 800 , active:false});
-  
+    // // transition camera
+    snake.cameras.cameraT = {};
+    snake.utils.addCamera(snake.cameras.cameraT);
+    snake.cameras.cameraT.set ({cameraFocalLenght: 75 , cameraNearView: .01 , cameraFarView: 800 , active:false});
+    
 
   // vehicle main camera
   // snake.cameras.camera6 = {};

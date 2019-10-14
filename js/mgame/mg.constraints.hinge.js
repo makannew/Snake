@@ -5,6 +5,7 @@ export function newHingeConstraint (mainComposite ,constraintName){
   constraintName.mainComposite = mainComposite;
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
+  constraintName.self = constraintName;
   constraintName.active = true;
   constraintName.maxForce = 1e6;
   constraintName.offsetA = {x:0,y:0,z:0};
@@ -44,22 +45,27 @@ function pivotB({offsetB}){
 }
 
 function hingeConstraint({bodyABody , bodyBBody , pivotA ,pivotB , maxForce , cannon}){
+  if (hingeConstraint) return hingeConstraint;
   let newConstraint = new CANNON.HingeConstraint(bodyABody , bodyBBody , {pivotA:pivotA, pivotB:pivotB, maxForce:maxForce});
   if (axisA) newConstraint.axisA = axisA;
   if (axisB) newConstraint.axisB = axisB;
-
-  if (hingeConstraint){
-    hingeConstraint.disable()
-  }
-  cannon.addConstraint(newConstraint);
   return newConstraint;
 }
 
 function setStatus({active , hingeConstraint}){
-    if (active){
+    if (active && !setStatus){
+      cannon.addConstraint(hingeConstraint);
       hingeConstraint.enable();
-    }else{
+      ++bodyA.self.totalConstraints;
+      ++bodyB.self.totalConstraints;
+      return true;
+    }
+    if (!active && setStatus){
       hingeConstraint.disable();
+      cannon.removeConstraint(hingeConstraint);
+      --bodyA.self.totalConstraints;
+      --bodyB.self.totalConstraints;
+      return false;
     }
 }
 

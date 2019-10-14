@@ -18,27 +18,18 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     color : 0xffffff , 
     materialName:"basic" 
   });
-  //snake.utils.addPhysicBody(obj.objects[0]);
 
   snake.utils.addObject(obj.parts[0]);
   obj.parts[0].set({geometryName : "box" , textureFileName:["/textures/barrierStand.png"],dimension : { height:.1 , width: 1.4, length:.8} , position :new THREE.Vector3(-3,.9,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , materialName:"phong" });
-  //snake.utils.addPhysicBody(obj.objects[1]);
-  //obj.objects[1].set({mass:2,allowSleep:true,groupName:"obstacle",collisionGroups:["wheel","ground","chassis"]});
 
   snake.utils.addObject(obj.parts[1]);
   obj.parts[1].set({geometryName : "box" , textureFileName:["/textures/barrierStand.png"],dimension : { height:.1 , width: 1.4 , length:.8} , position :new THREE.Vector3(3,.9,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
-  //snake.utils.addPhysicBody(obj.objects[2]);
-  //obj.objects[2].set({mass:2,allowSleep:true,groupName:"obstacle",collisionGroups:["wheel","ground","chassis"]});
 
   snake.utils.addObject(obj.parts[2]);
   obj.parts[2].set({geometryName : "box" ,textureFileName:["/textures/barrierStand.png"], dimension : { height:.8 , width: .2 , length:.8} , position :new THREE.Vector3(-3,.1,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
-  //.utils.addPhysicBody(obj.objects[3]);
-  //obj.objects[3].set({mass:2,allowSleep:true,groupName:"obstacle",collisionGroups:["wheel","ground","chassis"]});
 
   snake.utils.addObject(obj.parts[3]);
   obj.parts[3].set({geometryName : "box" ,textureFileName:["/textures/barrierStand.png"], dimension : { height:.8 , width: .2 , length:.8} , position :new THREE.Vector3(3,.1,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
-  //snake.utils.addPhysicBody(obj.objects[4]);
-  //obj.objects[4].set({mass:2,allowSleep:true,groupName:"obstacle",collisionGroups:["wheel","ground","chassis"]});
 
   snake.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
   obj.objects[0].set({
@@ -89,7 +80,6 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
 
 
     });
-//.set({geometryName:"cylinder" , dimension:{radiusTop:.1,radiusBottom:.5,height:1.5}, position:{x:9.0,y:-48.0,z:-32.0} , color:0x1f11ff , materialName:"phong" , shinines:0})
 
   snake.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
   obj.objects[0].set({
@@ -196,7 +186,39 @@ export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
     });
   snake.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:20,
+    mass:120,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+}
+
+export function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+  let snake = obj.getParentComposite;
+  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+
+  thisQuat.multiply(quat);
+
+  obj.objects = [{}];
+  obj.constraints = [];
+
+  snake.utils.addObject(obj.objects[0]);
+  obj.objects[0].set({geometryName : "sphere", 
+    dimension : {radius:8} , 
+    position :new THREE.Vector3(0,4.1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     textureFileName:["/textures/venus.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[0]);
+  obj.objects[0].set({
+    mass:500,
     allowSleep:true,
     sleep:true,
     physicStatus:false,
@@ -301,4 +323,251 @@ export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
   });
+}
+
+export function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+  let snake = obj.getParentComposite;
+  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+
+  thisQuat.multiply(quat);
+
+  obj.objects = [{}];
+  obj.constraints = [];
+
+  snake.utils.addObject(obj.objects[0]);
+  obj.objects[0].set({geometryName : "sphere", 
+    dimension : {radius:.8} , 
+    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     textureFileName:["/textures/moon.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[0]);
+  obj.objects[0].set({
+    mass:20,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+}
+
+export function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+  let snake = obj.getParentComposite;
+  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+
+  thisQuat.multiply(quat);
+
+  obj.objects = [{}];
+  obj.constraints = [];
+
+  snake.utils.addObject(obj.objects[0]);
+  obj.objects[0].set({geometryName : "sphere", 
+    dimension : {radius:1.8} , 
+    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     textureFileName:["/textures/sun.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[0]);
+  obj.objects[0].set({
+    mass:200,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+}
+
+export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+  let snake = obj.getParentComposite;
+  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+
+  thisQuat.multiply(quat);
+
+  obj.objects = [{},{}];
+  obj.constraints = [{}];
+
+  snake.utils.addObject(obj.objects[0]);
+  obj.objects[0].set({geometryName : "sphere", 
+    dimension : {radius:1.5} , 
+    position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     textureFileName:["/textures/earth.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[0]);
+  obj.objects[0].set({
+    mass:100,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+
+
+  // static core
+  snake.utils.addObject(obj.objects[1]);
+  obj.objects[1].set({geometryName : "sphere", 
+    dimension : {radius:.1} , 
+    position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     //textureFileName:["/textures/earth.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[1]);
+  obj.objects[1].set({
+    mass:0,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+
+
+  snake.utils.newHingeConstraint(obj.constraints[0]);
+    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
+    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
+    obj.constraints[0].set({
+      bodyA:obj.objects[1] , 
+      bodyB:obj.objects[0] , 
+      offsetA:{x:0,y:0,z:0} , 
+      offsetB:{x:0,y:0,z:0} , 
+      motor:true , 
+      speed:-1.0,
+      active:false
+    })
+
+
+
+
+}
+
+export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+  let snake = obj.getParentComposite;
+  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+
+  thisQuat.multiply(quat);
+
+  obj.objects = [{},{},{}];
+  obj.constraints = [{},{}];
+
+  snake.utils.addObject(obj.objects[0]);
+  obj.objects[0].set({geometryName : "sphere", 
+    dimension : {radius:1.5} , 
+    position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     textureFileName:["/textures/sun.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[0]);
+  obj.objects[0].set({
+    mass:100,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+
+  //
+  snake.utils.addObject(obj.objects[1]);
+  obj.objects[1].set({geometryName : "sphere", 
+    dimension : {radius:.7} , 
+    position :new THREE.Vector3(-4,1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     textureFileName:["/textures/ceres.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[1]);
+  obj.objects[1].set({
+    mass:10,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+
+  // static core
+  snake.utils.addObject(obj.objects[2]);
+  obj.objects[2].set({geometryName : "sphere", 
+    dimension : {radius:.4} , 
+    position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
+    quaternion:thisQuat ,
+     color : 0xaffffff , 
+     materialName:"basic" ,
+     //textureFileName:["/textures/earth.jpg"],
+
+    });
+  snake.utils.addPhysicBody(obj.objects[2]);
+  obj.objects[2].set({
+    mass:0,
+    allowSleep:true,
+    sleep:true,
+    physicStatus:false,
+    visible,
+    groupName:"obstacle",
+    collisionGroups:["wheel","ground","chassis","obstacle"], 
+    physicMaterial:"objectMaterial"
+  });
+
+
+  snake.utils.newHingeConstraint(obj.constraints[0]);
+    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
+    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
+    obj.constraints[0].set({
+      bodyA:obj.objects[2] , 
+      bodyB:obj.objects[1] , 
+      offsetA:{x:0,y:0,z:0} , 
+      offsetB:{x:6,y:0,z:0} , 
+      motor:true , 
+      speed:-2.0,
+      active:false
+    })
+
+    snake.utils.newHingeConstraint(obj.constraints[1]);
+    obj.constraints[1].axisA = new CANNON.Vec3(0,1,0);
+    obj.constraints[1].axisB = new CANNON.Vec3(0,1,0);
+    obj.constraints[1].set({
+      bodyA:obj.objects[0] , 
+      bodyB:obj.objects[2] , 
+      offsetA:{x:0,y:0,z:0} , 
+      offsetB:{x:0,y:0,z:0} , 
+      motor:true , 
+      speed:2.0,
+      active:false
+    })
+
+
+
+
 }

@@ -20,18 +20,23 @@ export function cannonSettingsBuilder(result){
   result.physicSettings.materials.wheelMaterial= new CANNON.Material({name:"wheelMaterial"});
   result.physicSettings.materials.fakeWheelMaterial= new CANNON.Material({name:"fakeWheelMaterial"});
   result.physicSettings.materials.chassisMaterial= new CANNON.Material({name:"chassisMaterial"});
+  result.physicSettings.materials.frontWheelMaterial= new CANNON.Material({name:"frontWheelMaterial"});
 
 
 
-  result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .3, restitution: .2 };
+
+  result.physicSettings.contactMaterials[0]={material1: "groundMaterial" , material2: "objectMaterial" , friction: .4, restitution: .4 };
 
   result.physicSettings.contactMaterials[1]={material1: "groundMaterial" , material2: "wheelMaterial" , friction: 1.4, restitution: 0 };
-  result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: 1.2, restitution: .2};
+  result.physicSettings.contactMaterials[2]={material1: "objectMaterial" , material2: "wheelMaterial" , friction: 1, restitution: .2};
 
-  result.physicSettings.contactMaterials[3]={material1: "objectMaterial" , material2: "fakeWheelMaterial" , friction: 0.2, restitution: 0};
-  result.physicSettings.contactMaterials[4]={material1: "groundMaterial" , material2: "fakeWheelMaterial" , friction: 0.2, restitution: 0};
+  result.physicSettings.contactMaterials[3]={material1: "objectMaterial" , material2: "fakeWheelMaterial" , friction: 0.1, restitution: 0};
+  result.physicSettings.contactMaterials[4]={material1: "groundMaterial" , material2: "fakeWheelMaterial" , friction: 0.1, restitution: 0};
 
   result.physicSettings.contactMaterials[5]={material1: "objectMaterial" , material2: "chassisMaterial" , friction: .3, restitution: .2};
+
+  result.physicSettings.contactMaterials[6]={material1: "groundMaterial" , material2: "frontWheelMaterial" , friction: 1.7, restitution: 0};
+
 
 
 
@@ -68,7 +73,7 @@ const initializeCannonJs = function(){
   result.solver = new CANNON.SplitSolver(solver);
   result.allowSleep = true;
 
-  result.solver.iterations = 17;// 7
+  result.solver.iterations = 7;// 17
   result.solver.tolerance = 1e-2;
 
   result.defaultContactMaterial.contactEquationStiffness = 1e6;

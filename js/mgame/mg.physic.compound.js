@@ -1,11 +1,26 @@
 
-import { shape , getMaterial , setActivityStatus , setStatus ,body , setAllowSleep, collisionGroupCode , contactGroupsMask , setBodyCollisionGroups} from "./mg.physic.js"
+import { 
+  shape , 
+  getMaterial , 
+  setActivityStatus , 
+  setStatus ,
+  body , 
+  setAllowSleep,
+  collisionGroupCode , 
+  contactGroupsMask , 
+  setBodyCollisionGroups, 
+  setCollisionCallback,
+  resetBody
+} from "./mg.physic.js"
 
 export function makePhysicCompound(mainComposite , components){
   components[0].cannon = mainComposite.cannon.getProxyLessObject;
   components[0].materials = mainComposite.physicSettings.materials.getProxyLessObject;
   components[0].collisionGroupsNames = mainComposite.collisionGroupsNames.getProxyLessObject;
   components[0].mainComposite = mainComposite;
+  components[0].self = components[0];
+  components[0].totalConstraints = 0;
+
   //mainComposite.addLink(mainComposite.collisionGroupsNames , components[0].collisionGroupsNames);
 
   if (!components[0].physicMaterial) components[0].physicMaterial= "objectMaterial";
@@ -36,6 +51,11 @@ export function makePhysicCompound(mainComposite , components){
   components[0].addFunction(collisionGroupCode);
   components[0].addFunction(contactGroupsMask);
   components[0].addFunction(setBodyCollisionGroups);
+  components[0].addFunction(setCollisionCallback);
+  components[0].addFunction(resetBody);
+
+
+
 
 
 

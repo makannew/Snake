@@ -5,6 +5,7 @@ export function newPointsConstraint (mainComposite ,constraintName){
   constraintName.mainComposite = mainComposite;
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
+  constraintName.self = constraintName;
   constraintName.active = true;
   constraintName.maxForce = 1e6;
   constraintName.offsetA = {x:0,y:0,z:0};
@@ -51,9 +52,18 @@ function pointConstraint({bodyABody , bodyBBody , pivotA , pivotB , maxForce , c
 }
 
 function setStatus({active , pointConstraint}){
-    if (active){
-      pointConstraint.enable();
-    }else{
-      pointConstraint.disable();
-    }
+  if (active && !setStatus){
+    cannon.addConstraint(pointConstraint);
+    pointConstraint.enable();
+    ++bodyA.self.totalConstraints;
+    ++bodyB.self.totalConstraints;
+    return true;
+  }
+  if (!active && setStatus){
+    pointConstraint.disable();
+    cannon.removeConstraint(pointConstraint);
+    --bodyA.self.totalConstraints;
+    --bodyB.self.totalConstraints;
+    return false;
+  }
 }

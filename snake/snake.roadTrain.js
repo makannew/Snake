@@ -25,7 +25,8 @@ export function loadRoadTrain(snake){
     wheelsInfo:truckWheelsInfo(),
     cabinInfo:loadTruckCabin(),
     cabinPhysic:true,
-    enable:true
+    enable:true,
+    initialSpeed:7
   });
 
   // load trailers but not enabled

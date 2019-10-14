@@ -4,6 +4,7 @@ export function newLockConstraint (mainComposite ,constraintName){
   constraintName.mainComposite = mainComposite;
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
+  constraintName.self = constraintName;
   constraintName.constraints = [];
   constraintName.linkedBodies = [];
   constraintName.addedIndex = 0;
@@ -44,11 +45,22 @@ function addLockConstraint({linkedBodies}){
 }
 
 function setStatus({active , addLockConstraint}){
-  for (let constraint of constraints){
-    if (active){
-      constraint.enable();
-    }else{
-      constraint.disable();
+    if (active && !setStatus){
+      for (let constraint of constraints){
+        cannon.addConstraint(constraint);
+        constraint.enable();
+        // ++bodyA.self.totalConstraints;
+        // ++bodyB.self.totalConstraints;
+      }
+      return true;
     }
-  }
+    if (!active && setStatus){
+      for (let constraint of constraints){
+        constraint.disable();
+        cannon.removeConstraint(constraint);
+        // --bodyA.self.totalConstraints;
+        // --bodyB.self.totalConstraints;
+      }
+      return false;
+    }
 }

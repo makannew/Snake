@@ -1,3 +1,13 @@
+/**
+ * RoadTrain is a javascript game built by Mgame engine. 
+ *
+ *
+ * @link   https://github.com/makannew/roadtrain
+ * @file   snake.js
+ * @author Makan Edrisi
+ * @since  2018
+ * @version 1.0.0
+ */
 
 import { MGame } from '../js/mgame/mg.js';
 import { loadWorlds } from "./snake.worlds.js";
@@ -18,6 +28,7 @@ import { loadStarfield } from './snake.starfield.js';
 
 
 const snake = MGame();
+snake.cheating = false;
 //snake.self = snake;
 console.log(snake)
 

@@ -1,8 +1,10 @@
 import { roadData } from "./snake.road.data.js";
 
 export function loadRoad(snake){
-  let roadInfo = roadData();
+  let snakeObject = snake.getProxyLessObject;
+  let roadInfo = roadData(snake);
   snake.road = roadInfo;
+  snake.checkPoint = {block:0,speed:10,camera:snake.cameras.camera3};
   let width,length,tickness,position,quaternion,color,materialName,physicMaterial,
   offset,textureFileName,textureNumber,materialIndex,frontActiveBlocks,rearActiveBlocks,frontVisibleBlocks,rearVisibleBlocks;
   let vAxis = new THREE.Vector3(1,0,0);
@@ -120,9 +122,15 @@ export function loadRoad(snake){
       physicStatus:(i==0)? true:false,
       visible:false//(i<=initialVisibleBlocks)?true:false,
        });
-
     snake.utils.addPhysicBody(snake.road[i].block);
-    snake.road[i].block.set({mass:0,allowSleep:true,sleep:true,groupName:"ground",collisionGroups:["wheel","obstacle","chassis"]});
+    snake.road[i].block.set({mass:0,allowSleep:true,sleep:true,groupName:"ground",collisionGroups:["wheel","obstacle","chassis"],
+    enableCollisionCallback:true,
+    collisionCallback:function(e){
+      if (e.body.collisionFilterGroup == snakeObject.roadTrains[0].wheelsBodies[0].collisionFilterGroup){
+        if (i>snakeObject.currentStandingBlock || snakeObject.currentStandingBlock==undefined) snake.currentStandingBlock=i;
+      }
+    }
+  });
     //
     //obstacles
     snake.road[i].blockObstacles = [];
@@ -130,10 +138,14 @@ export function loadRoad(snake){
     if (d.obstacles!=undefined ){
       for (let obstacle of d.obstacles){
         blockObstacles.push({});
-        obstacle.build(blockObstacles[blockObstacles.length - 1] , position , quaternion, obstacle.localPos, obstacle.localQuat,(i<=initialVisibleBlocks)?true:false);
+        let thisObstacle = blockObstacles[blockObstacles.length - 1];
+        obstacle.build(thisObstacle , position , quaternion, obstacle.localPos, obstacle.localQuat,(i<=initialVisibleBlocks)?true:false);
+        for (let object of thisObstacle.objects){
+          object.iniPos = object.position.clone();
+          object.iniQuat = object.quaternion.clone();
+        }
         snake.road[i + obstacle.enablingDistance].enablingObstacles.push(snake.road[i].blockObstacles[blockObstacles.length - 1]);
         snake.road[i + obstacle.disablingDistance].disablingObstacles.push(snake.road[i].blockObstacles[blockObstacles.length - 1]);
-
       }
     }
 
@@ -142,9 +154,11 @@ export function loadRoad(snake){
 }
 
 export function loadRoadUpdateManager(snake){
-  snake.addFunction(currentStandingBlock);
+  snake.standingTime = 0;
+  //snake.addFunction(currentStandingBlock);
   snake.addFunction(roadActiveBlocks);
   snake.addFunction(runPlots);
+  snake.addFunction(performReset);
 }
 
 function runPlots({currentStandingBlock}){
@@ -158,8 +172,15 @@ function runPlots({currentStandingBlock}){
 }
 
 function roadActiveBlocks({currentStandingBlock}){
+  standingTime = 0;
   if (currentStandingBlock==roadActiveBlocks) return currentStandingBlock;
   let thisBlock = road[currentStandingBlock];
+  if (thisBlock.checkPoint){
+    checkPoint.speed  = thisBlock.checkPoint.speed;
+    checkPoint.camera  = thisBlock.checkPoint.camera;
+    checkPoint.block  = currentStandingBlock;
+
+  }
   // set visible part of the road by frontVisibleBlocks and rearVisibleBlocks
   let maxAhead = currentStandingBlock + thisBlock.frontVisibleBlocks;
   let maxBehind = currentStandingBlock + thisBlock.rearVisibleBlocks;
@@ -186,11 +207,15 @@ function roadActiveBlocks({currentStandingBlock}){
     }
   }
   // set physical status of obstacles on other blocks
+  if (road[currentStandingBlock].enablingObstacles.length!=0 && road[currentStandingBlock].checkPoint){
+    throw console.error("checkpoint block cannot be where obstacle enablig will happen");
+    
+  }
   for (let enablingObstacle of road[currentStandingBlock].enablingObstacles){
-    obstaclesStatus(enablingObstacle , true);
+    obstaclesStatus(enablingObstacle , true,true,false);
   }
   for (let disablingObstacle of road[currentStandingBlock].disablingObstacles){
-    obstaclesStatus(disablingObstacle , false);
+    obstaclesStatus(disablingObstacle , false,false,true);
   }
 
 
@@ -199,53 +224,96 @@ function roadActiveBlocks({currentStandingBlock}){
     self.road[blockNum].block.set({
       physicStatus,
       visible,
-      sleep:false
+      sleep,
+      enableCollisionCallback:physicStatus
+
     });
     if (road[blockNum].blockObstacles){
       let obstacles = road[blockNum].blockObstacles;
       for (let obstacle of obstacles){
-        for (obj of obstacle.objects){
-          obj.self.set({
-            //physicStatus,
-            visible,
-            sleep
-          })
-        }
+        obstaclesStatus(obstacle,false,visible,sleep)
       }
 
     }
   }
-  function obstaclesStatus(obstacle,physicStatus){
+
+  function obstaclesStatus(obstacle,physicStatus,visible,sleep){
     for (obj of obstacle.objects){
       obj.self.set({
-        physicStatus
-        //visible,
-        //sleep
+        sleep,
+        physicStatus,
+        visible,
+      })
+      
+    }
+    for (let constraint of obstacle.constraints){
+      constraint.self.set({
+        active:physicStatus,
       })
     }
+
   }
 }
 
-function currentStandingBlock({newAnimationFrame}){
-  let x = roadTrains[0].position.x;
-  let z = roadTrains[0].position.z;
-  let u= (currentStandingBlock==undefined) ? 0:currentStandingBlock;
-  let r = road[u];
+function performReset({newAnimationFrame}){
+  let maxStandingTime=4;
+  if (roadTrains[0].speed==0){
+    standingTime=0;
+  }else{
+    standingTime+=actualInterval;
+  }
+  //if(standingTime>maxStandingTime) window.document.location.reload();
+  if(standingTime>maxStandingTime || cheating){
+    cheating = false;
+    // reset blocks and obstacles
+    for (let i=0,len=road.length;i<len;++i){
+      road[i].active = undefined;
+      road[i].plotRuned = undefined;
+      self.road[i].block.set({
+        physicStatus:false,
+        visible:false,
+        sleep:true,
+        enableCollisionCallback:false,
+      });
+    for (let j=0;j<road[i].blockObstacles.length;++j){
+      for (let constraint of road[i].blockObstacles[j].constraints){
+        constraint.self.set({
+          active:false
+        })
+      }
+      for (let k=0;k<road[i].blockObstacles[j].objects.length;++k){
+        let thisObject = road[i].blockObstacles[j].objects[k]
+        thisObject.self.set({position:thisObject.iniPos.clone(),quaternion:thisObject.iniQuat.clone(),reset:true,physicStatus:false,visible:false});
+      }
 
-  if(x>=r.smallX && x<=r.bigX && z>=r.smallZ && z<=r.bigZ) return u;
+    }
 
-  let max = road.length-1;
-  let d=u;
-  ++u;
-  if (u>max) u=max;
-  --d;
-  if (d<0) d=0;
+    }
 
-  r = road[u];
-  if(x>=r.smallX && x<=r.bigX && z>=r.smallZ && z<=r.bigZ) return u;
+    // reset truck
+    let localPosOnBlock = new THREE.Vector3(0,2,-7);
+    let resetPos = road[checkPoint.block].position.clone();
+    let resetQuat = road[checkPoint.block].quaternion
+    let blockYAxis = new THREE.Vector3(0,1,0).normalize().applyQuaternion(resetQuat).normalize();
+    resetQuat = new THREE.Quaternion().setFromAxisAngle(blockYAxis,Math.PI).multiply(resetQuat);
 
-  r = road[d];
-  if(x>=r.smallX && x<=r.bigX && z>=r.smallZ && z<=r.bigZ) return d;
+    localPosOnBlock.applyQuaternion(resetQuat);
+    resetPos.add(localPosOnBlock);
+    roadTrains[0].self.set({resetPos:resetPos.clone(),resetQuat,speed:0,steering:0});
+    checkPoint.camera.active = true;
 
-  return 0;
+    // reset trailers
+    for (let i=1;i<=roadTrains[0].visibleTrailers;++i){
+      let towingGap=roadTrains[i].towingGap;
+      let newPos = new THREE.Vector3(0,roadTrains[0].axelsVerticalFreedom,-towingGap);
+      newPos.applyQuaternion(resetQuat);
+      resetPos = resetPos.add(newPos)
+      roadTrains[i].self.set({resetPos:resetPos.clone(),resetQuat});
+    }
+
+    roadActiveBlocks = undefined;
+    currentStandingBlock = checkPoint.block;
+  }
+  return ;
 }
+

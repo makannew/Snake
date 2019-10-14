@@ -7,6 +7,7 @@ export function newDistanceConstraint (mainComposite ,constraintName){
 
   mainComposite.addLink(mainComposite.cannon , constraintName.cannon);
   constraintName.selfProxy = constraintName;
+  constraintName.self = constraintName;
   constraintName.active = true;
   constraintName.maxForce = 1e6;
   constraintName.distance = undefined;
@@ -33,20 +34,26 @@ return true;
 }
 
 function distanceConstraint({bodyABody , bodyBBody , maxForce , cannon}){
+  if (distanceConstraint) return distanceConstraint;
   let newConstraint = new CANNON.DistanceConstraint(bodyABody , bodyBBody);
   if (distance) newConstraint.distance = distance;
   newConstraint.maxForce = maxForce;
-  if (distanceConstraint){
-    distanceConstraint.disable()
-  }
-  cannon.addConstraint(newConstraint);
   return newConstraint;
 }
 
 function setStatus({active , distanceConstraint}){
-    if (active){
-      distanceConstraint.enable();
-    }else{
-      distanceConstraint.disable();
-    }
+  if (active && !setStatus){
+    cannon.addConstraint(distanceConstraint);
+    distanceConstraint.enable();
+    ++bodyA.self.totalConstraints;
+    ++bodyB.self.totalConstraints;
+    return true;
+  }
+  if (!active && setStatus){
+    distanceConstraint.disable();
+    cannon.removeConstraint(distanceConstraint);
+    --bodyA.self.totalConstraints;
+    --bodyB.self.totalConstraints;
+    return false;
+  }
 }

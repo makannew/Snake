@@ -4,6 +4,8 @@ export function addPhysicBody(mainComposite , obj){
   obj.collisionGroupsNames = mainComposite.collisionGroupsNames.getProxyLessObject;
   obj.materials = mainComposite.physicSettings.materials.getProxyLessObject;
   obj.mainComposite = mainComposite;
+  obj.self = obj;
+  obj.totalConstraints = 0;
   //mainComposite.addLink(mainComposite.collisionGroupsNames , obj.collisionGroupsNames);
 
 
@@ -30,8 +32,44 @@ export function addPhysicBody(mainComposite , obj){
   obj.addFunction(collisionGroupCode);
   obj.addFunction(contactGroupsMask);
   obj.addFunction(setBodyCollisionGroups);
+  obj.addFunction(setCollisionCallback);
+  obj.addFunction(resetBody);
 
 
+
+
+}
+
+export function resetBody({reset , body}){
+  body.linearDamping = linearDamping;
+  body.angularDamping = angularDamping;
+  // Position
+  body.position.set(position.x , position.y , position.z);
+  body.previousPosition.set(position.x , position.y , position.z);//.setZero();
+  body.interpolatedPosition.set(position.x , position.y , position.z);
+  body.initPosition.set(position.x , position.y , position.z);
+
+  // orientation
+  body.quaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
+  body.initQuaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
+  //body.previousQuaternion.set(0,0,0,1);
+  body.interpolatedQuaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
+
+  // Velocity
+  body.velocity.setZero();
+  body.initVelocity.setZero();
+  body.angularVelocity.setZero();
+  body.initAngularVelocity.setZero();
+
+  // Force
+  body.force.setZero();
+  body.torque.setZero();
+
+  // Sleep state reset
+  body.sleepState = 0;
+  body.timeLastSleepy = 0;
+  body._wakeUpAfterNarrowphase = false;
+  reset = undefined;
 }
 
 export function setBodyCollisionGroups({collisionGroupCode,contactGroupsMask,body}){
@@ -95,20 +133,36 @@ export function getMaterial({materials , physicMaterial}){
   }
 }
 
-export function setStatus({body,physicStatus}){
-  if(physicStatus){
+export function setStatus({body,physicStatus,totalConstraints}){
+  if(physicStatus && !setStatus){
     cannon.addBody(body);
-  }else{
-    cannon.remove(body);
+    return true
+  }
+  if(setStatus && !physicStatus && (setCollisionCallback==undefined || !setCollisionCallback) && totalConstraints==0){
+    mainComposite.getProxyLessObject.removeBodies.push(body);
   }
 }
+
+export function setCollisionCallback({body , collisionCallback, enableCollisionCallback}){
+  if (enableCollisionCallback && !setCollisionCallback){
+    body.addEventListener("collide", collisionCallback);
+    return true;
+  }
+  if (setCollisionCallback && !enableCollisionCallback ){
+    body.removeEventListener("collide");
+    physicStatus = physicStatus;
+    return false;
+  }
+}
+
+
 export function body({mesh , getMaterial , shape , mass}){
   if (body) return body;
   let newBody = new CANNON.Body({mass , shape , material:getMaterial,allowSleep});
-  newBody.position.set(position.x , position.y , position.z);
-  newBody.quaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
-  newBody.linearDamping = linearDamping;
-  newBody.angularDamping = angularDamping;
+  // newBody.position.set(position.x , position.y , position.z);
+  // newBody.quaternion.set(quaternion.x , quaternion.y , quaternion.z , quaternion.w);
+  // newBody.linearDamping = linearDamping;
+  // newBody.angularDamping = angularDamping;
     switch (bodyType){
       case "dynamic":
         newBody.type = CANNON.Body.DYNAMIC;
@@ -120,7 +174,7 @@ export function body({mesh , getMaterial , shape , mass}){
         newBody.type = CANNON.Body.STATIC ;
         break;
     }
-
+  reset = true;
   return newBody;
 }
 

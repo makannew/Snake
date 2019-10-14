@@ -33,7 +33,7 @@ function toushStartHandler(e){
   e.preventDefault();
   oldTouchX = e.touches[0].clientX;
   if (vehicle.speed ==0){
-    vehicle.speed = 5;
+    vehicle.speed = snake.checkPoint.speed;
   }
 }
 
@@ -72,7 +72,7 @@ function toushEndHandler(e){
     }
     if (e.key == "Up" || e.key == "ArrowUp"){
       if (vehicle.speed ==0){
-        vehicle.speed = 5;
+        vehicle.speed = snake.checkPoint.speed;
       }
       // if (!upKeyPressed){
       //   vehicle.set({speed:21,engineForce: 30});
@@ -139,6 +139,20 @@ function toushEndHandler(e){
     if (e.key == "4"){
       snake.cameras.camera9.active = true;
 
+    }
+    if (e.key == "c"){
+      snake.set({cheating:true});
+      snake.checkPoint.block=10;
+      snake.checkPoint.speed=10;
+      snake.checkPoint.camera=snake.cameras.camera3;
+
+
+    }
+    if (e.key == "+"){
+      ++vehicle.speed;
+    }
+    if (e.key == "-"){
+      --vehicle.speed;
     }
 
 

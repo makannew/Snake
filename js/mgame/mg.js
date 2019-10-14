@@ -44,33 +44,25 @@ export function MGame(){
   result.utils.newRayCastVehicle = function(vehicleName){newRayCastVehicle(result , vehicleName);}
   result.utils.newRoadTrain = function(roadTrain){newRoadTrain(result , roadTrain)};
 
-
-
   result.utils.start = startEngine;
   result.self = result;
 
-  //result.sceneObjects = {};
   result.cameras = {};
   result.worlds = {};
   result.lights ={};
-  //result.constraints = {};
-  //result.vehicles = {};
-  
 
   cannonSettingsBuilder(result);
 
   result.actualInterval = 0;
-  //result.timeStamp = 0;
   result.running = false;
-  //result.needsUpdate = undefined;
 
-  //result.addFunction(demandInterval);
   // default values
   result.settings = settings;
 
-  //result.addFunction(activeWorld);
   result.addFunction(newAnimationFrame);
   result.loadedObjects.push(result);
+  result.removeBodies = [];
+
   return result;
 }
 
@@ -78,6 +70,9 @@ const newAnimationFrame = function({timeStamp , three , activeCamera , cannon}){
   three.renderer.render( three.scene , activeCamera);
   let t = actualInterval;
   let s = cannonSafeStep;
+  if (removeBodies.length>0){
+    cannon.remove(removeBodies.pop());
+  }
   while (t>=s){
     cannon.step(s);
     t -=s;

@@ -17,7 +17,7 @@ function startUpProcess ({newAnimationFrame , startUp}){
     let d = t;
     if (d>startUpDuration) d= startUpDuration;
     d = Math.pow(1-d/startUpDuration,2)*startUpDuration;
-    let beam = new THREE.Vector3(0,0,-(10+d));
+    let beam = new THREE.Vector3(0,d,-(10+d));
     beam.applyQuaternion(truckQuat);
     pos.x = beam.x + truckPos.x;
     pos.y = beam.y + truckPos.y +2+(trailersNumber*2) //-47+(trailersNumber*2);//beam.y+truckPos.y;
