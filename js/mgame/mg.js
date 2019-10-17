@@ -1,3 +1,13 @@
+/**
+ * MGame is a javascript game  engine built  
+ * on top of CANNON.js and THREE.js.
+ *
+ * @link   https://github.com/makannew/MGame
+ * @file   mg.js
+ * @author Makan Edrisi
+ * @since  2019
+ * @version 1.0.0
+ */
 
 import CompositeObject from "./dependencies/composer.js"
 import { addCamera } from "./mg.camera.js"
