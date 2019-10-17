@@ -31,14 +31,14 @@ function addLockConstraint({linkedBodies}){
         previous = linkedBodies[i];
       }else{
         constraints.push(new CANNON.LockConstraint(linkedBodies[i] , previous , {maxForce:maxForce}));
-        cannon.addConstraint(constraints[constraints.length - 1]);
+        //cannon.addConstraint(constraints[constraints.length - 1]);
         mainComposite.loadedObjects.push(constraints[constraints.length - 1]);
 
         previous = linkedBodies[i];
         addedIndex = i;
       }
     }else{
-      break;
+      return undefined
     }
   }
   return true;
@@ -49,8 +49,9 @@ function setStatus({active , addLockConstraint}){
       for (let constraint of constraints){
         cannon.addConstraint(constraint);
         constraint.enable();
-        // ++bodyA.self.totalConstraints;
-        // ++bodyB.self.totalConstraints;
+      }
+      for (let body of bodies){
+        ++body.self.totalConstraints;
       }
       return true;
     }
@@ -58,8 +59,9 @@ function setStatus({active , addLockConstraint}){
       for (let constraint of constraints){
         constraint.disable();
         cannon.removeConstraint(constraint);
-        // --bodyA.self.totalConstraints;
-        // --bodyB.self.totalConstraints;
+      }
+      for (let body of bodies){
+        --body.self.totalConstraints;
       }
       return false;
     }

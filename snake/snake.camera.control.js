@@ -8,6 +8,10 @@ export function loadCameraControl(snake){
   snake.addFunction(updateTopCamera);
   snake.addFunction(updateCockpitCamera);
   snake.addFunction(transitionCamera);
+  snake.addFunction(updateOneTrailerCamera);
+  snake.addFunction(updateTwoTrailerCamera);
+
+
 
 
 
@@ -79,6 +83,41 @@ function updateCarCameras ({newAnimationFrame}){
 function updateBackChasingCamera ({newAnimationFrame}){
   if(startUp) return; 
   let thisCam = cameras.camera3.camera;
+  if (activeCamera != thisCam && activeCamera!=cameras.cameraT.camera) return;
+  let truckPos = roadTrains[0].position;
+  let truckQuat = roadTrains[0].quaternion;
+  let trailersNumber = roadTrains[0].visibleTrailers + 1;
+  let pos = thisCam.position;
+  let beam = new THREE.Vector3(0,0,-10*trailersNumber);
+  beam.applyQuaternion(truckQuat);
+  pos.x = beam.x + truckPos.x;
+  pos.y = beam.y + truckPos.y +2+(trailersNumber*2) //-47+(trailersNumber*2);//beam.y+truckPos.y;
+  pos.z = beam.z + truckPos.z;
+  thisCam.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
+
+}
+
+
+function updateOneTrailerCamera ({newAnimationFrame}){
+  if(startUp) return; 
+  let thisCam = cameras.camera11.camera;
+  if (activeCamera != thisCam && activeCamera!=cameras.cameraT.camera) return;
+  let truckPos = roadTrains[0].position;
+  let truckQuat = roadTrains[0].quaternion;
+  let trailersNumber = roadTrains[0].visibleTrailers + 1;
+  let pos = thisCam.position;
+  let beam = new THREE.Vector3(0,0,-10*trailersNumber);
+  beam.applyQuaternion(truckQuat);
+  pos.x = beam.x + truckPos.x;
+  pos.y = beam.y + truckPos.y +2+(trailersNumber*2) //-47+(trailersNumber*2);//beam.y+truckPos.y;
+  pos.z = beam.z + truckPos.z;
+  thisCam.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
+
+}
+
+function updateTwoTrailerCamera ({newAnimationFrame}){
+  if(startUp) return; 
+  let thisCam = cameras.camera12.camera;
   if (activeCamera != thisCam && activeCamera!=cameras.cameraT.camera) return;
   let truckPos = roadTrains[0].position;
   let truckQuat = roadTrains[0].quaternion;

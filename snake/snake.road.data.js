@@ -11,11 +11,21 @@ import {
   moon ,
   sun, 
   sunCeres,
-  venus
+  venus,
+  barrierB,
+  barrel,
+  box,
+  rotatingVenus,
+  rotatingMars,
+  rotatingJupiter,
+  rotatingMercury,
+  rotatingHaumea,
+  eris,
+  jupiterHaumea
 } from "./snake.road.obstacles.js";
 
 export function roadData(snake){
-  let maxAcceptableInterval = 20;
+  let maxAcceptableInterval = 25;
   let slope = Math.PI/16;
   let result = [
     {
@@ -42,7 +52,8 @@ export function roadData(snake){
       },
       up:slope,
       obstacles:[
-        {build:coneBarrier , localPos:{x:0,y:.4,z:0}, enablingDistance:0 , disablingDistance:2},
+        {build:coneBarrier , localPos:{x:-5,y:.4,z:-15}, enablingDistance:0 , disablingDistance:2}
+
       ]
     },
     {
@@ -72,7 +83,7 @@ export function roadData(snake){
       },
       down:slope,
       obstacles:[
-        {build:venus , localPos:{x:0,y:18,z:-7} , enablingDistance:1 , disablingDistance:7}
+        {build:venus , localPos:{x:0,y:18,z:-7} , enablingDistance:1 , disablingDistance:8}
       ]
     },
     {
@@ -114,6 +125,7 @@ export function roadData(snake){
       ]
     },
     {
+      uo:slope,
       obstacles:[
         {build:coneBarrier , localPos:{x:2,y:.4,z:10}, enablingDistance:0 , disablingDistance:2},
         {build:coneBarrier, localPos:{x:-5,y:.4,z:0} , enablingDistance:0 , disablingDistance:2},
@@ -134,11 +146,20 @@ export function roadData(snake){
           rotatingSpeed:1500,
           rotatingType:1,
           }
-
-
         ]
       }
     },
+    {
+      obstacles:[
+        {build:box , localPos:{x:-5,y:.4,z:0}, enablingDistance:-1 , disablingDistance:3},
+        {build:box , localPos:{x:0,y:.4,z:0}, enablingDistance:-1 , disablingDistance:3},
+        {build:box , localPos:{x:5,y:.4,z:0}, enablingDistance:-1 , disablingDistance:3},
+        {build:box , localPos:{x:-3,y:3.4,z:0}, enablingDistance:-1 , disablingDistance:3},
+        {build:box , localPos:{x:0,y:6.4,z:0}, enablingDistance:-1 , disablingDistance:3},
+        {build:box , localPos:{x:3,y:3.4,z:0}, enablingDistance:-1 , disablingDistance:3},
+      ]
+    },
+    {},
     {
       checkPoint:{speed:18,camera:snake.cameras.camera3}, // checkpoint
 
@@ -148,88 +169,184 @@ export function roadData(snake){
     },
     {
       plot:(snake)=>{
-        snake.roadTrains[0].speed = 18;
+        snake.roadTrains[0].speed = 14;
       },
       left:slope*2,
 
     },
     {
-      up:slope,
+      left:slope*2,
       //color:0x00ff00,
-      obstacles:[{build:barrierA , localPos:{x:4,y:.6,z:10}, enablingDistance:0 , disablingDistance:2}],
+      obstacles:[{build:barrierA , localPos:{x:4,y:.6,z:10}, enablingDistance:0 , disablingDistance:1}],
     },
     {
 
       left:slope,
       obstacles:[
-        {build:sunCeres , localPos:{x:0,y:2,z:-7} , enablingDistance:-2 , disablingDistance:2}
+        {build:rotatingEarth , localPos:{x:-3,y:2,z:10} , enablingDistance:-2 , disablingDistance:1},
+        {build:rotatingVenus , localPos:{x:3,y:2,z:0} , enablingDistance:-2 , disablingDistance:1},
+        {build:rotatingMars , localPos:{x:-3,y:2,z:-10} , enablingDistance:-2 , disablingDistance:1},
+
+
       ]
     },
     {
       textureNumber:0,
-      obstacles:[{build:coneBarrier , localPos:{x:-3,y:.4,z:0}, enablingDistance:-3 , disablingDistance:1}],
-      plot:(snake)=>{
-        snake.cameraTransitionPlot = [
-          {
-          startCam:snake.cameras.camera3,
-          endCam:snake.cameras.camera10,
-          movingSpeed:2000,
-          movingType:2,
-          rotatingSpeed:2000,
-          rotatingType:2,
-          },
-          {
-          startCam:snake.cameras.camera10,
-          endCam:snake.cameras.camera7,
-          movingSpeed:2000,
-          movingType:3,
-          rotatingSpeed:2000,
-          rotatingType:1,
-          }
+      obstacles:[
+        {build:coneBarrier , localPos:{x:-3,y:.4,z:0}, enablingDistance:-1 , disablingDistance:1},
+        {build:rotatingJupiter , localPos:{x:-3,y:2,z:10} , enablingDistance:-1 , disablingDistance:1},
+        {build:rotatingMercury , localPos:{x:3,y:2,z:0} , enablingDistance:-1 , disablingDistance:1},
+        {build:rotatingHaumea , localPos:{x:-3,y:2,z:-10} , enablingDistance:-1 , disablingDistance:1},
 
-        ]
+      ],
+
+    },
+    {
+      right:slope*2,
+      obstacles:[
+      {build:barrel , localPos:{x:-2,y:2,z:0}, enablingDistance:0 , disablingDistance:2},
+      {build:barrel , localPos:{x:-2,y:.4,z:0}, enablingDistance:0 , disablingDistance:2},
+      {build:barrel , localPos:{x:0,y:.4,z:0}, enablingDistance:0 , disablingDistance:2},
+      {build:barrel , localPos:{x:2,y:.4,z:0}, enablingDistance:0 , disablingDistance:2},
+      {build:barrel , localPos:{x:4,y:.4,z:0}, enablingDistance:0 , disablingDistance:2},
+
+    ]
+  },
+    {
+      right:slope*2,
+
+      plot:(snake)=>{
+      snake.roadTrains[0].speed = 20;
       }
     },
-    {obstacles:[{build:coneBarrier , localPos:{x:-4,y:.4,z:0}, enablingDistance:0 , disablingDistance:3}]},
-    {plot:(snake)=>{
-      snake.roadTrains[0].speed = 20;
-      snake.cameraTransitionPlot = [{
-        startCam:snake.cameras.camera7,
-        endCam:snake.cameras.camera10,
-        movingSpeed:4000,
-        movingType:1,
-        rotatingSpeed:2000,
-        rotatingType:2,
-      }]
-    }},
-    {plot:(snake)=>{snake.cameras.camera3.active=true}},
+    {
+      right:slope*2,
+      checkPoint:{speed:20,camera:snake.cameras.camera11}, // checkpoint
 
-    {obstacles:[{build:jupiter , localPos:{x:0,y:15,z:0}, enablingDistance:-4 , disablingDistance:3}],up:slope ,frontActiveBlocks:6},
-    {plot:(snake)=>{if(snake.framesInterval<maxAcceptableInterval)++snake.roadTrains[0].visibleTrailers;}},
+      frontActiveBlocks:6
+    },
+    {
+      right:slope*2,
+
+      plot:(snake)=>{
+        if(snake.framesInterval<maxAcceptableInterval){
+          if (snake.roadTrains[0].visibleTrailers<2)++snake.roadTrains[0].visibleTrailers;
+          if (snake.activeCamera == snake.cameras.camera3){
+            snake.cameraTransitionPlot = [
+              {
+              startCam:snake.cameras.camera3,
+              endCam:snake.cameras.camera11,
+              movingSpeed:3000,
+              movingType:1,
+              rotatingSpeed:1500,
+              rotatingType:3,
+              }
+            ]
+          }
+
+        }
+
+      },
+
+    },
+    {
+      right:slope*2,
+    },
+
+    {
+      up:slope*1,
+    },
+    {
+      up:slope*1,
+      obstacles:[
+        {build:barrel , localPos:{x:-2,y:.4,z:-4}, enablingDistance:0 , disablingDistance:2},
+        {build:barrel , localPos:{x:4,y:.4,z:4}, enablingDistance:0 , disablingDistance:2},
+      ],
+    },
+    {
+      obstacles:[
+        {build:barrel , localPos:{x:-2,y:.4,z:-3}, enablingDistance:0 , disablingDistance:2},
+      ],
+      up:slope*2,
+    },
+    {obstacles:[{build:coneBarrier , localPos:{x:4,y:.4,z:0}, enablingDistance:0 , disablingDistance:-1}]},
+    {obstacles:[{build:earth , localPos:{x:4,y:50,z:0}, enablingDistance:-4 , disablingDistance:-1}]},
+    {obstacles:[{build:mercury , localPos:{x:8,y:50,z:0}, enablingDistance:-4 , disablingDistance:-1}]},
+    {obstacles:[{build:mars , localPos:{x:2,y:50,z:0}, enablingDistance:-4 , disablingDistance:-1}]},
+    {obstacles:[{build:eris , localPos:{x:4,y:50,z:0}, enablingDistance:-4 , disablingDistance:-1}]},
+    {
+      obstacles:[{build:barrierA , localPos:{x:4,y:.4,z:10}, enablingDistance:0 , disablingDistance:1}],
+      plot:(snake)=>{
+        snake.roadTrains[0].speed = 20;
+        }
+    },
+
+    {checkPoint:{speed:20,camera:snake.cameras.camera11}}, // checkpoint
+    {obstacles:[{build:barrierA , localPos:{x:-4,y:.4,z:10}, enablingDistance:0 , disablingDistance:1}]},
+    {
+      obstacles:[
+        {build:barrel , localPos:{x:-3,y:.4,z:-7}, enablingDistance:-1 , disablingDistance:2},
+        {build:barrel , localPos:{x:3,y:.4,z:7}, enablingDistance:-1 , disablingDistance:2},
+      ],
+    },
+    {
+      obstacles:[
+        {build:jupiterHaumea , localPos:{x:24,y:-8,z:0}, enablingDistance:-2 , disablingDistance:2},
+        {build:barrel , localPos:{x:-3,y:.4,z:0}, enablingDistance:-2 , disablingDistance:1},
+        {build:barrel , localPos:{x:-3,y:.4,z:-5}, enablingDistance:-2 , disablingDistance:1},
+        {build:barrel , localPos:{x:-3,y:.4,z:-8}, enablingDistance:-2 , disablingDistance:1},
 
 
-    {},
-    {obstacles:[{build:coneBarrier , localPos:{x:4,y:.4,z:0}, enablingDistance:0 , disablingDistance:3}]},
-    {},
-    {obstacles:[{build:earth , localPos:{x:4,y:15,z:0}, enablingDistance:0 , disablingDistance:3}]},
-    {},
-    {obstacles:[{build:mars , localPos:{x:0,y:15,z:0}, enablingDistance:0 , disablingDistance:3}]},
-    {},
-    {obstacles:[{build:barrierA , localPos:{x:4,y:.4,z:10}, enablingDistance:0 , disablingDistance:3},{build:barrierA, enablingDistance:0 , disablingDistance:3}]},
-
-    {},
+      ]
+    },
     {obstacles:[{build:pluto , localPos:{x:4,y:15,z:0}, enablingDistance:0 , disablingDistance:3}]},
+    {
+      obstacles:[
+        {build:sunCeres , localPos:{x:-5,y:1,z:0}, enablingDistance:-2 , disablingDistance:2},
+        {build:barrel , localPos:{x:4,y:.4,z:-10}, enablingDistance:-2 , disablingDistance:1},
+        {build:barrel , localPos:{x:-4,y:.4,z:10}, enablingDistance:-2 , disablingDistance:1},
+
+
+      ]
+    },
+    {
+      down:slope,
+      plot:(snake)=>{
+        snake.roadTrains[0].speed = 25;
+        }
+    },
+    {checkPoint:{speed:25,camera:snake.cameras.camera11}}, // checkpoint
+
+    {
+      down:slope,
+      plot:(snake)=>{
+        if(snake.framesInterval<maxAcceptableInterval){
+          if (snake.roadTrains[0].visibleTrailers<2)++snake.roadTrains[0].visibleTrailers;
+          if (snake.activeCamera == snake.cameras.camera11){
+            snake.cameraTransitionPlot = [
+              {
+              startCam:snake.cameras.camera11,
+              endCam:snake.cameras.camera12,
+              movingSpeed:3000,
+              movingType:1,
+              rotatingSpeed:1500,
+              rotatingType:3,
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      down:slope,
+      obstacles:[{build:mercury , localPos:{x:-2,y:15,z:0}, enablingDistance:0 , disablingDistance:3}]},
     {},
-    {},
-    {obstacles:[{build:mercury , localPos:{x:-2,y:15,z:0}, enablingDistance:0 , disablingDistance:3}]},
-    {},
-    {plot:(snake)=>{snake.roadTrains[0].speed = 20}},
     {obstacles:[{build:jupiter , localPos:{x:0,y:15,z:0}, enablingDistance:0 , disablingDistance:3}]},
 
     {
       up:slope,
       //color:0x00ff00,
-      obstacles:[{build:barrierA , localPos:{x:4,y:.4,z:10}, enablingDistance:0 , disablingDistance:3},{build:barrierA, enablingDistance:0 , disablingDistance:3}],
+      obstacles:[{build:barrierA , localPos:{x:4,y:.4,z:10}, enablingDistance:0 , disablingDistance:3}],
     },
     {},
 
@@ -238,7 +355,6 @@ export function roadData(snake){
     {right:slope*2},
     {right:slope*2},
 
-    {plot:(snake)=>{if(snake.framesInterval<maxAcceptableInterval)++snake.roadTrains[0].visibleTrailers;}},
 
     {right:slope*2},
     {right:slope*2},
@@ -247,42 +363,12 @@ export function roadData(snake){
       obstacles:[{build:barrierA , localPos:{x:4,y:.4,z:10}, enablingDistance:0 , disablingDistance:3},{build:barrierA , localPos:{x:4,y:.4,z:-10}, enablingDistance:0 , disablingDistance:3}],
 
     },
-    {up:slope},
-    {left:slope*2},
-    {up:slope},
     {},
     {},
     {},
-    {},
-
-    {up:slope},
-    {},
-    {},
-    {},
-
-    {down:slope},
-    {down:slope},
-    {down:slope},
-    {down:slope},
-    {down:slope},
-    {down:slope},
-    {down:slope},
-
-    {},
-    {},
-    {},
-    {up:slope*2},
-    {up:slope*2},
-    {up:slope*2},
 
     
-    {left:slope},
-    {left:slope},
-    {left:slope},
-    {left:slope},
-    {left:slope},
-    {left:slope},
-    {},
+
    
 
 

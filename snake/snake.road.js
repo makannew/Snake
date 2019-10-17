@@ -159,6 +159,8 @@ export function loadRoadUpdateManager(snake){
   snake.addFunction(roadActiveBlocks);
   snake.addFunction(runPlots);
   snake.addFunction(performReset);
+  snake.addFunction(restart);
+
 }
 
 function runPlots({currentStandingBlock}){
@@ -211,12 +213,18 @@ function roadActiveBlocks({currentStandingBlock}){
     throw console.error("checkpoint block cannot be where obstacle enablig will happen");
     
   }
-  for (let enablingObstacle of road[currentStandingBlock].enablingObstacles){
-    obstaclesStatus(enablingObstacle , true,true,false);
+  if (road[currentStandingBlock].enablingObstacles){
+    for (let enablingObstacle of road[currentStandingBlock].enablingObstacles){
+      obstaclesStatus(enablingObstacle , true,true,false);
+    }
   }
-  for (let disablingObstacle of road[currentStandingBlock].disablingObstacles){
-    obstaclesStatus(disablingObstacle , false,false,true);
+
+  if (road[currentStandingBlock].disablingObstacles){
+    for (let disablingObstacle of road[currentStandingBlock].disablingObstacles){
+      obstaclesStatus(disablingObstacle , false,true,false);
+    }
   }
+
 
 
   return currentStandingBlock;
@@ -231,7 +239,11 @@ function roadActiveBlocks({currentStandingBlock}){
     if (road[blockNum].blockObstacles){
       let obstacles = road[blockNum].blockObstacles;
       for (let obstacle of obstacles){
-        obstaclesStatus(obstacle,false,visible,sleep)
+        for (obj of obstacle.objects){
+          obj.self.set({
+            visible,
+          })
+        }
       }
 
     }
@@ -290,6 +302,13 @@ function performReset({newAnimationFrame}){
 
     }
 
+
+  return true
+  }
+  return undefined;
+}
+function restart({performReset , newAnimationFrame}){
+if (removeBodies.length==0){
     // reset truck
     let localPosOnBlock = new THREE.Vector3(0,2,-7);
     let resetPos = road[checkPoint.block].position.clone();
@@ -309,11 +328,11 @@ function performReset({newAnimationFrame}){
       newPos.applyQuaternion(resetQuat);
       resetPos = resetPos.add(newPos)
       roadTrains[i].self.set({resetPos:resetPos.clone(),resetQuat});
-    }
-
+  }
     roadActiveBlocks = undefined;
     self.currentStandingBlock = checkPoint.block;
-  }
-  return ;
+
+  performReset = undefined;
+}
 }
 

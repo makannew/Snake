@@ -43,11 +43,8 @@ function pivotB({offsetB}){
 }
 
 function pointConstraint({bodyABody , bodyBBody , pivotA , pivotB , maxForce , cannon}){
+  if (pointConstraint) return pointConstraint;
   let newConstraint = new CANNON.PointToPointConstraint(bodyABody , pivotA , bodyBBody , pivotB , maxForce);
-  if (pointConstraint){
-    pointConstraint.disable()
-  }
-  cannon.addConstraint(newConstraint);
   return newConstraint;
 }
 

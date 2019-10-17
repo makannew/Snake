@@ -37,6 +37,8 @@ export function cannonSettingsBuilder(result){
 
   result.physicSettings.contactMaterials[6]={material1: "groundMaterial" , material2: "frontWheelMaterial" , friction: 1.7, restitution: 0};
 
+  
+
 
 
 

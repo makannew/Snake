@@ -142,8 +142,8 @@ function toushEndHandler(e){
     }
     if (e.key == "c"){
       snake.set({cheating:true});
-      snake.checkPoint.block=10;
-      snake.checkPoint.speed=10;
+      snake.checkPoint.block=20;
+      snake.checkPoint.speed=20;
       snake.checkPoint.camera=snake.cameras.camera3;
 
 

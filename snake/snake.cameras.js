@@ -45,6 +45,16 @@ export function loadCameras(snake){
     snake.utils.addCamera(snake.cameras.cameraT);
     snake.cameras.cameraT.set ({cameraFocalLenght: 75 , cameraNearView: .01 , cameraFarView: 800 , active:false});
     
+  // // back chasing camera for 1 trailer
+  snake.cameras.camera11 = {};
+  snake.utils.addCamera(snake.cameras.camera11);
+  snake.cameras.camera11.set ({cameraFocalLenght: 75 , cameraNearView: .01 , cameraFarView: 800 , active:false});
+
+  // // back chasing camera for 2 trailers
+  snake.cameras.camera12 = {};
+  snake.utils.addCamera(snake.cameras.camera12);
+  snake.cameras.camera12.set ({cameraFocalLenght: 75 , cameraNearView: .01 , cameraFarView: 800 , active:false});
+
 
   // vehicle main camera
   // snake.cameras.camera6 = {};
