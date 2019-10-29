@@ -3,8 +3,6 @@ import { loadTruckCabin, loadTrailerContainer, loadAdditionalTrailer} from "./ro
 
 
 export function loadRoadTrain(rGame){
-  //let z=90,l=11,t=.5;
-  //let iniPos={x:350,y:-280,z:-330}
   let iniPos={x:0,y:1,z:10}
 
   let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(),   Math.PI);
@@ -60,7 +58,6 @@ export function loadRoadTrain(rGame){
 
 
   rGame.roadTrains[0].visibleTrailers = 0;
-  //rGame.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
   rGame.loadedObjects.push(rGame.roadTrains);
 
 
@@ -78,8 +75,6 @@ function addTrailer({visibleTrailers,chassisBody}){
   if ( visibleTrailers>0 &&visibleTrailers<roadTrains.length-1 && roadTrains[visibleTrailers-1].enable==true && !roadTrains[visibleTrailers].enable){
     let towingGap=roadTrains[visibleTrailers].towingGap;
     let towingRatio=roadTrains[visibleTrailers].towingRatio;
-    //z = z - l;
-    //let roadTrains = mainComposite.roadTrains;
     let prev=visibleTrailers - 1;
     let pos = roadTrains[prev].position;
     let quat = new THREE.Quaternion(

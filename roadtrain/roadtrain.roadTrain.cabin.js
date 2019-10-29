@@ -72,16 +72,6 @@ export function loadTruckCabin(){
       materialName:"lambert",
     });
 
-    //chassis center
-    // cabin.push({
-    //   geometryName : "box" , 
-    //   dimension : { height:4.2 , width: .4 , length:1}, 
-    //   localPosition :new THREE.Vector3( 0 , 0 , .6 ), 
-    //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-    //   color : 0x8f2bd3, 
-    //   materialName:"lambert",
-    // });
-
     //left cover
     cabin.push({
       geometryName : "box" , 
@@ -186,8 +176,6 @@ export function loadTrailerContainer(){
       localPosition :new THREE.Vector3( 0 , 1.7 , -1.5 ), 
       widthSegments :32,
       heightSegments:32,
-      // radialSegments:32,
-      // cylinderHeightSegments:1,
       localQuaternion:new THREE.Quaternion(),//.setFromAxisAngle(new THREE.Vector3(1,0,0).normalize(), -Math.PI/2),
       textureFileName:["/textures/tanker.png"],
       color : 0xffffff, 
@@ -199,43 +187,11 @@ export function loadTrailerContainer(){
       localPosition :new THREE.Vector3( 0 , 1.7 , 7.5 ), 
       widthSegments :32,
       heightSegments:32,
-      // radialSegments:32,
-      // cylinderHeightSegments:1,
       localQuaternion:new THREE.Quaternion(),//.setFromAxisAngle(new THREE.Vector3(1,0,0).normalize(), -Math.PI/2),
       textureFileName:["/textures/tanker.png"],
       color : 0xffffff, 
       materialName:"lambert",
     });
-    //base
-    // cabin.push({
-    //   geometryName : "box" , 
-    //   dimension : { height:4.6 , width: .6 , length:1.7}, 
-    //   localPosition :new THREE.Vector3( 0 , .4 , -.5 ), 
-    //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-    //   color : 0x0000ff, 
-    //   materialName:"lambert",
-    // });
-
-    //container
-    // cabin.push({
-    //   geometryName : "box" , 
-    //   dimension : { height:13 , width: 4 , length:3.4}, 
-    //   localPosition :new THREE.Vector3( 0 , 2.6 , 3 ), 
-    //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-    //   color : 0xffffff, 
-    //   materialName:"lambert",
-    // });
-
-    // trailer
-      // cabin.push({
-      //   geometryName : "box" , 
-      //   dimension : { height:13 , width: .2 , length:3.2}, 
-      //   localPosition :new THREE.Vector3( 0 , 1 , 3 ), 
-      //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-      //   color : 0x2ffa8f, 
-      //   materialName:"lambert",
-      // });
-
 
   return cabin;
 
@@ -261,8 +217,6 @@ export function loadAdditionalTrailer(){
         localPosition :new THREE.Vector3( 0 , 1.5 , -1.5 ), 
         widthSegments :32,
         heightSegments:32,
-        // radialSegments:32,
-        // cylinderHeightSegments:1,
         localQuaternion:new THREE.Quaternion(),//.setFromAxisAngle(new THREE.Vector3(1,0,0).normalize(), -Math.PI/2),
         textureFileName:["/textures/tanker.png"],
         color : 0xffffff, 
@@ -274,61 +228,12 @@ export function loadAdditionalTrailer(){
         localPosition :new THREE.Vector3( 0 , 1.5 , 7.5 ), 
         widthSegments :32,
         heightSegments:32,
-        // radialSegments:32,
-        // cylinderHeightSegments:1,
         localQuaternion:new THREE.Quaternion(),//.setFromAxisAngle(new THREE.Vector3(1,0,0).normalize(), -Math.PI/2),
         textureFileName:["/textures/tanker.png"],
         color : 0xffffff, 
         materialName:"lambert",
       });
-  // all object position and orientation are relavive to vehicle position and orientation
-  //front base
-  // cabin.push({
-  //   geometryName : "box" , 
-  //   dimension : { height:.5 , width: 1 , length:1.6}, 
-  //   localPosition :new THREE.Vector3( 0 , .2 , 1 ), 
-  //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-  //   color : 0xff00ff, 
-  //   materialName:"lambert",
-  // });
-    //rear base
-    // cabin.push({
-    //   geometryName : "box" , 
-    //   dimension : { height:.5 , width: 1 , length:1.6}, 
-    //   localPosition :new THREE.Vector3( 0 , .2 , -2 ), 
-    //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-    //   color : 0xff00ff, 
-    //   materialName:"lambert",
-    // });
-    //base
-    // cabin.push({
-    //   geometryName : "box" , 
-    //   dimension : { height:4.6 , width: .6 , length:1.7}, 
-    //   localPosition :new THREE.Vector3( 0 , .4 , -.5 ), 
-    //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-    //   color : 0x0000ff, 
-    //   materialName:"lambert",
-    // });
 
-    //container
-    // cabin.push({
-    //   geometryName : "box" , 
-    //   dimension : { height:13 , width: 4 , length:3.4}, 
-    //   localPosition :new THREE.Vector3( 0 , 2.6 , 3 ), 
-    //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-    //   color : 0xffffff, 
-    //   materialName:"lambert",
-    // });
-
-    // trailer
-      // cabin.push({
-      //   geometryName : "box" , 
-      //   dimension : { height:13 , width: .2 , length:3.2}, 
-      //   localPosition :new THREE.Vector3( 0 , .7 , 3 ), 
-      //   localQuaternion:new THREE.Quaternion(0,0,0,1),
-      //   color : 0x2ffa8f, 
-      //   materialName:"lambert",
-      // });
       // hinge
       cabin.push({
         geometryName : "box" , 

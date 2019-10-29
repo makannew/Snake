@@ -155,7 +155,6 @@ export function loadRoad(rGame){
 
 export function loadRoadUpdateManager(rGame){
   rGame.standingTime = 0;
-  //rGame.addFunction(currentStandingBlock);
   rGame.addFunction(roadActiveBlocks);
   rGame.addFunction(runPlots);
   rGame.addFunction(performReset);
@@ -274,7 +273,6 @@ function performReset({newAnimationFrame}){
   }else{
     standingTime+=actualInterval;
   }
-  //if(standingTime>maxStandingTime) window.document.location.reload();
   if(standingTime>maxStandingTime || cheating){
     cheating = false;
     // reset blocks and obstacles

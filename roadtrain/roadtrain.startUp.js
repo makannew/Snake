@@ -1,7 +1,6 @@
 
 
 export function loadStartUp(rGame){
-  
   rGame.addFunction(startUpProcess);
 
 }

@@ -12,11 +12,6 @@ export function loadCameraControl(rGame){
   rGame.addFunction(updateTwoTrailerCamera);
 
 
-
-
-
-
-
 }
 
 function transitionCamera({cameraTransitionPlot , newAnimationFrame}){
@@ -62,22 +57,6 @@ function transitionCamera({cameraTransitionPlot , newAnimationFrame}){
     transitionData=undefined;
   }
 
-}
-
-function updateCarCameras ({newAnimationFrame}){
-    // main camera
-
-    let truckPos = car.position;
-    let truckQuat = car.quaternion;
-    //let trailersNumber = roadTrains.length;
-    let pos = cameras.camera3.camera.position;
-    let beam = new THREE.Vector3(0,0,-12);
-    beam.applyQuaternion(truckQuat);
-    pos.x = beam.x + truckPos.x;
-    pos.y = truckPos.y+2;
-    pos.z = beam.z + truckPos.z;
-    cameras.camera3.camera.lookAt(new THREE.Vector3(truckPos.x,truckPos.y,truckPos.z));
- 
 }
 
 function updateBackChasingCamera ({newAnimationFrame}){

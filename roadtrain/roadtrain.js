@@ -3,7 +3,7 @@
  *
  *
  * @link   https://github.com/makannew/roadtrain
- * @file   rGame.js
+ * @file   roadtrain.js
  * @author Makan Edrisi
  * @since  2018
  * @version 1.0.0
