@@ -10,7 +10,8 @@ This repo is compiled by [Makan Edrisi](https://github.com/makannew)
 
 ## Structure
 I have used [Mgame](https://github.com/makannew/MGame) to build this game. 
-[Mgame](https://github.com/makannew/MGame) implement [Three.js](https://github.com/mrdoob/three.js) as 3D liberary and [Cannon.js](https://github.com/schteppe/cannon.js) as physic liberary to provide easy way to develop javascript games.
+
+[Mgame](https://github.com/makannew/MGame) implement [Three.js](https://github.com/mrdoob/three.js) as 3D liberary and [Cannon.js](https://github.com/schteppe/cannon.js) as physic liberary to provide an easy way to develop javascript games.
 
 ## What I have learned
 Combining 3D and physic libraries result to a realistic feeling in a game. However, there is computation limitation which cause frame rate drops below 60fps which is not desired.
