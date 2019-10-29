@@ -1,4 +1,4 @@
-import { roadData } from "./snake.road.data.js";
+import { roadData } from "./roadtrain.road.data.js";
 
 export function loadRoad(snake){
   let snakeObject = snake.getProxyLessObject;

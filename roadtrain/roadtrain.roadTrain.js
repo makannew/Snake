@@ -1,5 +1,5 @@
-import { truckWheelsInfo, trailerWheelsInfo, additionalTrailerWheelsInfo } from "./snake.roadTrain.wheels.js";
-import { loadTruckCabin, loadTrailerContainer, loadAdditionalTrailer} from "./snake.roadTrain.cabin.js";
+import { truckWheelsInfo, trailerWheelsInfo, additionalTrailerWheelsInfo } from "./roadtrain.roadTrain.wheels.js";
+import { loadTruckCabin, loadTrailerContainer, loadAdditionalTrailer} from "./roadtrain.roadTrain.cabin.js";
 
 
 export function loadRoadTrain(snake){

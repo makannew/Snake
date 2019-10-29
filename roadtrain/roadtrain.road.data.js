@@ -22,7 +22,7 @@ import {
   rotatingHaumea,
   eris,
   jupiterHaumea
-} from "./snake.road.obstacles.js";
+} from "./roadtrain.road.obstacles.js";
 
 export function roadData(snake){
   let maxAcceptableInterval = 25;
