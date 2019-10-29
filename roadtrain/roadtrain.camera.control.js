@@ -1,15 +1,15 @@
 
-export function loadCameraControl(snake){
-  //snake.addFunction(updateCarCameras);
-  snake.transitionData = undefined;
-  snake.addFunction(updateBackChasingCamera);
-  snake.addFunction(updateReverseCamera);
-  snake.addFunction(updateSideCamera);
-  snake.addFunction(updateTopCamera);
-  snake.addFunction(updateCockpitCamera);
-  snake.addFunction(transitionCamera);
-  snake.addFunction(updateOneTrailerCamera);
-  snake.addFunction(updateTwoTrailerCamera);
+export function loadCameraControl(rGame){
+  //rGame.addFunction(updateCarCameras);
+  rGame.transitionData = undefined;
+  rGame.addFunction(updateBackChasingCamera);
+  rGame.addFunction(updateReverseCamera);
+  rGame.addFunction(updateSideCamera);
+  rGame.addFunction(updateTopCamera);
+  rGame.addFunction(updateCockpitCamera);
+  rGame.addFunction(transitionCamera);
+  rGame.addFunction(updateOneTrailerCamera);
+  rGame.addFunction(updateTwoTrailerCamera);
 
 
 

@@ -1,19 +1,19 @@
 import { roadData } from "./roadtrain.road.data.js";
 
-export function loadRoad(snake){
-  let snakeObject = snake.getProxyLessObject;
-  let roadInfo = roadData(snake);
-  snake.road = roadInfo;
-  snake.checkPoint = {block:0,speed:10,camera:snake.cameras.camera3};
+export function loadRoad(rGame){
+  let rGameObject = rGame.getProxyLessObject;
+  let roadInfo = roadData(rGame);
+  rGame.road = roadInfo;
+  rGame.checkPoint = {block:0,speed:10,camera:rGame.cameras.camera3};
   let width,length,tickness,position,quaternion,color,materialName,physicMaterial,
   offset,textureFileName,textureNumber,materialIndex,frontActiveBlocks,rearActiveBlocks,frontVisibleBlocks,rearVisibleBlocks;
   let vAxis = new THREE.Vector3(1,0,0);
   let hAxis = new THREE.Vector3(0,1,0);
   let initialVisibleBlocks = roadInfo[0].frontVisibleBlocks;
   for (let i=0,len=roadInfo.length;i<len;++i){
-    snake.road[i].block={};
-    snake.road[i].enablingObstacles = [];
-    snake.road[i].disablingObstacles = [];
+    rGame.road[i].block={};
+    rGame.road[i].enablingObstacles = [];
+    rGame.road[i].disablingObstacles = [];
   }
 
   for (let i=0,len=roadInfo.length;i<len;++i){
@@ -103,12 +103,12 @@ export function loadRoad(snake){
 
     //
     if(textureNumber!=undefined && textureFileName===undefined){
-      snake.addLink(snake.road[textureNumber].block.texture,snake.road[i].block.texture);
-      snake.addLink(snake.road[textureNumber].block.materialIndex,snake.road[i].block.materialIndex);
+      rGame.addLink(rGame.road[textureNumber].block.texture,rGame.road[i].block.texture);
+      rGame.addLink(rGame.road[textureNumber].block.materialIndex,rGame.road[i].block.materialIndex);
 
     }
-    snake.utils.addObject(snake.road[i].block);
-    snake.road[i].block.set({
+    rGame.utils.addObject(rGame.road[i].block);
+    rGame.road[i].block.set({
       geometryName : "box" , 
       dimension : { height:length , width:tickness , length:width} , 
       position, 
@@ -122,19 +122,19 @@ export function loadRoad(snake){
       physicStatus:(i==0)? true:false,
       visible:false//(i<=initialVisibleBlocks)?true:false,
        });
-    snake.utils.addPhysicBody(snake.road[i].block);
-    snake.road[i].block.set({mass:0,allowSleep:true,sleep:true,groupName:"ground",collisionGroups:["wheel","obstacle","chassis"],
+    rGame.utils.addPhysicBody(rGame.road[i].block);
+    rGame.road[i].block.set({mass:0,allowSleep:true,sleep:true,groupName:"ground",collisionGroups:["wheel","obstacle","chassis"],
     enableCollisionCallback:true,
     collisionCallback:function(e){
-      if (e.body.collisionFilterGroup == snakeObject.roadTrains[0].wheelsBodies[0].collisionFilterGroup){
-        if (i>snakeObject.currentStandingBlock || snakeObject.currentStandingBlock==undefined) snake.currentStandingBlock=i;
+      if (e.body.collisionFilterGroup == rGameObject.roadTrains[0].wheelsBodies[0].collisionFilterGroup){
+        if (i>rGameObject.currentStandingBlock || rGameObject.currentStandingBlock==undefined) rGame.currentStandingBlock=i;
       }
     }
   });
     //
     //obstacles
-    snake.road[i].blockObstacles = [];
-    let blockObstacles = snake.road[i].blockObstacles;
+    rGame.road[i].blockObstacles = [];
+    let blockObstacles = rGame.road[i].blockObstacles;
     if (d.obstacles!=undefined ){
       for (let obstacle of d.obstacles){
         blockObstacles.push({});
@@ -144,8 +144,8 @@ export function loadRoad(snake){
           object.iniPos = object.position.clone();
           object.iniQuat = object.quaternion.clone();
         }
-        snake.road[i + obstacle.enablingDistance].enablingObstacles.push(snake.road[i].blockObstacles[blockObstacles.length - 1]);
-        snake.road[i + obstacle.disablingDistance].disablingObstacles.push(snake.road[i].blockObstacles[blockObstacles.length - 1]);
+        rGame.road[i + obstacle.enablingDistance].enablingObstacles.push(rGame.road[i].blockObstacles[blockObstacles.length - 1]);
+        rGame.road[i + obstacle.disablingDistance].disablingObstacles.push(rGame.road[i].blockObstacles[blockObstacles.length - 1]);
       }
     }
 
@@ -153,13 +153,13 @@ export function loadRoad(snake){
   }
 }
 
-export function loadRoadUpdateManager(snake){
-  snake.standingTime = 0;
-  //snake.addFunction(currentStandingBlock);
-  snake.addFunction(roadActiveBlocks);
-  snake.addFunction(runPlots);
-  snake.addFunction(performReset);
-  snake.addFunction(restart);
+export function loadRoadUpdateManager(rGame){
+  rGame.standingTime = 0;
+  //rGame.addFunction(currentStandingBlock);
+  rGame.addFunction(roadActiveBlocks);
+  rGame.addFunction(runPlots);
+  rGame.addFunction(performReset);
+  rGame.addFunction(restart);
 
 }
 

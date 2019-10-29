@@ -1,6 +1,6 @@
 
-export function loadStarfield(snake){
-  let threeScene = snake.getProxyLessObject.three.scene;
+export function loadStarfield(rGame){
+  let threeScene = rGame.getProxyLessObject.three.scene;
   let starsGeometry = new THREE.Geometry();
 
   for ( let i = 0; i < 5000; i ++ ) {
@@ -19,6 +19,6 @@ let starsMaterial = new THREE.PointsMaterial( { color: 0x888888 } );
 let starField = new THREE.Points( starsGeometry, starsMaterial );
 
 threeScene.add( starField );
-snake.loadedObjects.push(starField);
+rGame.loadedObjects.push(starField);
 
 }

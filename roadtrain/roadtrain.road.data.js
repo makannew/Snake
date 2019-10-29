@@ -24,7 +24,7 @@ import {
   jupiterHaumea
 } from "./roadtrain.road.obstacles.js";
 
-export function roadData(snake){
+export function roadData(rGame){
   let maxAcceptableInterval = 25;
   let slope = Math.PI/16;
   let result = [
@@ -47,8 +47,8 @@ export function roadData(snake){
 
     },
     {
-      plot:(snake)=>{
-        snake.roadTrains[0].speed = 15;
+      plot:(rGame)=>{
+        rGame.roadTrains[0].speed = 15;
       },
       up:slope,
       obstacles:[
@@ -78,8 +78,8 @@ export function roadData(snake){
       down:slope
     },
     {
-      plot:(snake)=>{
-        snake.roadTrains[0].speed = 8;
+      plot:(rGame)=>{
+        rGame.roadTrains[0].speed = 8;
       },
       down:slope,
       obstacles:[
@@ -87,19 +87,19 @@ export function roadData(snake){
       ]
     },
     {
-      plot:(snake)=>{
-        snake.cameraTransitionPlot = [
+      plot:(rGame)=>{
+        rGame.cameraTransitionPlot = [
           {
-          startCam:snake.cameras.camera3,
-          endCam:snake.cameras.camera10,
+          startCam:rGame.cameras.camera3,
+          endCam:rGame.cameras.camera10,
           movingSpeed:500,
           movingType:2,
           rotatingSpeed:500,
           rotatingType:2,
           },
           {
-          startCam:snake.cameras.camera10,
-          endCam:snake.cameras.camera7,
+          startCam:rGame.cameras.camera10,
+          endCam:rGame.cameras.camera7,
           movingSpeed:500,
           movingType:3,
           rotatingSpeed:500,
@@ -136,11 +136,11 @@ export function roadData(snake){
     {
       left:slope*2,
       obstacles:[{build:barrierA , localPos:{x:4,y:.5,z:10},enablingDistance:0 , disablingDistance:2}],
-      plot:(snake)=>{
-        snake.cameraTransitionPlot = [
+      plot:(rGame)=>{
+        rGame.cameraTransitionPlot = [
           {
-          startCam:snake.cameras.camera7,
-          endCam:snake.cameras.camera3,
+          startCam:rGame.cameras.camera7,
+          endCam:rGame.cameras.camera3,
           movingSpeed:1500,
           movingType:2,
           rotatingSpeed:1500,
@@ -161,15 +161,15 @@ export function roadData(snake){
     },
     {},
     {
-      checkPoint:{speed:18,camera:snake.cameras.camera3}, // checkpoint
+      checkPoint:{speed:18,camera:rGame.cameras.camera3}, // checkpoint
 
 
       left:slope*2,
 
     },
     {
-      plot:(snake)=>{
-        snake.roadTrains[0].speed = 14;
+      plot:(rGame)=>{
+        rGame.roadTrains[0].speed = 14;
       },
       left:slope*2,
 
@@ -215,27 +215,27 @@ export function roadData(snake){
     {
       right:slope*2,
 
-      plot:(snake)=>{
-      snake.roadTrains[0].speed = 20;
+      plot:(rGame)=>{
+      rGame.roadTrains[0].speed = 20;
       }
     },
     {
       right:slope*2,
-      checkPoint:{speed:20,camera:snake.cameras.camera11}, // checkpoint
+      checkPoint:{speed:20,camera:rGame.cameras.camera11}, // checkpoint
 
       frontActiveBlocks:6
     },
     {
       right:slope*2,
 
-      plot:(snake)=>{
-        if(snake.framesInterval<maxAcceptableInterval){
-          if (snake.roadTrains[0].visibleTrailers<2)++snake.roadTrains[0].visibleTrailers;
-          if (snake.activeCamera == snake.cameras.camera3){
-            snake.cameraTransitionPlot = [
+      plot:(rGame)=>{
+        if(rGame.framesInterval<maxAcceptableInterval){
+          if (rGame.roadTrains[0].visibleTrailers<2)++rGame.roadTrains[0].visibleTrailers;
+          if (rGame.activeCamera == rGame.cameras.camera3){
+            rGame.cameraTransitionPlot = [
               {
-              startCam:snake.cameras.camera3,
-              endCam:snake.cameras.camera11,
+              startCam:rGame.cameras.camera3,
+              endCam:rGame.cameras.camera11,
               movingSpeed:3000,
               movingType:1,
               rotatingSpeed:1500,
@@ -276,12 +276,12 @@ export function roadData(snake){
     {obstacles:[{build:eris , localPos:{x:4,y:50,z:0}, enablingDistance:-4 , disablingDistance:-1}]},
     {
       obstacles:[{build:barrierA , localPos:{x:4,y:.4,z:10}, enablingDistance:0 , disablingDistance:1}],
-      plot:(snake)=>{
-        snake.roadTrains[0].speed = 20;
+      plot:(rGame)=>{
+        rGame.roadTrains[0].speed = 20;
         }
     },
 
-    {checkPoint:{speed:20,camera:snake.cameras.camera11}}, // checkpoint
+    {checkPoint:{speed:20,camera:rGame.cameras.camera11}}, // checkpoint
     {obstacles:[{build:barrierA , localPos:{x:-4,y:.4,z:10}, enablingDistance:0 , disablingDistance:1}]},
     {
       obstacles:[
@@ -311,22 +311,22 @@ export function roadData(snake){
     },
     {
       down:slope,
-      plot:(snake)=>{
-        snake.roadTrains[0].speed = 25;
+      plot:(rGame)=>{
+        rGame.roadTrains[0].speed = 25;
         }
     },
-    {checkPoint:{speed:25,camera:snake.cameras.camera11}}, // checkpoint
+    {checkPoint:{speed:25,camera:rGame.cameras.camera11}}, // checkpoint
 
     {
       down:slope,
-      plot:(snake)=>{
-        if(snake.framesInterval<maxAcceptableInterval){
-          if (snake.roadTrains[0].visibleTrailers<2)++snake.roadTrains[0].visibleTrailers;
-          if (snake.activeCamera == snake.cameras.camera11){
-            snake.cameraTransitionPlot = [
+      plot:(rGame)=>{
+        if(rGame.framesInterval<maxAcceptableInterval){
+          if (rGame.roadTrains[0].visibleTrailers<2)++rGame.roadTrains[0].visibleTrailers;
+          if (rGame.activeCamera == rGame.cameras.camera11){
+            rGame.cameraTransitionPlot = [
               {
-              startCam:snake.cameras.camera11,
-              endCam:snake.cameras.camera12,
+              startCam:rGame.cameras.camera11,
+              endCam:rGame.cameras.camera12,
               movingSpeed:3000,
               movingType:1,
               rotatingSpeed:1500,

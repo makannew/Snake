@@ -1,9 +1,9 @@
 
-export function loadControls(snake){
+export function loadControls(rGame){
   // game controls
   let oldTouchX=undefined;
-  let vehicle = snake.roadTrains[0];
-  //let vehicle = snake.car;
+  let vehicle = rGame.roadTrains[0];
+  //let vehicle = rGame.car;
   let touchSpan = vehicle.touchSpan;
   let maxSteering = vehicle.absMaxSteering;
   let prevSteering = vehicle.steering;
@@ -12,7 +12,7 @@ export function loadControls(snake){
   let downKeyPressed = false;
 
 
-  snake.activateControls = function(){
+  rGame.activateControls = function(){
     document.addEventListener( "keydown" , keyDownHandler , false );
     document.addEventListener( "keyup" , keyUpHandler , false );
     document.addEventListener( 'touchstart' ,toushStartHandler , { passive: false })
@@ -33,7 +33,7 @@ function toushStartHandler(e){
   e.preventDefault();
   oldTouchX = e.touches[0].clientX;
   if (vehicle.speed ==0){
-    vehicle.speed = snake.checkPoint.speed;
+    vehicle.speed = rGame.checkPoint.speed;
   }
 }
 
@@ -60,19 +60,19 @@ function toushEndHandler(e){
         vehicle.set({turningRight:true,turningLeft:false});
 
       }
-      //snake.cameras.camera1.position.x=snake.cameras.camera1.position.x+1
+      //rGame.cameras.camera1.position.x=rGame.cameras.camera1.position.x+1
     }
     if (e.key == "Left" || e.key == "ArrowLeft"){
       if (!vehicle.turningLeft){
         vehicle.set({turningRight:false,turningLeft:true});
 
       }
-      //snake.cameras.camera1.position.x=snake.cameras.camera1.position.x-1
+      //rGame.cameras.camera1.position.x=rGame.cameras.camera1.position.x-1
 
     }
     if (e.key == "Up" || e.key == "ArrowUp"){
       if (vehicle.speed ==0){
-        vehicle.speed = snake.checkPoint.speed;
+        vehicle.speed = rGame.checkPoint.speed;
       }
       // if (!upKeyPressed){
       //   vehicle.set({speed:21,engineForce: 30});
@@ -124,27 +124,27 @@ function toushEndHandler(e){
     }
 
     if (e.key == "1"){
-      snake.cameras.camera7.active = true;
+      rGame.cameras.camera7.active = true;
 
     }
 
     if (e.key == "2"){
-      snake.cameras.camera3.active = true;
+      rGame.cameras.camera3.active = true;
 
     }
     if (e.key == "3"){
-      snake.cameras.camera8.active = true;
+      rGame.cameras.camera8.active = true;
 
     }
     if (e.key == "4"){
-      snake.cameras.camera9.active = true;
+      rGame.cameras.camera9.active = true;
 
     }
     if (e.key == "c"){
-      snake.set({cheating:true});
-      snake.checkPoint.block=20;
-      snake.checkPoint.speed=20;
-      snake.checkPoint.camera=snake.cameras.camera3;
+      rGame.set({cheating:true});
+      rGame.checkPoint.block=20;
+      rGame.checkPoint.speed=20;
+      rGame.checkPoint.camera=rGame.cameras.camera3;
 
 
     }

@@ -1,6 +1,6 @@
 
 export function box(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = localQuat.clone();
 
   thisQuat.multiply(quat);
@@ -9,7 +9,7 @@ export function box(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , local
   obj.constraints = [];
   obj.parts = []
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
     geometryName : "box" ,
     dimension : { height:3 , width: 3 , length:3} , 
@@ -20,7 +20,7 @@ export function box(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , local
     materialName:"lambert" 
   });
 
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:1,
     allowSleep:true,
@@ -35,7 +35,7 @@ export function box(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , local
 }
 
 export function barrel(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = localQuat.clone();
 
   thisQuat.multiply(quat);
@@ -44,7 +44,7 @@ export function barrel(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , lo
   obj.constraints = [];
   obj.parts = []
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
     geometryName : "cylinder" , 
     dimension : {radiusTop:.8,radiusBottom:.8,height:2.2} , 
@@ -57,7 +57,7 @@ export function barrel(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , lo
 
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:10,
     allowSleep:true,
@@ -71,7 +71,7 @@ export function barrel(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , lo
 
 }
 export function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = localQuat.clone();
 
   thisQuat.multiply(quat);
@@ -80,7 +80,7 @@ export function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
   obj.constraints = [{}];
   obj.parts = []
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
     geometryName : "box" ,
     dimension : { height:1 , width: 1 , length:1} , 
@@ -90,7 +90,7 @@ export function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     color : 0xffffff , 
     materialName:"lambert" 
   });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:10,
     allowSleep:true,
@@ -102,7 +102,7 @@ export function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     physicMaterial:"objectMaterial"
   });
 
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({
     geometryName : "box" ,
      textureFileName:["/textures/barrierStand.png"],
@@ -110,7 +110,7 @@ export function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
      position :new THREE.Vector3(0,1.4,0).add(localPos).applyQuaternion(quat).add(pos),
      quaternion:thisQuat , 
      materialName:"lambert" });
-     snake.utils.addPhysicBody(obj.objects[1]);
+     rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:10,
     allowSleep:true,
@@ -122,14 +122,14 @@ export function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     physicMaterial:"objectMaterial"
   });
 
-  snake.utils.newLockConstraint(obj.constraints[0]);
+  rGame.utils.newLockConstraint(obj.constraints[0]);
   obj.constraints[0].maxForce = 1e6;
   obj.constraints[0].bodies = [obj.objects[0] , obj.objects[1]];
 
 }
 
 export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -138,7 +138,7 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
   obj.constraints = [];
   obj.parts = [{},{},{},{}]
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
     geometryName : "box" ,
     dimension : { height:.1 , width: .8 , length:8} , 
@@ -148,19 +148,19 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     materialName:"basic" 
   });
 
-  snake.utils.addObject(obj.parts[0]);
+  rGame.utils.addObject(obj.parts[0]);
   obj.parts[0].set({geometryName : "box" , textureFileName:["/textures/barrierStand.png"],dimension : { height:.1 , width: 1.4, length:.8} , position :new THREE.Vector3(-3,.9,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , materialName:"phong" });
 
-  snake.utils.addObject(obj.parts[1]);
+  rGame.utils.addObject(obj.parts[1]);
   obj.parts[1].set({geometryName : "box" , textureFileName:["/textures/barrierStand.png"],dimension : { height:.1 , width: 1.4 , length:.8} , position :new THREE.Vector3(3,.9,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
 
-  snake.utils.addObject(obj.parts[2]);
+  rGame.utils.addObject(obj.parts[2]);
   obj.parts[2].set({geometryName : "box" ,textureFileName:["/textures/barrierStand.png"], dimension : { height:.8 , width: .2 , length:.8} , position :new THREE.Vector3(-3,.1,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
 
-  snake.utils.addObject(obj.parts[3]);
+  rGame.utils.addObject(obj.parts[3]);
   obj.parts[3].set({geometryName : "box" ,textureFileName:["/textures/barrierStand.png"], dimension : { height:.8 , width: .2 , length:.8} , position :new THREE.Vector3(3,.1,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
 
-  snake.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
+  rGame.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
   obj.objects[0].set({
     mass:2,
     allowSleep:true,
@@ -171,14 +171,14 @@ export function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
     collisionGroups:["wheel","ground","chassis","obstacle"], 
     physicMaterial:"objectMaterial"
   });
-  // snake.utils.newLockConstraint(obj.constraints[0]);
+  // rGame.utils.newLockConstraint(obj.constraints[0]);
   // obj.constraints[0].maxForce = 1e6;
   // obj.constraints[0].bodies = [obj.objects[0] , obj.objects[1] , obj.objects[2] , obj.objects[3] , obj.objects[4]];
 
 }
 
 export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1) , visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -187,7 +187,7 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
   obj.constraints = [];
   obj.parts = [{},{}]
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "box" , 
   dimension : { height:1 , width: .1 , length:1} , 
   position :new THREE.Vector3(0,.05,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat ,
@@ -197,7 +197,7 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
    materialName:"basic" 
   });
 
-  snake.utils.addObject(obj.parts[0]);
+  rGame.utils.addObject(obj.parts[0]);
   obj.parts[0].set({geometryName : "cylinder" , 
     dimension : {radiusTop:0.04,radiusBottom:.45,height:1.5} , 
     position :new THREE.Vector3(0,.8,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -210,7 +210,7 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
 
     });
 
-  snake.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
+  rGame.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
   obj.objects[0].set({
     mass:.5,
     allowSleep:true,
@@ -225,7 +225,7 @@ export function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0)
 }
 
 export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -234,10 +234,10 @@ export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) ,
   obj.constraints = [];
   obj.parts = [{},{}]
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "box" , dimension : { height:1 , width: .1 , length:1} , position :new THREE.Vector3(0,.05,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , color : 0xaffbb0 , materialName:"phong" });
 
-  snake.utils.addObject(obj.parts[0]);
+  rGame.utils.addObject(obj.parts[0]);
   obj.parts[0].set({geometryName : "sphere", 
     dimension : {radius:2.5} , 
     position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -248,7 +248,7 @@ export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) ,
 
     });
 
-  snake.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
+  rGame.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
   obj.objects[0].set({
     mass:.5,
     allowSleep:true,
@@ -263,7 +263,7 @@ export function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) ,
 }
 
 export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -271,7 +271,7 @@ export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:2} , 
     position :new THREE.Vector3(0,2.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -281,7 +281,7 @@ export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
      textureFileName:["/textures/jupiter.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:300,
     allowSleep:true,
@@ -295,7 +295,7 @@ export function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
 }
 
 export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -303,7 +303,7 @@ export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.5} , 
     position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -313,7 +313,7 @@ export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
      textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:220,
     allowSleep:true,
@@ -327,7 +327,7 @@ export function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
 }
 
 export function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -335,7 +335,7 @@ export function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:8} , 
     position :new THREE.Vector3(0,4.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -345,7 +345,7 @@ export function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
      textureFileName:["/textures/venus.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:500,
     allowSleep:true,
@@ -359,7 +359,7 @@ export function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
 }
 
 export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -367,7 +367,7 @@ export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:2.5} , 
     position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -377,7 +377,7 @@ export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
      textureFileName:["/textures/mars.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:200,
     allowSleep:true,
@@ -391,7 +391,7 @@ export function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
 }
 
 export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -399,7 +399,7 @@ export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:3.5} , 
     position :new THREE.Vector3(0,3.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -409,7 +409,7 @@ export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
      textureFileName:["/textures/mercury.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:600,
     allowSleep:true,
@@ -423,7 +423,7 @@ export function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , l
 }
 
 export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -431,7 +431,7 @@ export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1} , 
     position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -441,7 +441,7 @@ export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
      textureFileName:["/textures/pluto.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:2000,
     allowSleep:true,
@@ -455,7 +455,7 @@ export function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loc
 }
 
 export function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -463,7 +463,7 @@ export function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:.8} , 
     position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -473,7 +473,7 @@ export function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
      textureFileName:["/textures/moon.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -487,7 +487,7 @@ export function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
 }
 
 export function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -495,7 +495,7 @@ export function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , local
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.8} , 
     position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -505,7 +505,7 @@ export function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , local
      textureFileName:["/textures/sun.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:2000,
     allowSleep:true,
@@ -519,7 +519,7 @@ export function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , local
 }
 
 export function eris(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -527,7 +527,7 @@ export function eris(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
   obj.objects = [{}];
   obj.constraints = [];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.8} , 
     position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -537,7 +537,7 @@ export function eris(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
      textureFileName:["/textures/sun.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:500,
     allowSleep:true,
@@ -551,7 +551,7 @@ export function eris(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , loca
 }
 
 export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -559,7 +559,7 @@ export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   obj.objects = [{},{}];
   obj.constraints = [{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.5} , 
     position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -569,7 +569,7 @@ export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -583,7 +583,7 @@ export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,
 
 
   // static core
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.1} , 
     position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -593,7 +593,7 @@ export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:0,
     allowSleep:true,
@@ -606,7 +606,7 @@ export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -624,7 +624,7 @@ export function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,
 
 }
 export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -632,7 +632,7 @@ export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0
   obj.objects = [{},{}];
   obj.constraints = [{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:3} , 
     position :new THREE.Vector3(0,3.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -642,7 +642,7 @@ export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0
      textureFileName:["/textures/mars.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -656,7 +656,7 @@ export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0
 
 
   // static core
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.1} , 
     position :new THREE.Vector3(0,3.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -666,7 +666,7 @@ export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:0,
     allowSleep:true,
@@ -679,7 +679,7 @@ export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -698,7 +698,7 @@ export function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0
 }
 
 export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -706,7 +706,7 @@ export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   obj.objects = [{},{}];
   obj.constraints = [{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:2} , 
     position :new THREE.Vector3(0,2.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -716,7 +716,7 @@ export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      textureFileName:["/textures/venus.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -730,7 +730,7 @@ export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,
 
 
   // static core
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.1} , 
     position :new THREE.Vector3(0,2.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -740,7 +740,7 @@ export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:0,
     allowSleep:true,
@@ -753,7 +753,7 @@ export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -772,7 +772,7 @@ export function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,
 }
 
 export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -780,7 +780,7 @@ export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,
   obj.objects = [{},{}];
   obj.constraints = [{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.2} , 
     position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -790,7 +790,7 @@ export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,
      textureFileName:["/textures/jupiter.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -804,7 +804,7 @@ export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,
 
 
   // static core
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.1} , 
     position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -814,7 +814,7 @@ export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:0,
     allowSleep:true,
@@ -827,7 +827,7 @@ export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -846,7 +846,7 @@ export function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,
 }
 
 export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -854,7 +854,7 @@ export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,
   obj.objects = [{},{}];
   obj.constraints = [{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:2.5} , 
     position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -864,7 +864,7 @@ export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,
      textureFileName:["/textures/mercury.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -878,7 +878,7 @@ export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,
 
 
   // static core
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.1} , 
     position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -888,7 +888,7 @@ export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:0,
     allowSleep:true,
@@ -901,7 +901,7 @@ export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -920,7 +920,7 @@ export function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,
 }
 
 export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -928,7 +928,7 @@ export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0
   obj.objects = [{},{}];
   obj.constraints = [{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.3} , 
     position :new THREE.Vector3(0,1.4,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -938,7 +938,7 @@ export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0
      textureFileName:["/textures/haumea.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -952,7 +952,7 @@ export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0
 
 
   // static core
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.1} , 
     position :new THREE.Vector3(0,1.4,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -962,7 +962,7 @@ export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:0,
     allowSleep:true,
@@ -975,7 +975,7 @@ export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -994,7 +994,7 @@ export function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0
 }
 
 export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -1002,7 +1002,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
   obj.objects = [{},{},{}];
   obj.constraints = [{},{}];
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:1.5} , 
     position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -1012,7 +1012,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
      textureFileName:["/textures/sun.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -1025,7 +1025,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
   });
 
   //
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:.7} , 
     position :new THREE.Vector3(-4,1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -1035,7 +1035,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
      textureFileName:["/textures/ceres.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:100,
     allowSleep:true,
@@ -1048,7 +1048,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
   });
 
   // static core
-  snake.utils.addObject(obj.objects[2]);
+  rGame.utils.addObject(obj.objects[2]);
   obj.objects[2].set({geometryName : "sphere", 
     dimension : {radius:.4} , 
     position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -1058,7 +1058,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[2]);
+  rGame.utils.addPhysicBody(obj.objects[2]);
   obj.objects[2].set({
     mass:0,
     allowSleep:true,
@@ -1071,7 +1071,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -1084,7 +1084,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
       active:false
     })
 
-    snake.utils.newHingeConstraint(obj.constraints[1]);
+    rGame.utils.newHingeConstraint(obj.constraints[1]);
     obj.constraints[1].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[1].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[1].set({
@@ -1103,7 +1103,7 @@ export function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , 
 }
 
 export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
-  let snake = obj.getParentComposite;
+  let rGame = obj.getParentComposite;
   let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
 
   thisQuat.multiply(quat);
@@ -1112,7 +1112,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   obj.constraints = [{},{}];
   let orbit = 27;
 
-  snake.utils.addObject(obj.objects[0]);
+  rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({geometryName : "sphere", 
     dimension : {radius:12} , 
     position :new THREE.Vector3(0,12,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -1122,7 +1122,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      textureFileName:["/textures/jupiter.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[0]);
+  rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
     mass:100,
     allowSleep:true,
@@ -1135,7 +1135,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   });
 
   //
-  snake.utils.addObject(obj.objects[1]);
+  rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({geometryName : "sphere", 
     dimension : {radius:1.5} , 
     position :new THREE.Vector3(orbit,12,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -1145,7 +1145,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      textureFileName:["/textures/haumea.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[1]);
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
     mass:100,
     allowSleep:true,
@@ -1158,7 +1158,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   });
 
   // static core
-  snake.utils.addObject(obj.objects[2]);
+  rGame.utils.addObject(obj.objects[2]);
   obj.objects[2].set({geometryName : "sphere", 
     dimension : {radius:11} , 
     position :new THREE.Vector3(0,12,0).add(localPos).applyQuaternion(quat).add(pos),
@@ -1168,7 +1168,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
      //textureFileName:["/textures/earth.jpg"],
 
     });
-  snake.utils.addPhysicBody(obj.objects[2]);
+  rGame.utils.addPhysicBody(obj.objects[2]);
   obj.objects[2].set({
     mass:0,
     allowSleep:true,
@@ -1181,7 +1181,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
   });
 
 
-  snake.utils.newHingeConstraint(obj.constraints[0]);
+  rGame.utils.newHingeConstraint(obj.constraints[0]);
     obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[0].set({
@@ -1194,7 +1194,7 @@ export function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,
       active:false
     })
 
-    snake.utils.newHingeConstraint(obj.constraints[1]);
+    rGame.utils.newHingeConstraint(obj.constraints[1]);
     obj.constraints[1].axisA = new CANNON.Vec3(0,1,0);
     obj.constraints[1].axisB = new CANNON.Vec3(0,1,0);
     obj.constraints[1].set({

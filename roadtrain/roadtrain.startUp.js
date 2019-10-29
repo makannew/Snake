@@ -1,8 +1,8 @@
 
 
-export function loadStartUp(snake){
+export function loadStartUp(rGame){
   
-  snake.addFunction(startUpProcess);
+  rGame.addFunction(startUpProcess);
 
 }
 

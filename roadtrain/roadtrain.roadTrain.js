@@ -2,7 +2,7 @@ import { truckWheelsInfo, trailerWheelsInfo, additionalTrailerWheelsInfo } from 
 import { loadTruckCabin, loadTrailerContainer, loadAdditionalTrailer} from "./roadtrain.roadTrain.cabin.js";
 
 
-export function loadRoadTrain(snake){
+export function loadRoadTrain(rGame){
   //let z=90,l=11,t=.5;
   //let iniPos={x:350,y:-280,z:-330}
   let iniPos={x:0,y:1,z:10}
@@ -10,10 +10,10 @@ export function loadRoadTrain(snake){
   let iniQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0).normalize(),   Math.PI);
   let trailersNumber = 4
 
-  snake.roadTrains = [];
-  snake.roadTrains.push({});
-  snake.utils.newRoadTrain(snake.roadTrains[0]);
-  snake.roadTrains[0].set({
+  rGame.roadTrains = [];
+  rGame.roadTrains.push({});
+  rGame.utils.newRoadTrain(rGame.roadTrains[0]);
+  rGame.roadTrains[0].set({
     position:{x:iniPos.x , y:iniPos.y , z:iniPos.z} , 
     quaternion:new THREE.Quaternion(iniQuat.x , iniQuat.y , iniQuat.z , iniQuat.w),
     axelsVerticalFreedom:.2 , 
@@ -32,10 +32,10 @@ export function loadRoadTrain(snake){
   // load trailers but not enabled
   
   for (let i=0;i<trailersNumber;++i){
-    snake.roadTrains.push({});
-    let last = snake.roadTrains.length - 1;
-    snake.utils.newRoadTrain(snake.roadTrains[last]);
-    snake.roadTrains[last].set({
+    rGame.roadTrains.push({});
+    let last = rGame.roadTrains.length - 1;
+    rGame.utils.newRoadTrain(rGame.roadTrains[last]);
+    rGame.roadTrains[last].set({
       position:{x:0,y:0,z:0} , 
       quaternion: {x:0,y:0,z:0,w:1},
       axelsVerticalFreedom:.2 , 
@@ -54,14 +54,14 @@ export function loadRoadTrain(snake){
     });
   }
 
-  snake.roadTrains[0].addFunction(addTrailer);
-  snake.roadTrains[0].addFunction(addTrailerToLoadObjects);
+  rGame.roadTrains[0].addFunction(addTrailer);
+  rGame.roadTrains[0].addFunction(addTrailerToLoadObjects);
 
 
 
-  snake.roadTrains[0].visibleTrailers = 0;
-  //snake.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
-  snake.loadedObjects.push(snake.roadTrains);
+  rGame.roadTrains[0].visibleTrailers = 0;
+  //rGame.roadTrains[0].trailerWheelsInfo = trailerWheelsInfo;
+  rGame.loadedObjects.push(rGame.roadTrains);
 
 
 }
