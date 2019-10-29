@@ -9,7 +9,7 @@
  * @version 1.0.0
  */
 
-import { MGame } from '../js/mgame/mg.js';
+import { MGame } from '../mgame/mg.js';
 import { loadLights } from './roadtrain.lights.js';
 import { loadCameras } from './roadtrain.cameras.js';
 import { loadControls } from './roadtrain.controls.js';
