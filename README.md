@@ -20,7 +20,7 @@ During debuging I have noticed the bottleneck of performance is in physic engine
 Collision detector is responsible to find out where two objects touching by applying math operations between each object with all others. In other word performance exponentialy decrease by increasing total objects.
 This has a huge effect in physic game development in javascipt by limiting to only simple games.
 
-Although, I think there are some way to fix this problem which mentioneds below:
+Although, I think there are some way to fix this problem which mentioned below:
 - using web workers to take advantage of multi-thread computing
 - using web-assembly
 - using machin-learning model as collision detection function
