@@ -15,6 +15,17 @@ module.exports = {
         use: ["url-loader"],
       },
       // {
+      //   test: /\.(png|jpe?g|gif)$/i,
+      //   use: [
+      //     {
+      //       loader: "file-loader",
+      //       options: {
+      //         name: "[path][name].[ext]",
+      //       },
+      //     },
+      //   ],
+      // },
+      // {
       //   test: /\.m?js$/,
       //   exclude: /(node_modules|bower_components)/,
       //   use: {

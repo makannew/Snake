@@ -5784,8 +5784,15 @@ function startUpProcess ({newAnimationFrame , startUp}){
 }
 
 // CONCATENATED MODULE: ./roadtrain/roadtrain.road.obstacles.js
-
-function box(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+// require("./textures/barrierStand.png");
+function box(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
   let thisQuat = localQuat.clone();
 
@@ -5793,34 +5800,43 @@ function box(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=ne
 
   obj.objects = [{}];
   obj.constraints = [];
-  obj.parts = []
+  obj.parts = [];
 
   rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
-    geometryName : "box" ,
-    dimension : { height:3 , width: 3 , length:3} , 
-    position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat , 
-    textureFileName:["/textures/box.jpg"],
-    color : 0xffffff , 
-    materialName:"lambert" 
+    geometryName: "box",
+    dimension: { height: 3, width: 3, length: 3 },
+    position: new THREE.Vector3(0, 1.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    textureFileName: ["/textures/box.jpg"],
+    color: 0xffffff,
+    materialName: "lambert",
   });
 
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:1,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 1,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 }
 
-function barrel(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function barrel(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
   let thisQuat = localQuat.clone();
 
@@ -5828,229 +5844,359 @@ function barrel(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat
 
   obj.objects = [{}];
   obj.constraints = [];
-  obj.parts = []
+  obj.parts = [];
 
   rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
-    geometryName : "cylinder" , 
-    dimension : {radiusTop:.8,radiusBottom:.8,height:2.2} , 
-    position :new THREE.Vector3(0,2,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xffffff , 
-     materialName:"lambert" ,
-     textureFileName:["/textures/barrelTop.jpg","/textures/barrelSide.jpg","/textures/barrelBottom.jpg"],
-     materialIndex:[0,1,2],
-
-
-    });
+    geometryName: "cylinder",
+    dimension: { radiusTop: 0.8, radiusBottom: 0.8, height: 2.2 },
+    position: new THREE.Vector3(0, 2, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xffffff,
+    materialName: "lambert",
+    textureFileName: [
+      "/textures/barrelTop.jpg",
+      "/textures/barrelSide.jpg",
+      "/textures/barrelBottom.jpg",
+    ],
+    materialIndex: [0, 1, 2],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:10,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 10,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 }
-function barrierB(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function barrierB(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
   let thisQuat = localQuat.clone();
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
-  obj.parts = []
+  obj.parts = [];
 
   rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
-    geometryName : "box" ,
-    dimension : { height:1 , width: 1 , length:1} , 
-    position :new THREE.Vector3(0,.2,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat , 
-    textureFileName:["/textures/barrierStand.png"],
-    color : 0xffffff , 
-    materialName:"lambert" 
+    geometryName: "box",
+    dimension: { height: 1, width: 1, length: 1 },
+    position: new THREE.Vector3(0, 0.2, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    textureFileName: ["/textures/barrierStand.png"],
+    color: 0xffffff,
+    materialName: "lambert",
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:10,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 10,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
   rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({
-    geometryName : "box" ,
-     textureFileName:["/textures/barrierStand.png"],
-     dimension : { height:1 , width:1, length:1} , 
-     position :new THREE.Vector3(0,1.4,0).add(localPos).applyQuaternion(quat).add(pos),
-     quaternion:thisQuat , 
-     materialName:"lambert" });
-     rGame.utils.addPhysicBody(obj.objects[1]);
+    geometryName: "box",
+    textureFileName: ["/textures/barrierStand.png"],
+    dimension: { height: 1, width: 1, length: 1 },
+    position: new THREE.Vector3(0, 1.4, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    materialName: "lambert",
+  });
+  rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:10,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 10,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
   rGame.utils.newLockConstraint(obj.constraints[0]);
   obj.constraints[0].maxForce = 1e6;
-  obj.constraints[0].bodies = [obj.objects[0] , obj.objects[1]];
-
+  obj.constraints[0].bodies = [obj.objects[0], obj.objects[1]];
 }
 
-function barrierA(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function barrierA(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
   obj.objects = [{}];
   obj.constraints = [];
-  obj.parts = [{},{},{},{}]
+  obj.parts = [{}, {}, {}, {}];
 
   rGame.utils.addObject(obj.objects[0]);
   obj.objects[0].set({
-    geometryName : "box" ,
-    dimension : { height:.1 , width: .8 , length:8} , 
-    position :new THREE.Vector3(0,2,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , 
-    textureFileName:["/textures/barrierSide.png"],
-    color : 0xffffff , 
-    materialName:"basic" 
+    geometryName: "box",
+    dimension: { height: 0.1, width: 0.8, length: 8 },
+    position: new THREE.Vector3(0, 2, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    textureFileName: ["/textures/barrierSide.png"],
+    color: 0xffffff,
+    materialName: "basic",
   });
 
   rGame.utils.addObject(obj.parts[0]);
-  obj.parts[0].set({geometryName : "box" , textureFileName:["/textures/barrierStand.png"],dimension : { height:.1 , width: 1.4, length:.8} , position :new THREE.Vector3(-3,.9,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , materialName:"phong" });
+  obj.parts[0].set({
+    geometryName: "box",
+    textureFileName: ["/textures/barrierStand.png"],
+    dimension: { height: 0.1, width: 1.4, length: 0.8 },
+    position: new THREE.Vector3(-3, 0.9, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    materialName: "phong",
+  });
 
   rGame.utils.addObject(obj.parts[1]);
-  obj.parts[1].set({geometryName : "box" , textureFileName:["/textures/barrierStand.png"],dimension : { height:.1 , width: 1.4 , length:.8} , position :new THREE.Vector3(3,.9,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
+  obj.parts[1].set({
+    geometryName: "box",
+    textureFileName: ["/textures/barrierStand.png"],
+    dimension: { height: 0.1, width: 1.4, length: 0.8 },
+    position: new THREE.Vector3(3, 0.9, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    materialName: "phong",
+  });
 
   rGame.utils.addObject(obj.parts[2]);
-  obj.parts[2].set({geometryName : "box" ,textureFileName:["/textures/barrierStand.png"], dimension : { height:.8 , width: .2 , length:.8} , position :new THREE.Vector3(-3,.1,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
+  obj.parts[2].set({
+    geometryName: "box",
+    textureFileName: ["/textures/barrierStand.png"],
+    dimension: { height: 0.8, width: 0.2, length: 0.8 },
+    position: new THREE.Vector3(-3, 0.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    materialName: "phong",
+  });
 
   rGame.utils.addObject(obj.parts[3]);
-  obj.parts[3].set({geometryName : "box" ,textureFileName:["/textures/barrierStand.png"], dimension : { height:.8 , width: .2 , length:.8} , position :new THREE.Vector3(3,.1,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat  , materialName:"phong" });
+  obj.parts[3].set({
+    geometryName: "box",
+    textureFileName: ["/textures/barrierStand.png"],
+    dimension: { height: 0.8, width: 0.2, length: 0.8 },
+    position: new THREE.Vector3(3, 0.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    materialName: "phong",
+  });
 
-  rGame.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
+  rGame.utils.makePhysicCompound([obj.objects[0], ...obj.parts]);
   obj.objects[0].set({
-    mass:2,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 2,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
   // rGame.utils.newLockConstraint(obj.constraints[0]);
   // obj.constraints[0].maxForce = 1e6;
   // obj.constraints[0].bodies = [obj.objects[0] , obj.objects[1] , obj.objects[2] , obj.objects[3] , obj.objects[4]];
-
 }
 
-function coneBarrier(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1) , visible){
+function coneBarrier(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
   obj.objects = [{}];
   obj.constraints = [];
-  obj.parts = [{},{}]
+  obj.parts = [{}, {}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "box" , 
-  dimension : { height:1 , width: .1 , length:1} , 
-  position :new THREE.Vector3(0,.05,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat ,
-   color : 0xffffff , 
-   textureFileName:["/textures/coneBaseSide.png","/textures/coneBaseTop.png","/textures/coneBaseBottom.png"],
-   materialIndex:[0,0,0,0,1,1,2,2,2,2,0,0],
-   materialName:"basic" 
+  obj.objects[0].set({
+    geometryName: "box",
+    dimension: { height: 1, width: 0.1, length: 1 },
+    position: new THREE.Vector3(0, 0.05, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xffffff,
+    textureFileName: [
+      "/textures/coneBaseSide.png",
+      "/textures/coneBaseTop.png",
+      "/textures/coneBaseBottom.png",
+    ],
+    materialIndex: [0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 0, 0],
+    materialName: "basic",
   });
 
   rGame.utils.addObject(obj.parts[0]);
-  obj.parts[0].set({geometryName : "cylinder" , 
-    dimension : {radiusTop:0.04,radiusBottom:.45,height:1.5} , 
-    position :new THREE.Vector3(0,.8,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/coneTop.png","/textures/coneSide.png"],
-     materialIndex:[0,1,0],
-
-
-    });
-
-  rGame.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
-  obj.objects[0].set({
-    mass:.5,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
-    visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+  obj.parts[0].set({
+    geometryName: "cylinder",
+    dimension: { radiusTop: 0.04, radiusBottom: 0.45, height: 1.5 },
+    position: new THREE.Vector3(0, 0.8, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/coneTop.png", "/textures/coneSide.png"],
+    materialIndex: [0, 1, 0],
   });
 
+  rGame.utils.makePhysicCompound([obj.objects[0], ...obj.parts]);
+  obj.objects[0].set({
+    mass: 0.5,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
+    visible,
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
+  });
 }
 
-function heavyBall(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function heavyBall(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
   obj.objects = [{}];
   obj.constraints = [];
-  obj.parts = [{},{}]
+  obj.parts = [{}, {}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "box" , dimension : { height:1 , width: .1 , length:1} , position :new THREE.Vector3(0,.05,0).add(localPos).applyQuaternion(quat).add(pos),quaternion:thisQuat , color : 0xaffbb0 , materialName:"phong" });
+  obj.objects[0].set({
+    geometryName: "box",
+    dimension: { height: 1, width: 0.1, length: 1 },
+    position: new THREE.Vector3(0, 0.05, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffbb0,
+    materialName: "phong",
+  });
 
   rGame.utils.addObject(obj.parts[0]);
-  obj.parts[0].set({geometryName : "sphere", 
-    dimension : {radius:2.5} , 
-    position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/earth.jpg"],
-
-    });
-
-  rGame.utils.makePhysicCompound([obj.objects[0],...obj.parts]);
-  obj.objects[0].set({
-    mass:.5,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
-    visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+  obj.parts[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 2.5 },
+    position: new THREE.Vector3(0, 2.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/earth.jpg"],
   });
 
+  rGame.utils.makePhysicCompound([obj.objects[0], ...obj.parts]);
+  obj.objects[0].set({
+    mass: 0.5,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
+    visible,
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
+  });
 }
 
-function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function jupiter(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6058,31 +6204,46 @@ function jupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQua
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:2} , 
-    position :new THREE.Vector3(0,2.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/jupiter.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 2 },
+    position: new THREE.Vector3(0, 2.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/jupiter.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:300,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 300,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function earth(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6090,31 +6251,46 @@ function earth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.5} , 
-    position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.5 },
+    position: new THREE.Vector3(0, 1.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:220,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 220,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function venus(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6122,31 +6298,46 @@ function venus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:8} , 
-    position :new THREE.Vector3(0,4.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/venus.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 8 },
+    position: new THREE.Vector3(0, 4.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/venus.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:500,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 500,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function mars(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6154,31 +6345,46 @@ function mars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=n
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:2.5} , 
-    position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/mars.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 2.5 },
+    position: new THREE.Vector3(0, 2.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/mars.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:200,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 200,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function mercury(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6186,31 +6392,46 @@ function mercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQua
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:3.5} , 
-    position :new THREE.Vector3(0,3.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/mercury.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 3.5 },
+    position: new THREE.Vector3(0, 3.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/mercury.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:600,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 600,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function pluto(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6218,31 +6439,46 @@ function pluto(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1} , 
-    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/pluto.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1 },
+    position: new THREE.Vector3(0, 1.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/pluto.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:2000,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 2000,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function moon(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6250,31 +6486,46 @@ function moon(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=n
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:.8} , 
-    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/moon.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.8 },
+    position: new THREE.Vector3(0, 1.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/moon.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function sun(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6282,31 +6533,46 @@ function sun(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=ne
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.8} , 
-    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/sun.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.8 },
+    position: new THREE.Vector3(0, 1.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/sun.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:2000,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 2000,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function eris(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function eris(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
@@ -6314,692 +6580,797 @@ function eris(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=n
   obj.constraints = [];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.8} , 
-    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/sun.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.8 },
+    position: new THREE.Vector3(0, 1.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/sun.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:500,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 500,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 }
 
-function rotatingEarth(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function rotatingEarth(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.5} , 
-    position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.5 },
+    position: new THREE.Vector3(0, 1.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 
   // static core
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.1} , 
-    position :new THREE.Vector3(0,1.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.1 },
+    position: new THREE.Vector3(0, 1.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[1] , 
-      bodyB:obj.objects[0] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:-1.0,
-      active:false
-    })
-
-
-
-
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[1],
+    bodyB: obj.objects[0],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: -1.0,
+    active: false,
+  });
 }
-function rotatingMars(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function rotatingMars(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:3} , 
-    position :new THREE.Vector3(0,3.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/mars.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 3 },
+    position: new THREE.Vector3(0, 3.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/mars.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 
   // static core
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.1} , 
-    position :new THREE.Vector3(0,3.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.1 },
+    position: new THREE.Vector3(0, 3.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[1] , 
-      bodyB:obj.objects[0] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:1,
-      active:false
-    })
-
-
-
-
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[1],
+    bodyB: obj.objects[0],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: 1,
+    active: false,
+  });
 }
 
-function rotatingVenus(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function rotatingVenus(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:2} , 
-    position :new THREE.Vector3(0,2.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/venus.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 2 },
+    position: new THREE.Vector3(0, 2.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/venus.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 
   // static core
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.1} , 
-    position :new THREE.Vector3(0,2.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.1 },
+    position: new THREE.Vector3(0, 2.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[1] , 
-      bodyB:obj.objects[0] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:-2,
-      active:false
-    })
-
-
-
-
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[1],
+    bodyB: obj.objects[0],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: -2,
+    active: false,
+  });
 }
 
-function rotatingJupiter(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function rotatingJupiter(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.2} , 
-    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/jupiter.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.2 },
+    position: new THREE.Vector3(0, 1.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/jupiter.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 
   // static core
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.1} , 
-    position :new THREE.Vector3(0,1.1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.1 },
+    position: new THREE.Vector3(0, 1.1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[1] , 
-      bodyB:obj.objects[0] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:-3,
-      active:false
-    })
-
-
-
-
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[1],
+    bodyB: obj.objects[0],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: -3,
+    active: false,
+  });
 }
 
-function rotatingMercury(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function rotatingMercury(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:2.5} , 
-    position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/mercury.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 2.5 },
+    position: new THREE.Vector3(0, 2.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/mercury.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 
   // static core
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.1} , 
-    position :new THREE.Vector3(0,2.6,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.1 },
+    position: new THREE.Vector3(0, 2.6, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[1] , 
-      bodyB:obj.objects[0] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:2,
-      active:false
-    })
-
-
-
-
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[1],
+    bodyB: obj.objects[0],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: 2,
+    active: false,
+  });
 }
 
-function rotatingHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function rotatingHaumea(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{}];
+  obj.objects = [{}, {}];
   obj.constraints = [{}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.3} , 
-    position :new THREE.Vector3(0,1.4,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/haumea.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.3 },
+    position: new THREE.Vector3(0, 1.4, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/haumea.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
-
 
   // static core
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.1} , 
-    position :new THREE.Vector3(0,1.4,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.1 },
+    position: new THREE.Vector3(0, 1.4, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[1] , 
-      bodyB:obj.objects[0] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:4,
-      active:false
-    })
-
-
-
-
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[1],
+    bodyB: obj.objects[0],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: 4,
+    active: false,
+  });
 }
 
-function sunCeres(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function sunCeres(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{},{}];
-  obj.constraints = [{},{}];
+  obj.objects = [{}, {}, {}];
+  obj.constraints = [{}, {}];
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:1.5} , 
-    position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/sun.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.5 },
+    position: new THREE.Vector3(2, 1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/sun.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
   //
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:.7} , 
-    position :new THREE.Vector3(-4,1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/ceres.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.7 },
+    position: new THREE.Vector3(-4, 1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/ceres.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
   // static core
   rGame.utils.addObject(obj.objects[2]);
-  obj.objects[2].set({geometryName : "sphere", 
-    dimension : {radius:.4} , 
-    position :new THREE.Vector3(2,1,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[2].set({
+    geometryName: "sphere",
+    dimension: { radius: 0.4 },
+    position: new THREE.Vector3(2, 1, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[2]);
   obj.objects[2].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[2] , 
-      bodyB:obj.objects[1] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:6,y:0,z:0} , 
-      motor:true , 
-      speed:-2.0,
-      active:false
-    })
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[2],
+    bodyB: obj.objects[1],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 6, y: 0, z: 0 },
+    motor: true,
+    speed: -2.0,
+    active: false,
+  });
 
-    rGame.utils.newHingeConstraint(obj.constraints[1]);
-    obj.constraints[1].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[1].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[1].set({
-      bodyA:obj.objects[0] , 
-      bodyB:obj.objects[2] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:2.0,
-      active:false
-    })
-
-
-
-
+  rGame.utils.newHingeConstraint(obj.constraints[1]);
+  obj.constraints[1].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[1].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[1].set({
+    bodyA: obj.objects[0],
+    bodyB: obj.objects[2],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: 2.0,
+    active: false,
+  });
 }
 
-function jupiterHaumea(obj , pos , quat , localPos=new THREE.Vector3(0,0,0) , localQuat=new THREE.Quaternion(0,0,0,1), visible){
+function jupiterHaumea(
+  obj,
+  pos,
+  quat,
+  localPos = new THREE.Vector3(0, 0, 0),
+  localQuat = new THREE.Quaternion(0, 0, 0, 1),
+  visible
+) {
   let rGame = obj.getParentComposite;
-  let thisQuat = new THREE.Quaternion(localQuat.x,localQuat.y,localQuat.z,localQuat.w);
+  let thisQuat = new THREE.Quaternion(
+    localQuat.x,
+    localQuat.y,
+    localQuat.z,
+    localQuat.w
+  );
 
   thisQuat.multiply(quat);
 
-  obj.objects = [{},{},{}];
-  obj.constraints = [{},{}];
+  obj.objects = [{}, {}, {}];
+  obj.constraints = [{}, {}];
   let orbit = 27;
 
   rGame.utils.addObject(obj.objects[0]);
-  obj.objects[0].set({geometryName : "sphere", 
-    dimension : {radius:12} , 
-    position :new THREE.Vector3(0,12,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/jupiter.jpg"],
-
-    });
+  obj.objects[0].set({
+    geometryName: "sphere",
+    dimension: { radius: 12 },
+    position: new THREE.Vector3(0, 12, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/jupiter.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
   //
   rGame.utils.addObject(obj.objects[1]);
-  obj.objects[1].set({geometryName : "sphere", 
-    dimension : {radius:1.5} , 
-    position :new THREE.Vector3(orbit,12,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     textureFileName:["/textures/haumea.jpg"],
-
-    });
+  obj.objects[1].set({
+    geometryName: "sphere",
+    dimension: { radius: 1.5 },
+    position: new THREE.Vector3(orbit, 12, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    textureFileName: ["/textures/haumea.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
-    mass:100,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 100,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
   // static core
   rGame.utils.addObject(obj.objects[2]);
-  obj.objects[2].set({geometryName : "sphere", 
-    dimension : {radius:11} , 
-    position :new THREE.Vector3(0,12,0).add(localPos).applyQuaternion(quat).add(pos),
-    quaternion:thisQuat ,
-     color : 0xaffffff , 
-     materialName:"basic" ,
-     //textureFileName:["/textures/earth.jpg"],
-
-    });
+  obj.objects[2].set({
+    geometryName: "sphere",
+    dimension: { radius: 11 },
+    position: new THREE.Vector3(0, 12, 0)
+      .add(localPos)
+      .applyQuaternion(quat)
+      .add(pos),
+    quaternion: thisQuat,
+    color: 0xaffffff,
+    materialName: "basic",
+    //textureFileName:["/textures/earth.jpg"],
+  });
   rGame.utils.addPhysicBody(obj.objects[2]);
   obj.objects[2].set({
-    mass:0,
-    allowSleep:true,
-    sleep:true,
-    physicStatus:false,
+    mass: 0,
+    allowSleep: true,
+    sleep: true,
+    physicStatus: false,
     visible,
-    groupName:"obstacle",
-    collisionGroups:["wheel","ground","chassis","obstacle"], 
-    physicMaterial:"objectMaterial"
+    groupName: "obstacle",
+    collisionGroups: ["wheel", "ground", "chassis", "obstacle"],
+    physicMaterial: "objectMaterial",
   });
 
-
   rGame.utils.newHingeConstraint(obj.constraints[0]);
-    obj.constraints[0].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[0].set({
-      bodyA:obj.objects[2] , 
-      bodyB:obj.objects[1] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:-orbit,y:0,z:0} , 
-      motor:true , 
-      speed:-2.0,
-      active:false
-    })
+  obj.constraints[0].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[0].set({
+    bodyA: obj.objects[2],
+    bodyB: obj.objects[1],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: -orbit, y: 0, z: 0 },
+    motor: true,
+    speed: -2.0,
+    active: false,
+  });
 
-    rGame.utils.newHingeConstraint(obj.constraints[1]);
-    obj.constraints[1].axisA = new CANNON.Vec3(0,1,0);
-    obj.constraints[1].axisB = new CANNON.Vec3(0,1,0);
-    obj.constraints[1].set({
-      bodyA:obj.objects[0] , 
-      bodyB:obj.objects[2] , 
-      offsetA:{x:0,y:0,z:0} , 
-      offsetB:{x:0,y:0,z:0} , 
-      motor:true , 
-      speed:2.0,
-      active:false
-    })
-
-
-
-
-
-
-
+  rGame.utils.newHingeConstraint(obj.constraints[1]);
+  obj.constraints[1].axisA = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[1].axisB = new CANNON.Vec3(0, 1, 0);
+  obj.constraints[1].set({
+    bodyA: obj.objects[0],
+    bodyB: obj.objects[2],
+    offsetA: { x: 0, y: 0, z: 0 },
+    offsetB: { x: 0, y: 0, z: 0 },
+    motor: true,
+    speed: 2.0,
+    active: false,
+  });
 }
+
 // CONCATENATED MODULE: ./roadtrain/roadtrain.road.data.js
 
 
