@@ -1,52 +1,60 @@
-export async function startEngine(gameInstance){
-  let lastTime = 0;
-  let lastFrameTime;
+export async function startEngine(gameInstance) {
+  let lastTime;
   let frameNumber = 0;
   gameInstance.running = true;
-  gameInstance.cannonSafeStep = .016;
+  gameInstance.cannonSafeStep = 0.016;
   let cannonStep = gameInstance.cannonSafeStep;
-  async function mainloop(t){
-    if (gameInstance.running){
-      let frameInterval = gameInstance.actualInterval;
-      frameInterval += (t - lastTime) / 1000;
+  function mainloop(t) {
+    let frameInterval = gameInstance.actualInterval;
+    frameInterval += (t - lastTime) / 1000;
+    if (
+      frameInterval >= cannonStep &&
+      gameInstance.compositeRunningFunctions === false
+    ) {
+      gameInstance.set({
+        timeStamp: t,
+        actualInterval: frameInterval,
+        rendering: true,
+        framesInterval: t - lastTime,
+      });
       lastTime = t;
-      if (frameInterval >= cannonStep && gameInstance.compositeRunningFunctions==false){
-        gameInstance.set({timeStamp:t, actualInterval:frameInterval,rendering:true ,framesInterval:t-lastFrameTime});
-        lastFrameTime = t;
-      }
     }
     requestAnimationFrame(mainloop);
-
   }
-  function whileLoading(t){
+  function whileLoading(t) {
     if (gameInstance.startUp) return;
     let frameInterval = gameInstance.actualInterval;
-    if (frameNumber>24){
-      let loaderElement = window.document.getElementById("myLoader");
-      let loadingMessageElement = window.document.getElementById("loadingMessage");
-      loaderElement.parentNode.removeChild(loaderElement);
-      loadingMessageElement.parentNode.removeChild(loadingMessageElement);
-
-      document.body.appendChild ( gameInstance.three.renderer.domElement.getProxyLessObject );
+    if (frameNumber > 2) {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hide");
+      }, 1000);
+      document.body.appendChild(
+        gameInstance.three.renderer.domElement.getProxyLessObject
+      );
       gameInstance.startUp = t;
       requestAnimationFrame(mainloop);
+      return;
     }
-    if (frameInterval<cannonStep){
-      if(lastTime==undefined) {
-        frameInterval = cannonStep;
-      }else{
-        frameInterval += (t - lastTime) / 1000;
-      }
+    if (lastTime === undefined) {
       lastTime = t;
-      //
-      if (lastFrameTime==undefined) lastFrameTime = t;
-      if (frameInterval >= cannonStep && gameInstance.compositeRunningFunctions==false){
-        gameInstance.set({timeStamp:t, actualInterval:frameInterval,rendering:true ,framesInterval:t-lastFrameTime});
-        lastFrameTime = t;
-        ++frameNumber;
-      }
     }
-    requestAnimationFrame(whileLoading);
+    frameInterval += (t - lastTime) / 1000;
+    if (
+      frameInterval >= cannonStep &&
+      gameInstance.compositeRunningFunctions === false
+    ) {
+      gameInstance.set({
+        timeStamp: t,
+        actualInterval: frameInterval,
+        rendering: true,
+        framesInterval: t - lastTime,
+      });
+      ++frameNumber;
+    }
+    lastTime = t;
+    setTimeout(() => {
+      requestAnimationFrame(whileLoading);
+    }, 1000 / 4);
   }
   requestAnimationFrame(whileLoading);
 }

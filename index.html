@@ -1,46 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style type="text/css">
-        .loader {
-        margin: auto;
-        width:50%;
-        height: 50%;
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #3498db; /* Blue */
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-        }
-    </style>
-    <style>
-        #loadingMessage {
-            position: absolute;
-            top: 20%;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            z-index: 100;
-            color:rgb(8, 22, 224);
-            transform: translateZ(0); 
-        }
-    </style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Road Train game</title>
-</head>
-<body>
-    <div id="myLoader" class="loader"></div>
-    <div id="loadingMessage"><h1>Please wait.</h1> Loading game textures takes longer than usual.</div>
-    <script src= "/mgame/dependencies/three.min.js"></script>
-    <script src= "/mgame/dependencies/cannon.min.js"></script>
-    <script type = "module" src = "roadtrain/roadtrain.js"></script>
-</body>
+  </head>
+  <body>
+    <div id="loading">
+      <div>
+        <h2>Roadtrain Game</h2>
+        <p>
+          Experimental Javascript game using graphic and physic libraries
+          (Three.js and Cannon.js)
+        </p>
+        <h6>Author:Makan Edrisi</h6>
+        <h6>Since 2018</h6>
+      </div>
+    </div>
+    <script src="/mgame/dependencies/three.min.js"></script>
+    <script src="/mgame/dependencies/cannon.min.js"></script>
+    <script type="module" src="roadtrain/roadtrain.js"></script>
+  </body>
 </html>
