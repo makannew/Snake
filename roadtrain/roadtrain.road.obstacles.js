@@ -25,7 +25,7 @@ export function box(
       .applyQuaternion(quat)
       .add(pos),
     quaternion: thisQuat,
-    textureFileName: ["/textures/box.jpg"],
+    textureFileName: ["./textures/box.jpg"],
     color: 0xffffff,
     materialName: "lambert",
   });
@@ -72,9 +72,9 @@ export function barrel(
     color: 0xffffff,
     materialName: "lambert",
     textureFileName: [
-      "/textures/barrelTop.jpg",
-      "/textures/barrelSide.jpg",
-      "/textures/barrelBottom.jpg",
+      "./textures/barrelTop.jpg",
+      "./textures/barrelSide.jpg",
+      "./textures/barrelBottom.jpg",
     ],
     materialIndex: [0, 1, 2],
   });
@@ -116,7 +116,7 @@ export function barrierB(
       .applyQuaternion(quat)
       .add(pos),
     quaternion: thisQuat,
-    textureFileName: ["/textures/barrierStand.png"],
+    textureFileName: ["./textures/barrierStand.png"],
     color: 0xffffff,
     materialName: "lambert",
   });
@@ -135,7 +135,7 @@ export function barrierB(
   rGame.utils.addObject(obj.objects[1]);
   obj.objects[1].set({
     geometryName: "box",
-    textureFileName: ["/textures/barrierStand.png"],
+    textureFileName: ["./textures/barrierStand.png"],
     dimension: { height: 1, width: 1, length: 1 },
     position: new THREE.Vector3(0, 1.4, 0)
       .add(localPos)
@@ -192,7 +192,7 @@ export function barrierA(
       .applyQuaternion(quat)
       .add(pos),
     quaternion: thisQuat,
-    textureFileName: ["/textures/barrierSide.png"],
+    textureFileName: ["./textures/barrierSide.png"],
     color: 0xffffff,
     materialName: "basic",
   });
@@ -200,7 +200,7 @@ export function barrierA(
   rGame.utils.addObject(obj.parts[0]);
   obj.parts[0].set({
     geometryName: "box",
-    textureFileName: ["/textures/barrierStand.png"],
+    textureFileName: ["./textures/barrierStand.png"],
     dimension: { height: 0.1, width: 1.4, length: 0.8 },
     position: new THREE.Vector3(-3, 0.9, 0)
       .add(localPos)
@@ -213,7 +213,7 @@ export function barrierA(
   rGame.utils.addObject(obj.parts[1]);
   obj.parts[1].set({
     geometryName: "box",
-    textureFileName: ["/textures/barrierStand.png"],
+    textureFileName: ["./textures/barrierStand.png"],
     dimension: { height: 0.1, width: 1.4, length: 0.8 },
     position: new THREE.Vector3(3, 0.9, 0)
       .add(localPos)
@@ -226,7 +226,7 @@ export function barrierA(
   rGame.utils.addObject(obj.parts[2]);
   obj.parts[2].set({
     geometryName: "box",
-    textureFileName: ["/textures/barrierStand.png"],
+    textureFileName: ["./textures/barrierStand.png"],
     dimension: { height: 0.8, width: 0.2, length: 0.8 },
     position: new THREE.Vector3(-3, 0.1, 0)
       .add(localPos)
@@ -239,7 +239,7 @@ export function barrierA(
   rGame.utils.addObject(obj.parts[3]);
   obj.parts[3].set({
     geometryName: "box",
-    textureFileName: ["/textures/barrierStand.png"],
+    textureFileName: ["./textures/barrierStand.png"],
     dimension: { height: 0.8, width: 0.2, length: 0.8 },
     position: new THREE.Vector3(3, 0.1, 0)
       .add(localPos)
@@ -298,9 +298,9 @@ export function coneBarrier(
     quaternion: thisQuat,
     color: 0xffffff,
     textureFileName: [
-      "/textures/coneBaseSide.png",
-      "/textures/coneBaseTop.png",
-      "/textures/coneBaseBottom.png",
+      "./textures/coneBaseSide.png",
+      "./textures/coneBaseTop.png",
+      "./textures/coneBaseBottom.png",
     ],
     materialIndex: [0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 0, 0],
     materialName: "basic",
@@ -317,7 +317,7 @@ export function coneBarrier(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/coneTop.png", "/textures/coneSide.png"],
+    textureFileName: ["./textures/coneTop.png", "./textures/coneSide.png"],
     materialIndex: [0, 1, 0],
   });
 
@@ -380,7 +380,7 @@ export function heavyBall(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/earth.jpg"],
+    textureFileName: ["./textures/earth.jpg"],
   });
 
   rGame.utils.makePhysicCompound([obj.objects[0], ...obj.parts]);
@@ -428,7 +428,7 @@ export function jupiter(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/jupiter.jpg"],
+    textureFileName: ["./textures/jupiter.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -475,7 +475,7 @@ export function earth(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/earth.jpg"],
+    textureFileName: ["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -522,7 +522,7 @@ export function venus(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/venus.jpg"],
+    textureFileName: ["./textures/venus.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -569,7 +569,7 @@ export function mars(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/mars.jpg"],
+    textureFileName: ["./textures/mars.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -616,7 +616,7 @@ export function mercury(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/mercury.jpg"],
+    textureFileName: ["./textures/mercury.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -663,7 +663,7 @@ export function pluto(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/pluto.jpg"],
+    textureFileName: ["./textures/pluto.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -710,7 +710,7 @@ export function moon(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/moon.jpg"],
+    textureFileName: ["./textures/moon.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -757,7 +757,7 @@ export function sun(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/sun.jpg"],
+    textureFileName: ["./textures/sun.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -804,7 +804,7 @@ export function eris(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/sun.jpg"],
+    textureFileName: ["./textures/sun.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -851,7 +851,7 @@ export function rotatingEarth(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/earth.jpg"],
+    textureFileName: ["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -877,7 +877,7 @@ export function rotatingEarth(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -936,7 +936,7 @@ export function rotatingMars(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/mars.jpg"],
+    textureFileName: ["./textures/mars.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -962,7 +962,7 @@ export function rotatingMars(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1022,7 +1022,7 @@ export function rotatingVenus(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/venus.jpg"],
+    textureFileName: ["./textures/venus.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -1048,7 +1048,7 @@ export function rotatingVenus(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1108,7 +1108,7 @@ export function rotatingJupiter(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/jupiter.jpg"],
+    textureFileName: ["./textures/jupiter.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -1134,7 +1134,7 @@ export function rotatingJupiter(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1194,7 +1194,7 @@ export function rotatingMercury(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/mercury.jpg"],
+    textureFileName: ["./textures/mercury.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -1220,7 +1220,7 @@ export function rotatingMercury(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1280,7 +1280,7 @@ export function rotatingHaumea(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/haumea.jpg"],
+    textureFileName: ["./textures/haumea.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -1306,7 +1306,7 @@ export function rotatingHaumea(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1366,7 +1366,7 @@ export function sunCeres(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/sun.jpg"],
+    textureFileName: ["./textures/sun.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -1392,7 +1392,7 @@ export function sunCeres(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/ceres.jpg"],
+    textureFileName: ["./textures/ceres.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1418,7 +1418,7 @@ export function sunCeres(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[2]);
   obj.objects[2].set({
@@ -1492,7 +1492,7 @@ export function jupiterHaumea(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/jupiter.jpg"],
+    textureFileName: ["./textures/jupiter.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[0]);
   obj.objects[0].set({
@@ -1518,7 +1518,7 @@ export function jupiterHaumea(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    textureFileName: ["/textures/haumea.jpg"],
+    textureFileName: ["./textures/haumea.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[1]);
   obj.objects[1].set({
@@ -1544,7 +1544,7 @@ export function jupiterHaumea(
     quaternion: thisQuat,
     color: 0xaffffff,
     materialName: "basic",
-    //textureFileName:["/textures/earth.jpg"],
+    //textureFileName:["./textures/earth.jpg"],
   });
   rGame.utils.addPhysicBody(obj.objects[2]);
   obj.objects[2].set({
