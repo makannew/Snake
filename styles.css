@@ -18,6 +18,7 @@ html {
   width: 100vw;
   height: 100vh;
   background-image: url(textures/p1.jpg);
+  background-position: center;
   background-size: 100% auto;
   background-repeat: no-repeat;
 }
