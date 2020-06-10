@@ -26,6 +26,6 @@ Although, I think there are some ways to fix this problem:
 - using web-assembly
 - using machin-learning model as collision detection function
 
-Hopefully, I will try those solutions in futur!
+Hopefully, I will try those solutions in future!
 
 
