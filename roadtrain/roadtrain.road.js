@@ -255,6 +255,7 @@ export function loadRoad(rGame) {
 
 export function loadRoadUpdateManager(rGame) {
   rGame.standingTime = 0;
+  rGame.firstRun = true;
   rGame.addFunction(roadActiveBlocks);
   rGame.addFunction(runPlots);
   rGame.addFunction(performReset);
@@ -367,6 +368,11 @@ function performReset({ newAnimationFrame }) {
   let maxStandingTime = 4;
   if (roadTrains[0].speed == 0) {
     maxStandingTime = 10;
+  } else {
+    if (firstRun) {
+      firstRun = false;
+      standingTime = 0;
+    }
   }
   standingTime += actualInterval;
   if (standingTime > maxStandingTime || cheating) {
